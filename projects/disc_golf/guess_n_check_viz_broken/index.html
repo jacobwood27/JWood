@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>DG Viz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js"></script>
+  <link
+  href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css"
+  rel="stylesheet"
+  />
+  <style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, Sans-serif;
+  }
+
+  table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: center;
+    /*padding: 8px;*/
+  }
+
+  table.center {
+    margin: 0px auto;
+    text-align: center;
+  }
+
+
+  #map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+  }
+
+  h1 {
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  h2 {
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 5px;
+  }
+
+  a {
+    text-decoration: none;
+    color: #2dc4b2;
+  }
+
+  #console {
+    position: absolute;
+    margin: 10px;
+    width: 240px;
+    background-color: white;
+    padding: 10px 20px;
+  }
+
+  .session {
+    margin-bottom: 20px;
+  }
+
+  .row {
+    height: 20px;
+    width: 100%;
+  }
+
+  .colors {
+    background: linear-gradient(
+      to right,
+      #2dc4b2,
+      #3bb3c3,
+      #669ec4,
+      #8b88b6,
+      #a2719b,
+      #aa5e79
+      );
+    margin-bottom: 5px;
+  }
+
+  .label {
+    width: 15%;
+    display: inline-block;
+    text-align: center;
+  }
+</style>
+</head>
+
+<body>
+  <div id="map"></div>
+  <div id="console">
+    <h1>Guess and Check</h1>
+    <div class="session">
+      <div class="row">
+        <input id="raw_marks" type="checkbox" name="toggle" value="raw_marks" checked="checked"/>
+        <label for="raw_marks">Raw Marks</label>
+      </div>
+      <div class="row">
+        <input id="throws" type="checkbox" name="toggle" value="throws" checked="checked"/>
+        <label for="throws">Throws</label>
+      </div>
+    </div>
+    <div class="session">
+      <table id="myTable" class="center"> <!-- table-borderless table-striped table-earning">  --> 
+        <thead>
+          <tr>
+            <th>Hole</th>
+            <th>Tee</th>
+            <th>Pin</th>
+            <th>Par</th>
+            <th>Score</th>
+            <th>Run</th>
+          </tr>
+        </thead>
+        <tbody id="round_summary"></tbody>
+      </table>
+    </div>
+    <div class="session">
+      <div class="row">
+        <span id="mouse_lat">Lat: </span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1Ijoiandvb2QyNyIsImEiOiJja3Jtajh3aXYxcXRsMnFwZWc0bnJxbDVkIn0.rcjWqatkRc5dLOH0G06z9Q';
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/satellite-v9',
+    center: [-117.058426, 33.079323],
+    zoom: 16
+  });
+
+  function loadTableData(items) {
+    const table = document.getElementById("round_summary");
+    items.forEach( item => {
+      let row = table.insertRow();
+      let hole = row.insertCell(0);
+      hole.innerHTML = item.hole;
+      let tee = row.insertCell(1);
+      tee.innerHTML = item.tee;
+      let pin = row.insertCell(2);
+      pin.innerHTML = item.pin;
+      let par = row.insertCell(3);
+      par.innerHTML = item.par;
+      let score = row.insertCell(4);
+      score.innerHTML = item.score;
+      let running = row.insertCell(5);
+      running.innerHTML = item.running;
+
+      if (item.score-item.par <= -2){
+        score.style.backgroundColor = 'green';
+      } else if (item.score-item.par == -1){
+        score.style.backgroundColor = 'green';
+      } else if (item.score-item.par == 0){
+        score.style.backgroundColor = 'white';
+      } else if (item.score-item.par == 1){
+        score.style.backgroundColor = 'red';
+      } else {
+        score.style.backgroundColor = 'red';
+      }
+
+    });
+  }
+
+  async function fetchData () {
+    try {
+      const response = await fetch('guess_n_check.json');
+          // const response = await fetch('test_vis.json');
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      var filterGroup = document.getElementById('filters');
+      fetchData().then((data) => {
+
+        map.on('load', function () {
+
+          map.addSource('round_json', {
+            'type': 'geojson',
+            'data': data});
+
+          map.addLayer({
+            'id': 'tees->pins',
+            'type': 'line',
+            'source': 'round_json',
+            'layout': {
+              'line-join': 'round',
+              'line-cap': 'round'},
+              'paint': {
+                'line-color': '#BF93E4',
+                'line-width': 1},
+                'filter': ['==', 'thing', 'tee->pin']
+              });
+
+          map.addLayer({
+            'id': 'tees',
+            'type': 'symbol',
+            'source': 'round_json',
+            'paint': {
+              'text-color': '#fff',
+              'text-halo-color': '#000',
+              'text-halo-width': 2},
+              'layout': {
+                'text-field': ['get', 'name']},
+                'filter': ['==', 'thing', 'tee']
+              });
+
+          map.addLayer({
+            'id': 'pins',
+            'type': 'symbol',
+            'source': 'round_json',
+            'paint': {
+              'text-color': '#000',
+              'text-halo-color': '#fff',
+              'text-halo-width': 2},
+              'layout': {
+                'text-field': ['get', 'name']},
+                'filter': ['==', 'thing', 'pin']
+              });
+
+          map.addLayer({
+            'id': 'throws',
+            'type': 'line',
+            'source': 'round_json',
+            'layout': {
+              'line-join': 'round',
+              'line-cap': 'round'},
+              'paint': {
+                'line-color': [
+                'interpolate',
+                ['linear'],
+                ['number', ['get', 'hole_res']],
+                -10,
+                'green',
+                -1,
+                'green',
+                0,
+                'white',
+                1,
+                'red',
+                10,
+                'red'
+                ],
+                'line-width': 5},
+                'filter': ['==', 'thing', 'throw']
+              });
+
+          Promise.all(
+            data.discs.map(img => new Promise((resolve, reject) => {
+              map.loadImage(img.image, function (error, res) {
+                map.addImage(img.id, res)
+                resolve();
+              })
+            }))
+            )
+          .then(
+            map.addLayer({
+              'id': 'raw_marks',
+              'type': 'symbol',
+              'source': 'round_json',
+              'paint': {
+                'text-color': '#000',
+                'text-halo-color': '#fff',
+                'text-halo-width': 2},
+                'layout': {
+                  'text-field': ['get', 'name'],
+                  'icon-image': ['get', 'disc_name'],
+                  'icon-size': 0.2,
+                  'icon-allow-overlap': true,
+                  'icon-ignore-placement': true},
+                  'filter': ['==', 'thing', 'raw_mark']})
+            );
+
+            const layers = ['raw_marks', 'throws'];//, 'throws', 'discs'];
+            layers.forEach(function (item, index) {
+              document.getElementById(item).addEventListener('change', function (e) {
+                map.setLayoutProperty(
+                  item,
+                  'visibility',
+                  e.target.checked ? 'visible' : 'none'
+                  );
+              });
+            });
+
+            
+
+
+          }
+          );
+
+        loadTableData(data.summary);
+
+      });
+
+      map.on('mousemove', function (e) {
+        document.getElementById('mouse_lat').innerHTML = e.lngLat.lat + '<br>' + e.lngLat.lng;
+      });
+
+      map.on('click', function(e) {
+        var coordinates = e.lngLat;
+        new mapboxgl.Popup()
+        .setLngLat(coordinates)
+        .setHTML(e.lngLat.lat + ',' + e.lngLat.lng)
+        .addTo(map);
+      });
+
+      // });
+    </script>
+  </body>
+  </html>
