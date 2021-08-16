@@ -1,4 +1,4 @@
-Sitemap: https://jacobwood27.github.io/sitemap.xml
+Sitemap: https://jacobwood.xyz/sitemap.xml
 
 User-agent: *
 Disallow:
