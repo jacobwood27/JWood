@@ -269,7 +269,7 @@ The [*make-round*](https://github.com/jacobwood27/dg_record_go/tree/main/cmd/mak
 Below is an example use of *make-round*. The rudimentary inference was not perfect, the disc was tapped too far away (>10m) from the 14th teebox when recording. After dragging the stamped location towards the teebox the inference is updated to correctly reflect the round as played. When the "Save" button is clicked the icons are updated in two ways: 
  - they are snapped to the locations of their inferred teeboxes/pins
  - the symbol designating the basket at the end of the hole changes from the tapped disc to a basket icon
-\fig{/projects/disc_golf/edit_round.gif}
+\fig{/projects/disc_golf/make_round.gif}
 
 The saved round is recorded in a tidy-ish .csv file with some round metadata in the header:
 ```plaintext
