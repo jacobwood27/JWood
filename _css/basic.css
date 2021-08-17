@@ -188,3 +188,15 @@ td {
 table tbody tr td {
   border: 1px solid lightgray;
 }
+
+.books-page {
+  width: 60vw;
+  left: 50%;
+  margin-left: -10vw;
+}
+
+.im-100 {text-align: center;}
+.im-100 img {
+    padding: 0;
+    width: 100%;
+}
