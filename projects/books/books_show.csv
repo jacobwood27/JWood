@@ -5,67 +5,110 @@ Rank,Title,Author,Stars,Takeaway
 4,The Power Broker: Robert Moses and the Fall of New York,Robert A. Caro,4,People that can command game theory power relations in real time can do extraordinary things. Be wary of incentives in politics.
 5,"Guns, Germs, and Steel: The Fates of Human Societies",Jared Diamond,4,"Grain and animals native to the Fertile Crescent led to agriculture, East-West axis of Eurasia led to disseminating ideas and rapid advancement of European culture and innovations. Germs are abundant in early agriculture societies, European settlers wiped out up to 95% (!) of North America natives with their germs."
 6,The Precipice: Existential Risk and the Future of Humanity,Toby  Ord,4,"Longtermism is very convincing, and urgent. All the risk of the next century comes from anthropogenic risk, with the bulk of that residing in the buckets of unaligned AI, engineered pandemics, and unknown anthropogenic risk. No doubt that working in this field is what I want to do."
-7,Franny and Zooey,J.D. Salinger,4,"Just be, and respect people for who they are. "
-8,Atlas Shrugged,Ayn Rand,4,"There is room for bringing about new philosophical systems, and writing a novel imagining Utopia is probably a good way to work through the details."
-9,Destined for War: Can America and China Escape Thucydides’s Trap?,Graham Allison,4,"China is soon to be (if not already) the leading global power. 12/16 of the identified cases in which a rising power has displaced an established power have resulted in war. Probably the best way to flourish is to pull the strings and develop a symbiotic relationship, like US and UK."
-10,The Hitchhiker's Guide to the Galaxy,Douglas Adams,4,What is the question? There is no requirement for meaning or purpose in anything.
-11,The Dictator's Handbook: Why Bad Behavior is Almost Always Good Politics,"Bruce Bueno de Mesquita, Alastair Smith",4,"Well functioning democracy makes those in power accountable to the largest ""winning coalition"". Analyzing political leaders in the context of staying in power is probably a good starting place in almost all cases. "
-12,Artificial Intelligence: A Guide for Thinking Humans,Melanie Mitchell,4,"As of 2019 AI has a long way to go before it actually understands anything, and the abstractions it makes now are very different than those that humans make."
-13,Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones,James Clear,4,"You are largely a product of your habits. Relying on sheer willpower to enforce a new habit or dismiss an old one is not a good idea. Instead, use a series of strategies and environment shaping to help maintain compliance."
-14,Homo Deus: A History of Tomorrow,Yuval Noah Harari,4,"Myths are good at bringing people together and giving them common cause. Humanism is the current paradigm, but all bets are off if/when we cede the future to smarter beings.  "
-15,Ethics in the Real World: 86 Brief Essays on Things that Matter,Peter Singer,4,"Medication to improve ethical reasoning could be possible, with interesting implications. Generally ethical problems can be worked through and brought to a solution after adopting a moral framework. "
-16,Cat's Cradle,Kurt Vonnegut,3,"A big danger brought about by new, powerful technology stems from accidental misuse, not necessarily intentionally bad actors."
-17,Exhalation,Ted Chiang,3,It is both meaningless and unbelievably enticing to think about free will and its repercussions. And the 2nd law of thermodynamics is a real pain.
-18,The Life You Can Save: Acting Now to End World Poverty,Peter Singer,3,"A single person can, and is perhaps morally bound in a utilitarian framework, to make a large difference with the global poor."
-19,Brave New World,Aldous Huxley,3,"The state can change society’s Nash equilibrium profoundly, so that it does not agree with today’s values. What values should be preserved? Is a society full of people on Soma a utopia or a dystopia?"
-20,Why We're Polarized,Ezra Klein,3,People have evolved to be governed by their identities through in-group out-group association. Party politics has come to a head by cleanly sorting into two groups along many of the most important identities people have.
-21,Animal Farm,George Orwell,3,Self interested agents mixed with deceit can lead to almost universally undesirable outcomes.
-22,1984,George Orwell,3,"It is incredibly difficult to resist the 1984 future big brother state, or any well planned state regime probably, from within."
-23,The Stand,Stephen King,3,Good and evil only exist relevant to moral frames. Contrasting worldviews must exist in society.
-24,Gang Leader for a Day: A Rogue Sociologist Takes to the Streets,Sudhir Venkatesh,3,"Incentives are everywhere and shape just about everything, even (perhaps especially) the guidelines and rules we use to live our lives."
-25,"How to Measure Anything: Finding the Value of ""Intangibles"" in Business",Douglas W. Hubbard,3,"Put numbers on things, and carry confidence intervals. Identify what variable is driving the uncertainty and focus on refining that."
-26,Do Androids Dream of Electric Sheep?,Philip K. Dick,3,"We’ll likely never be able to tell if androids have consciousness, how do we possibly decide if they deserve moral standing?"
-27,The Art of Solitude,Stephen Batchelor,3,Extended periods of solitude should be welcomed as a great way to achieve an open mind. And one day I need to try Ayahuasca.
-28,Player Piano,Kurt Vonnegut,3,"Early automated society, where ""managers and engineers"" are still working but nobody else is needed, will tend toward the inequitable without thorough preparation."
-29,Merchants of Doubt: How a Handful of Scientists Obscured the Truth on Issues from Tobacco Smoke to Global Warming,Naomi Oreskes,3,"Entities will act according to their best interests, because they must. This does not stop at blurring lines in science, as the same group of people did for the effects of smoking, acid rain, DDT, ozone layer, and climate science. Always ask who has a stake in the outcome."
-30,Slaughterhouse-Five,Kurt Vonnegut,3,"Make your life what you will, the universe is apathetic. So it goes."
-31,Talking to Strangers: What We Should Know About the People We Don’t Know,Malcolm Gladwell,3,Even large actions can be heavily coupled to the environment. Take time and place into context when interacting with strangers.
-32,Mister Fred,Jill Pinkwater,3,Challenge kids and let them surprise you.
-33,Impro: Improvisation and the Theatre,Keith Johnstone,3,Social interaction can be entirely practiced and improved upon. I should take improv classes.
-34,Siddhartha,Hermann Hesse,3,Experiences alone can lead to enlightenment.
-35,Breakfast of Champions,Kurt Vonnegut,3,"Maybe there is meaning in the chaos, maybe there isn’t, does it matter?"
-36,The Giver,Lois Lowry,3,We only live in the world we sense.
-37,Lord of the Flies,William Golding,3,"Friendly, democratic civilization, as opposed to chaos and rule by power, is not to be taken for granted."
-38,The Kite Runner,Khaled Hosseini,3,Love and friendship takes on many different shapes.
-39,Foundation,Isaac Asimov,2,Good predictions of the future are powerful.
-40,Ender's Game,Orson Scott Card,2,"It is either difficult or impossible to assign an objective ""good guys vs bad guys"", but so easy to fall into the thinking that your guys are the good guys."
-41,Poor Economics: A Radical Rethinking of the Way to Fight Global Poverty,"Abhijit V. Banerjee, Esther Duflo",2,"Poverty is deeply seated in circumstance, and relief is a many-faceted problem."
-42,To Kill a Mockingbird,Harper Lee,2,"""You never really understand a person until you consider things from his point of view"""
-43,The Way of Kings,Brandon Sanderson,2,"It can be really hard to see life through a different point of view, and doing so may have profound impacts on what is right and wrong."
-44,Good Economics for Hard Times: Better Answers to Our Biggest Problems,"Abhijit V. Banerjee, Esther Duflo",2,"Preferences are shaped by society, they aren’t magic. Trade and immigration are increasingly important as the world globalizes, and are hard problems."
-45,Stumbling on Happiness,Daniel Todd Gilbert,2,We are not good at predicting what will make us happy. Imagination works constantly to fill in gaps and make guesses and is not to always be trusted.
-46,"""Surely You're Joking, Mr. Feynman!"": Adventures of a Curious Character",Richard P. Feynman,2,Curiosity needs to be practiced consistently.
-47,How to Read a Book: The Classic Guide to Intelligent Reading,Mortimer J. Adler,2,"Read books with purpose, and ideally in stages."
-48,The Catcher in the Rye,J.D. Salinger,2,"We grow up, all we can do is appreciate the path."
-49,Doing Good Better: How Effective Altruism Can Help You Make a Difference,William MacAskill,2,"Effective charities are effective, and philanthropy is a science worth studying."
-50,The Most Good You Can Do: How Effective Altruism Is Changing Ideas About Living Ethically,Peter Singer,2,"Effective Altruism is applied charity, and the utilitarian returns to charity take on a power law distribution."
-51,Red Rising,Pierce Brown,2,"Deeply hierarchical societies don’t seem like a good idea. In a society with stratification, all people will bring valuable and varied insight to governing given the opportunity."
-52,The Gunslinger,Stephen King,2,Relentless pursuit of goals is a goal itself.
-53,Recursion,Blake Crouch,2,"There is nothing ""real"" about the past, collective memories are all that remain. "
-54,The Sirens of Titan,Kurt Vonnegut,2,"""A purpose of human life, no matter who is controlling it, is to love whoever is around to be loved."""
-55,Dune,Frank Herbert,2,"""When religion and politics travel in the same cart, the riders believe nothing can stand in their way. Their movements become headlong - faster and faster and faster. They put aside all thoughts of obstacles and forget the precipice does not show itself to the man in a blind rush until it's too late."""
-56,The Fountainhead,Ayn Rand,2,Do what you are passionate about.
-57,Mother Night,Kurt Vonnegut,2,"""We are what we pretend to be, so we must be careful about what we pretend to be"""
-58,A Madman Dreams of Turing Machines,Janna Levin,2,"Godel and Turing demonstrate how blurred the line between minds and computers can be, and what incredible variety minds can show."
-59,The Name of the Wind,Patrick Rothfuss,2,Storytelling is a good skill to have and should be practiced.
-60,The Martian,Andy Weir,2,"Be resourceful, learn to make the best with what you have."
-61,The Count of Monte Cristo,Alexandre Dumas,2,Revenge is not worthwhile.
-62,The Old Man and the Sea,Ernest Hemingway,2,Seeing things through for the sake of seeing things through can be simultaneously honorable and foolish. 
-63,My Brilliant Friend,Elena Ferrante,2,"We are unbelievably fortunate to grow up in rich western society. The violence and family politics present in this poor Italian city is not even imaginable, and maybe that gives us hope for economic growth to usher in an even less violent future."
-64,The Windup Girl,Paolo Bacigalupi,2,"""Politics is ugly. Never doubt what small men will do for great power."""
-65,Where the Crawdads Sing,Delia Owens,1,Spending all your time immersed and observant in an environment leads to deep understanding.
-66,Harry Potter and the Methods of Rationality,Eliezer Yudkowsky,1,Statistical thinking and experimentation can be applied to everyday things.
-67,Fight Club,Chuck Palahniuk,1,"Chaos has a place, but things can get out of control quickly."
-68,Blithe Tomato,Mike Madison,1,Learn to find the beauty in simple things. 
-69,A Confederacy of Dunces,John Kennedy Toole,1,Empty whining about things doesn’t help anything.
-70,The Metamorphosis,Franz Kafka,1,Making people give up their life to help you is pretty selfish.
+7,"Daring Greatly: How the Courage to Be Vulnerable Transforms the Way We Live, Love, Parent, and Lead",Brené Brown,4,"You can’t be courageous without first being vulnerable. I am not sure why I hadn’t internalized that until reading this book, but this is something I would like to be much better at."
+8,Franny and Zooey,J.D. Salinger,4,"Just be, and respect people for who they are. "
+9,Master of the Senate,Robert A. Caro,4,Much of policy is driven by personal ties and relationships. I also found myself focusing on how much I disliked LBJ on personal grounds and trying to dislike his politics because of who he was even though I largely admire his politics. This is just as bad as liking a politician for who they are and using that as a lens to view their politics. 
+10,Atlas Shrugged,Ayn Rand,4,"There is room for bringing about new philosophical systems, and writing a novel imagining Utopia is probably a good way to work through the details."
+11,Seeing Like a State: How Certain Schemes to Improve the Human Condition Have Failed,James C. Scott,4,"As a whole we should prefer diversity and self-correcting complexity. The challenge is inserting diversity into the system for diversity’s sake, as it will, almost by definition, look unfair or undesirable at the ground level. "
+12,Destined for War: Can America and China Escape Thucydides’s Trap?,Graham Allison,4,"China is soon to be (if not already) the leading global power. 12/16 of the identified cases in which a rising power has displaced an established power have resulted in war. Probably the best way to flourish is to pull the strings and develop a symbiotic relationship, like US and UK."
+13,The Hitchhiker's Guide to the Galaxy,Douglas Adams,4,What is the question? There is no requirement for meaning or purpose in anything.
+14,The Dictator's Handbook: Why Bad Behavior is Almost Always Good Politics,"Bruce Bueno de Mesquita, Alastair Smith",4,"Well functioning democracy makes those in power accountable to the largest ""winning coalition"". Analyzing political leaders in the context of staying in power is probably a good starting place in almost all cases. "
+15,Artificial Intelligence: A Guide for Thinking Humans,Melanie Mitchell,4,"As of 2019 AI has a long way to go before it actually understands anything, and the abstractions it makes now are very different than those that humans make."
+16,Endurance: Shackleton's Incredible Voyage,Alfred Lansing,4,"There is not much people won’t endure if they have a respected leader, a plan, and a common goal."
+17,Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones,James Clear,4,"You are largely a product of your habits. Relying on sheer willpower to enforce a new habit or dismiss an old one is not a good idea. Instead, use a series of strategies and environment shaping to help maintain compliance."
+18,Homo Deus: A History of Tomorrow,Yuval Noah Harari,4,"Myths are good at bringing people together and giving them common cause. Humanism is the current paradigm, but all bets are off if/when we cede the future to smarter beings.  "
+19,Ethics in the Real World: 86 Brief Essays on Things that Matter,Peter Singer,4,"Medication to improve ethical reasoning could be possible, with interesting implications. Generally ethical problems can be worked through and brought to a solution after adopting a moral framework. "
+20,"The Bird Way: A New Look at How Birds Talk, Work, Play, Parent, and Think",Jennifer Ackerman,4,Birds provide an illuminating window into evolutionary races and pressures. It is amazing how many get caught up in the “do this expensive thing to indicate how fit I am” paradigm. They also perform complicated multi-step behavior that seems to be indicative of deep conceptual understanding with brains ~2-3 orders of magnitude smaller than humans (in raw neuron count).
+21,The Book of Joy: Lasting Happiness in a Changing World,Dalai Lama XIV,3,"Be kind, light-hearted, and grateful in daily interactions to bring joy into your life and the lives of those around you."
+22,Cat's Cradle,Kurt Vonnegut,3,"A big danger brought about by new, powerful technology stems from accidental misuse, not necessarily intentionally bad actors."
+23,The 7 Habits of Highly Effective People: Powerful Lessons in Personal Change,Stephen R. Covey,3,Have a central mission statement for your life that works like a thesis in an essay. Reflect on it. Don’t be afraid to steer your life according to it. Individual courses of action should be able to tie back to it. Bring some agency to the problem.
+24,Steve Jobs,Walter Isaacson,3,Passion. It is just all about passion. 
+25,Exhalation,Ted Chiang,3,It is both meaningless and unbelievably enticing to think about free will and its repercussions. And the 2nd law of thermodynamics is a real pain.
+26,"Elon Musk: Tesla, SpaceX, and the Quest for a Fantastic Future",Ashlee Vance,3,Overwhelming passion is an incredibly effective driving force – do everything you can to cultivate passion. 
+27,Letters from a Stoic,Seneca,3,"“But if you are looking on anyone as a friend when you do not trust him (or her) as you trust yourself, you are making a grave mistake, and have failed to grasp sufficiently the full force of true friendship.”"
+28,The Black Swan: The Impact of the Highly Improbable,Nassim Nicholas Taleb,3,The Black Swan is an effective counter to expected value thinking. You can take all the +EV bets you want and the only stable equilibrium is still going bust. 
+29,The Life You Can Save: Acting Now to End World Poverty,Peter Singer,3,"A single person can, and is perhaps morally bound in a utilitarian framework, to make a large difference with the global poor."
+30,Brave New World,Aldous Huxley,3,"The state can change society’s Nash equilibrium profoundly, so that it does not agree with today’s values. What values should be preserved? Is a society full of people on Soma a utopia or a dystopia?"
+31,"The Price of Peace: Money, Democracy, and the Life of John Maynard Keynes",Zachary D. Carter,3,It is possible to completely rethink the purpose and methods of government. 
+32,Why We're Polarized,Ezra Klein,3,People have evolved to be governed by their identities through in-group out-group association. Party politics has come to a head by cleanly sorting into two groups along many of the most important identities people have.
+33,Animal Farm,George Orwell,3,Self interested agents mixed with deceit can lead to almost universally undesirable outcomes.
+34,1984,George Orwell,3,"It is incredibly difficult to resist the 1984 future big brother state, or any well planned state regime probably, from within."
+35,On China,Henry Kissinger,3,China as an entity has always existed. Chinese exceptionalism is historically cultural – let the people come to them instead of reach out and preach. Constructive ambiguity does a lot of work for Kissinger.
+36,The Stand,Stephen King,3,Good and evil only exist relevant to moral frames. Contrasting worldviews must exist in society.
+37,Gang Leader for a Day: A Rogue Sociologist Takes to the Streets,Sudhir Venkatesh,3,"Incentives are everywhere and shape just about everything, even (perhaps especially) the guidelines and rules we use to live our lives."
+38,Scarcity: Why Having Too Little Means So Much,Sendhil Mullainathan,3,Slack is important in and of itself. Build it in to the design.
+39,"How to Measure Anything: Finding the Value of ""Intangibles"" in Business",Douglas W. Hubbard,3,"Put numbers on things, and carry confidence intervals. Identify what variable is driving the uncertainty and focus on refining that."
+40,Never Split the Difference: Negotiating As If Your Life Depended On It,Chris Voss,3,Learn to speak in the “late night FM DJ” voice. Work a negotiation into a collaboration by saying things like “how am I supposed to do that?”
+41,Do Androids Dream of Electric Sheep?,Philip K. Dick,3,"We’ll likely never be able to tell if androids have consciousness, how do we possibly decide if they deserve moral standing?"
+42,The Origin of Species,Charles Darwin,3,"Evolution is more accurately thought of as a filter, rather than a propulsive force. Confusing and complicated taxonomy (like what was used to justify small differences in specied pre-Darwin) is likely an indicator of a fundamental flaw in understanding."
+43,World Order,Henry Kissinger,3,"The concept of sovereign states and borders is relatively recent, established largely by the Peace of Westphalia in 1648. Cultural differences establish different goals for each modern state, and those need to be consulted when establishing a world order. "
+44,Life 3.0: Being Human in the Age of Artificial Intelligence,Max Tegmark,3,There should be more writing getting people stoked on inconceivable utopias.
+45,The Art of Solitude,Stephen Batchelor,3,Extended periods of solitude should be welcomed as a great way to achieve an open mind. And one day I need to try Ayahuasca.
+46,Player Piano,Kurt Vonnegut,3,"Early automated society, where ""managers and engineers"" are still working but nobody else is needed, will tend toward the inequitable without thorough preparation."
+47,A Promised Land,Barack Obama,3,It is really hard to be both an idealist and pragmatic in American democracy. Obama pulled these two things together pretty well and still accomplished far less than one would hope. This tendency to maintain status quo will likely pose problems for America as societal change follows an exponential trajectory. 
+48,Merchants of Doubt: How a Handful of Scientists Obscured the Truth on Issues from Tobacco Smoke to Global Warming,Naomi Oreskes,3,"Entities will act according to their best interests, because they must. This does not stop at blurring lines in science, as the same group of people did for the effects of smoking, acid rain, DDT, ozone layer, and climate science. Always ask who has a stake in the outcome."
+49,Slaughterhouse-Five,Kurt Vonnegut,3,"Make your life what you will, the universe is apathetic. So it goes."
+50,2034: A Novel of the Next World War,Elliot Ackerman,3,"When two parties both believe themselves to be dominant it only takes one quibble to set things into a terrifying positive feedback loop. Also, design for operations in a non-ideal state, rather than assuming ideal environment all the time."
+51,Stories of Your Life and Others,Ted Chiang,3,Our interpretation of the world is fundamentally intertwined with the human experience. What might we be missing out on?
+52,"The Code Breaker: Jennifer Doudna, Gene Editing, and the Future of the Human Race",Walter Isaacson,3,Leading individuals have a profound ability to shape the trajectory of a technology. It is probably very high impact to get in on the ground floor of emerging fields and keep ethical concerns at the forefront at the beginning. As a counter – once the ball is rolling it is very hard to stop. 
+53,Einstein: His Life and Universe,Walter Isaacson,3,"Einstein’s defining qualities were a mix of intelligence and curiosity. It is disconcerting how much time he spent doing “regular people stuff”, when his marginal minute of deep thought is probably worth a few lifetimes to society (assuming the marginal minute would be equally productive, which likely isn’t a good assumption). Time spent improving the efficiency and removing roadblocks for talents like Einstein seem high impact."
+54,Talking to Strangers: What We Should Know About the People We Don’t Know,Malcolm Gladwell,3,Even large actions can be heavily coupled to the environment. Take time and place into context when interacting with strangers.
+55,The Souls of Black Folk,W.E.B. Du Bois,3,The prose in this book is incredible. Asymptotic incrementalism is not the answer when trying to merge two groups.
+56,Nonviolent Communication: A Language of Life,Marshall B. Rosenberg,3,"Observe what is really happening, notice and identify your emotions about it, be explicit about asking for the needs driving that emotional response. I realize I am very poor at communicating in this way."
+57,Mister Fred,Jill Pinkwater,3,Challenge kids and let them surprise you.
+58,Kissinger,Walter Isaacson,3,"Kissinger comes across as the ultimate pragmatist. He plays the game theory well and understands the real desires of the states he is negotiating with. It is surprising how one (appointed, not elected) man’s ideals can sway so much."
+59,Impro: Improvisation and the Theatre,Keith Johnstone,3,Social interaction can be entirely practiced and improved upon. I should take improv classes.
+60,Siddhartha,Hermann Hesse,3,Experiences alone can lead to enlightenment.
+61,Breakfast of Champions,Kurt Vonnegut,3,"Maybe there is meaning in the chaos, maybe there isn’t, does it matter?"
+62,The Giver,Lois Lowry,3,We only live in the world we sense.
+63,Free Will,Sam Harris,3,"Well, we probably don’t have free will. Retribution for the sake of retribution doesn’t make sense."
+64,Lord of the Flies,William Golding,3,"Friendly, democratic civilization, as opposed to chaos and rule by power, is not to be taken for granted."
+65,The Kite Runner,Khaled Hosseini,3,Love and friendship takes on many different shapes.
+66,Outliers: The Story of Success,Malcolm Gladwell,3,"More effort should go into identifying and shaping the environment to lead to positive outcomes, rather than the direct pursuit. Work higher in the stack!"
+67,Foundation,Isaac Asimov,2,Good predictions of the future are powerful.
+68,Ender's Game,Orson Scott Card,2,"It is either difficult or impossible to assign an objective ""good guys vs bad guys"", but so easy to fall into the thinking that your guys are the good guys."
+69,Antifragile: Things That Gain from Disorder,Nassim Nicholas Taleb,2,"The antifragile concept is powerful, and weirdly ignored. This can be an illuminating lens applied to complex systems."
+70,Benjamin Franklin: An American Life,Walter Isaacson,2,"History is shaped by influential figures, especially at specific times/places. Franklin is a good example of a pragmatic and intellectual life that set a certain tone for the development of American society. "
+71,Poor Economics: A Radical Rethinking of the Way to Fight Global Poverty,"Abhijit V. Banerjee, Esther Duflo",2,"Poverty is deeply seated in circumstance, and relief is a many-faceted problem."
+72,To Kill a Mockingbird,Harper Lee,2,You never really understand a person until you consider things from his point of view
+73,The Way of Kings,Brandon Sanderson,2,"It can be really hard to see life through a different point of view, and doing so may have profound impacts on what is right and wrong."
+74,Good Economics for Hard Times: Better Answers to Our Biggest Problems,"Abhijit V. Banerjee, Esther Duflo",2,"Preferences are shaped by society, they aren’t magic. Trade and immigration are increasingly important as the world globalizes, and are hard problems."
+75,Stumbling on Happiness,Daniel Todd Gilbert,2,We are not good at predicting what will make us happy. Imagination works constantly to fill in gaps and make guesses and is not to always be trusted.
+76,"""Surely You're Joking, Mr. Feynman!"": Adventures of a Curious Character",Richard P. Feynman,2,Curiosity needs to be practiced consistently.
+77,Leonardo da Vinci,Walter Isaacson,2,Da Vinci’s real talent was observation and an undying curiosity about how the world worked.
+78,How to Read a Book: The Classic Guide to Intelligent Reading,Mortimer J. Adler,2,"Read books with purpose, and ideally in stages."
+79,The Catcher in the Rye,J.D. Salinger,2,"We grow up, all we can do is appreciate the path."
+80,Doing Good Better: How Effective Altruism Can Help You Make a Difference,William MacAskill,2,"Effective charities are effective, and philanthropy is a science worth studying."
+81,Waking Up: A Guide to Spirituality Without Religion,Sam Harris,2,Religion is found in all surviving societies because it provides an evolutionary advantage. There are benefits to common understandings and societal ritual. As we move away from theistic religion we don’t want to lose sight of what the purpose really was.
+82,The Art of Happiness,Dalai Lama XIV,2,Lasting happiness always comes from inside. Always.
+83,"The Great Stagnation: How America Ate All The Low-Hanging Fruit of Modern History, Got Sick, and Will (Eventually) Feel Better",Tyler Cowen,2,"We haven’t really begun to see the economic implications of the technological age. GDP growth due to digital revolution is not nearly where it likely could be, and it might take a “digital native” generation to change things."
+84,The Most Good You Can Do: How Effective Altruism Is Changing Ideas About Living Ethically,Peter Singer,2,"Effective Altruism is applied charity, and the utilitarian returns to charity take on a power law distribution."
+85,Red Rising,Pierce Brown,2,"Deeply hierarchical societies don’t seem like a good idea. In a society with stratification, all people will bring valuable and varied insight to governing given the opportunity."
+86,"Enlightenment Now: The Case for Reason, Science, Humanism, and Progress",Steven Pinker,2,"Objective metrics are all going in a positive direction for the median individual. Unfortunately, relative metrics seem to be the relevant yardstick. "
+87,12 Rules for Life: An Antidote to Chaos,Jordan B. Peterson,2,There is sufficient time in the day to take care of yourself and do things in the world. Taking care of yourself first will make you more effective with the rest of your pursuits by reinforcing the fact that you are in control of your actions. 
+88,The Gunslinger,Stephen King,2,Relentless pursuit of goals is a goal itself.
+89,Recursion,Blake Crouch,2,"There is nothing ""real"" about the past, collective memories are all that remain. "
+90,The Sirens of Titan,Kurt Vonnegut,2,"A purpose of human life, no matter who is controlling it, is to love whoever is around to be loved."
+91,Dune,Frank Herbert,2,"When religion and politics travel in the same cart, the riders believe nothing can stand in their way. Their movements become headlong - faster and faster and faster. They put aside all thoughts of obstacles and forget the precipice does not show itself to the man in a blind rush until it's too late."
+92,Klara and the Sun,Kazuo Ishiguro ,2,AI that doesn’t quickly become massively avilable AGI in the context of a capitalist society leads to pretty drastic wealth and opportunity inequality.
+93,The Fountainhead,Ayn Rand,2,Do what you are passionate about.
+94,Mother Night,Kurt Vonnegut,2,"We are what we pretend to be, so we must be careful about what we pretend to be"
+95,Archaeology from Space: How the Future Shapes Our Past,Sarah Parcak,2,"There is a lot of interesting archaelogy to be done out there, but funding is limited because it is largely  a public good. Meta-work, like answering the “so what” question, is less fun and probably should receive more attention than the data collection. "
+96,A Madman Dreams of Turing Machines,Janna Levin,2,"Godel and Turing demonstrate how blurred the line between minds and computers can be, and what incredible variety minds can show."
+97,The Name of the Wind,Patrick Rothfuss,2,Storytelling is a good skill to have and should be practiced.
+98,The Martian,Andy Weir,2,"Be resourceful, learn to make the best with what you have."
+99,The Count of Monte Cristo,Alexandre Dumas,2,Revenge is not worthwhile.
+100,The Old Man and the Sea,Ernest Hemingway,2,Seeing things through for the sake of seeing things through can be simultaneously honorable and foolish. 
+101,How to Win Friends and Influence People,Dale Carnegie,2,Smile and really listen to people. This book might be a bit dated.
+102,My Brilliant Friend,Elena Ferrante,2,"We are unbelievably fortunate to grow up in rich western society. The violence and family politics present in this poor Italian city is not even imaginable, and maybe that gives us hope for economic growth to usher in an even less violent future."
+103,The Windup Girl,Paolo Bacigalupi,2,Politics is ugly. Never doubt what small men will do for great power.
+104,Skin in the Game: Hidden Asymmetries in Daily Life,Nassim Nicholas Taleb,1,"When you want to care about something – put some skin in the game. When you want to believe what someone has to say – check to make sure they have some skin in the game. Also, one Taleb book is probably enough."
+105,Land of Big Numbers,Te-Ping Chen,1,"It all comes down to local incentives shaped by a complex mix of environmental, social, and civic engagements. "
+106,Where the Crawdads Sing,Delia Owens,1,Spending all your time immersed and observant in an environment leads to deep understanding.
+107,The Moral Landscape: How Science Can Determine Human Values,Sam Harris,1,Morality can exist outside of religion – just adopt a moral framework and do the math.
+108,Harry Potter and the Methods of Rationality,Eliezer Yudkowsky,1,Statistical thinking and experimentation can be applied to everyday things.
+109,The Everlasting Man,G.K. Chesterton,1,"Evidence can often be interpreted (or at the very least, ignored) in any way you wish. I unfortunately found myself unable to consider Chesterton’s arguments outside of my preconceptions on religion."
+110,Fight Club,Chuck Palahniuk,1,"Chaos has a place, but things can get out of control quickly."
+111,Blithe Tomato,Mike Madison,1,Learn to find the beauty in simple things. 
+112,A Confederacy of Dunces,John Kennedy Toole,1,Empty whining about things doesn’t help anything.
+113,The Metamorphosis,Franz Kafka,1,Making people give up their life to help you is pretty selfish.
