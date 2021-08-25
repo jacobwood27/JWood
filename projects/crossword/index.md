@@ -1,11 +1,13 @@
 @def title = "Crossword"
 
-My friends have made a bunch of incredible crosswords over the years. I have had this idea for a crossword theme for a long time and have finally put it together. This page details how the crossword was made!
+My friends have made a bunch of incredible crosswords over the years. I have had this idea for a crossword theme for a long time and finally put it together.
 
-Before reading any spoilers head on over to [https://david.vaskos.com/crossword/7](https://david.vaskos.com/crossword/7) to do the crossword online (or print out a .pdf version available [here](/projects/crossword/crossword.pdf)). It is mostly free of inside jokes.
+Before reading any spoilers head on over to [https://david.vaskos.com/crossword/7](https://david.vaskos.com/crossword/7) (thanks David!) to do the crossword online or print out a .pdf version available [here](/projects/crossword/crossword.pdf). It is mostly free of inside jokes.
 
 ## Board Design
-\fig{/projects/crossword/crossword_board.png}
+@@im-100
+\fig{/projects/crossword/p2_blank.svg}
+@@
 
 ### Inspiration
 The theme of the puzzle is roughly "Life" and the intent was to draw together [John Conway's *Game of Life*](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) with [Douglas Adams' *Answer to the Ultimate Question of Life, The Universe, and Everything*](https://en.wikipedia.org/wiki/Phrases_from_The_Hitchhiker%27s_Guide_to_the_Galaxy#Answer_to_the_Ultimate_Question_of_Life,_the_Universe,_and_Everything_(42)). 
@@ -99,14 +101,73 @@ More generations of evolution seemed more exciting to me, so I restricted the op
 \fig{/projects/crossword/20_opts.gif}
 @@
 
-Of these, I selected the bottom right solution as the most "crossword-looking". I then added in additional squares to make the board-filling problem tractable, making sure to only add them in places that wash out in three generations of propagation. The purple squares in the image below were added to create the final board ready for filling.
+Of these, I selected the bottom right solution as the most "crossword-looking" starting point for the puzzle layout. 
+
+<!-- Of these, I selected the bottom right solution as the most "crossword-looking". I then added in additional squares to make the board-filling problem tractable, making sure to only add them in places that wash out in three generations of propagation. The purple squares in the image below were added to create the final board ready for filling. In reality they were added iteratively with the board filling to accommodate certain clues.
 @@im-100
 \fig{/projects/crossword/added_squares.png}
-@@
+@@ -->
 
 
 ## Board Fill
 
-The part of the board that was most difficult to fill in was the lower-center and middle-right. As a result, a few clues answers stand out as needing updates. 
+To being the filling process I identified the theme answers I wanted to incorporate:
+ - JOHNCONWAY
+ - DEEPTHOUGHT
+ - THISPUZZLE
+ - SEVENPOINTFIVEMILLION
+ - LIFE
+ - THE UNIVERSE
+ - EVERYTHING
+ - THREE
+
+The board filling was done with help from [QXW](https://www.quinapalus.com/qxw.html). QXW allows a user to import gigantic lists of words and then attempts to solve the remaining puzzle while you type in your desired answers. QXW will suggest answers that fit with the current layout. The most helpful feature is the red square that appears in a box to show you when you are running low on possible letters that make sense there (or when you will have to get creative with an answer).
+
+As the puzzle was filled out I iterated on the location of the black squares surrounding the resulting 42.
+
+The first attempt may have ultimately resulted in a better puzzle. I compromised the clean look of the simulated puzzle to produce a solution that looked more crossword like.
+@@im-100
+\fig{/projects/crossword/puz1.svg}
+@@
+
+But ultimately could not live with the fact that the 42 did not come out standing alone.
+@@im-100
+\fig{/projects/crossword/123_old.gif}
+@@
+
+So I went back to the original layout and took care to only add additional black squares in patterns that would wash out in three generations. The final completed puzzle has a few sore spots but ultimately I am pretty happy with how it turned out.
+
+@@im-100
+\fig{/projects/crossword/puz2.svg}
+@@
+@@im-100
+\fig{/projects/crossword/123_p2.gif}
+@@
 
 ## Clue Writing
+
+Numbering and clue writing was done manually in [LibreOffice Calc](https://www.libreoffice.org/discover/calc/) because I could not get QXW to number the single letter answers but thought they would be interesting to write clues for. 
+
+Here are a few of my favorite clues:
+ - 22, 23 Across and 14,22 Down: 23-Across + 14-Down + 22-Down, to Caesar - C+CDIV+MXI=MDXV (100+404+1011=1515)
+    - This one took forever to get right
+ - 41 Across: Children and Teens - EVENTUALADULTS
+ - 52 Across: The greenness of a bowl of a greens - SALADHUE
+ - 94 Across: Cause of financial strain for millennials - AVOCADOES
+ - 98 Across: Half the cost of a large purchase - ARM
+ - 145 Across: Long term dwelling not pictured on Google Earth (Abbr.) - ISS
+ - 15 Down: Theodore, after changing his name - EXTED
+ - 87 Down: Hollywood actor/actress producers? - LAIMPLANTS (a little forced)
+ - 97 Down: Someone who produces presents that are difficult to unwrap - OVERTAPER
+
+
+## Ingredients
+Thank you to the following software projects that made the creation of this puzzle possible:
+ - [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
+ - [Golly](http://golly.sourceforge.net/) - For interacting with Game of Life boards
+ - [Logic Life Search](https://github.com/OscarCunningham/logic-life-search) - for posing the SAT problem for Conway's Game of Life 
+ - [lingeling](http://fmv.jku.at/lingeling/) - for solving the SAT problem (and plingeling for a parallel solver)
+ - [QXW](https://www.quinapalus.com/qxw.html) - for filling in the puzzle
+ - [Peter Broda's WordList](https://peterbroda.me/crosswords/wordlist/) - for QXW to use in word suggestion
+ - [david.vaskos.com](https://david.vaskos.com/crossword/7) - for hosting the puzzle and providing an excellent interface
+
