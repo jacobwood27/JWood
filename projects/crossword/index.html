@@ -1,0 +1,45 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/github.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=stylesheet  href="/css/basic.css"> <link rel=icon  href="/assets/favicon.png"> <title>Crossword</title> <header> <div class=blog-name ><a href="/">Jacob Wood</a></div> <nav> <ul> <li><a href="/projects/">Projects</a> <li><a href="/projects/books/">Books</a> <li><a href="/now">Now</a> </ul> <img src="/assets/hamburger.svg" id=menu-icon > </nav> </header> <div class=franklin-content ><p>My friends have made a bunch of incredible crosswords over the years. I have had this idea for a crossword theme for a long time and have finally put it together. This page details how the crossword was made&#33;</p> <p>Before reading any spoilers head on over to <a href="https://david.vaskos.com/crossword/7">https://david.vaskos.com/crossword/7</a> to do the crossword online &#40;or print out a .pdf version available <a href="/projects/crossword/crossword.pdf">here</a>&#41;. It is mostly free of inside jokes.</p> <h2 id=board_design ><a href="#board_design" class=header-anchor >Board Design</a></h2> <img src="/projects/crossword/crossword_board.png" alt=""> <h3 id=inspiration ><a href="#inspiration" class=header-anchor >Inspiration</a></h3> <p>The theme of the puzzle is roughly &quot;Life&quot; and the intent was to draw together <a href="https://en.wikipedia.org/wiki/Conway&#37;27s_Game_of_Life">John Conway&#39;s <em>Game of Life</em></a> with <a href="https://en.wikipedia.org/wiki/Phrases_from_The_Hitchhiker&#37;27s_Guide_to_the_Galaxy#Answer_to_the_Ultimate_Question_of_Life,_the_Universe,_and_Everything_&#40;42&#41;">Douglas Adams&#39; <em>Answer to the Ultimate Question of Life, The Universe, and Everything</em></a>. </p> <p>The theme of the puzzle, to give it all away, is that when the black spaces on the board are simulated in <em>The Game of Life</em> the meaning of life should emerge.</p> <h3 id=ideal_board ><a href="#ideal_board" class=header-anchor >Ideal Board</a></h3> <p>The ideal game board in my mind would have these qualities:</p> <ul> <li><p>When entered into the <em>Game of Life</em> and simulated for X generations the number 42 should appear</p> <li><p>Look initially like a typical 21x21 Sunday crossword</p> <li><p>Support a few long answers</p> <li><p>NYT Crossword Legal</p> <ul> <li><p>Rotationally symmetric</p> <li><p>No answers shorter than 3 letters</p> </ul> </ul> <p>We unfortunately couldn&#39;t get all the way there, but we got close and managed to meet the important ones&#33;</p> <h3 id=board_exploration ><a href="#board_exploration" class=header-anchor >Board Exploration</a></h3> <p>To complete the board design we need to find a way to search through the design space, which is huge &#40;there are 2^&#40;21&#42;21&#41; &#61; 5.7&#42;10^132 possible boards&#41;, for a specific pattern that results in the number 42 drawn in black squares. </p> <p><em>The Game of Life</em> is meant to simulate a complex system, where local forward propagation is easy but it is inherently difficult to solve the problem in reverse or make deductions from global structure. Fortunately it is not necessary to brute-force sweep the design space for suitable starting grids, instead we can turn to some tools that the vibrant <a href="https://www.conwaylife.com/forums/"><em>Game of Life</em> community</a> has put together. </p> <p><a href="https://gitlab.com/OscarCunningham/logic-life-search">Logic Life Search</a> &#40;lls&#41; is a Python program that searches for patterns in cellular automata. It takes in a starting pattern definition and a final pattern definition and translates the automata propagation into a Boolean satisfiability problem &#40;SAT&#41;. We can then use a freely available SAT solver &#40;like <a href="http://fmv.jku.at/lingeling/">lingeling</a> or <a href="https://github.com/arminbiere/cadical">cadical</a>&#41; to search for solutions to the SAT problem.</p> <p>We can also make use of <a href="http://golly.sourceforge.net/">Golly</a> to visualize solutions and get a feel for the board layouts.</p> <p>The initial input to lls should be a wide open 21x21 board, which looks like:</p> <pre><code class="plaintext hljs">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 * * * * * * * * * * * * * * * * * * * * * 0
+0 * * * * * * * * * * * * * * * * * * * * * 0
+0 * * * * * * * * * * * * * * * * * * * * * 0
+0 * * * * * * * * * * * * * * * * * * * * * 0
+0 * * * * * * * * * * * * * * * * * * * * * 0
+0 * * * * * * * * * * * * * * * * * * * * * 0
+0 * * * * * * * * * * * * * * * * * * * * * 0
+0 * * * * * * * * * * * * * * * * * * * * * 0
+0 * * * * * * * * * * * * * * * * * * * * * 0
+0 * * * * * * * * * * * * * * * * * * * * * 0
+0 * * * * * * * * * * * * * * * * * * * * * 0
+0 * * * * * * * * * * * * * * * * * * * * * 0
+0 * * * * * * * * * * * * * * * * * * * * * 0
+0 * * * * * * * * * * * * * * * * * * * * * 0
+0 * * * * * * * * * * * * * * * * * * * * * 0
+0 * * * * * * * * * * * * * * * * * * * * * 0
+0 * * * * * * * * * * * * * * * * * * * * * 0
+0 * * * * * * * * * * * * * * * * * * * * * 0
+0 * * * * * * * * * * * * * * * * * * * * * 0
+0 * * * * * * * * * * * * * * * * * * * * * 0
+0 * * * * * * * * * * * * * * * * * * * * * 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</code></pre> <p>And the desired end state is a large text 42, which looks like:</p> <pre><code class="plaintext hljs">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 1 0 0 0 0 1 0 0 0 0 0 1 1 1 1 1 1 0 0 0
+0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0
+0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0
+0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0
+0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0
+0 0 0 1 1 1 1 1 1 0 0 0 0 0 1 1 1 1 1 1 0 0 0
+0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 1 1 1 1 1 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</code></pre> <p>The call to lls was wrapped in a Python script and allowed to run in parallel over a few days. Results were easily found for 1, 2, and 3 generations in the past. Results for 4 generations in the past &#40;and further&#41; were not uncovered in the maximum specified 100 hours of solve time. </p> <p>Here is an example of boards that work in 1, 2, and 3 generations:</p> <div class=im-100 ><img src="/projects/crossword/123.gif" alt=""></div> <p>More generations of evolution seemed more exciting to me, so I restricted the options to the 20 unique 3 generation boards that the solver produced:</p> <div class=im-100 ><img src="/projects/crossword/20_opts.gif" alt=""></div> <p>Of these, I selected the bottom right solution as the most &quot;crossword-looking&quot;. I then added in additional squares to make the board-filling problem tractable, making sure to only add them in places that wash out in three generations of propagation. The purple squares in the image below were added to create the final board ready for filling.</p> <div class=im-100 ><img src="/projects/crossword/added_squares.png" alt=""></div> <h2 id=board_fill ><a href="#board_fill" class=header-anchor >Board Fill</a></h2> <p>The part of the board that was most difficult to fill in was the lower-center and middle-right. As a result, a few clues answers stand out as needing updates. </p> <h2 id=clue_writing ><a href="#clue_writing" class=header-anchor >Clue Writing</a></h2> <div class=page-foot > <div class=copyright > Last modified: August 25, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div>
