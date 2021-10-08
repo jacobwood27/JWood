@@ -1,0 +1,53 @@
+@def title = "Inklings"
+
+Here are some thoughts I have had that I hope to flesh out. 
+
+- Teach for America but business practices 3rd world
+- Progress studies
+- Land on an asteroid, spread out solar panels, mine material and use solar energy to chuck it to divert
+- Energy efficiency of catapult/trebuchet
+- compounding returns to charity
+- African rail network
+- Consultancy with slots carved out in multiple influential companies. Consultancy hires people that want to do good and have skills but don't know where they will best be used. Company places all the employees into slots for (1yr?) stints. Leftover employees work to help reallocate next year's slots. Partner companies benefit from consultants that work for low pay, company is sustained by delta between employee pay and partner company compensation, employees benefit from having someone that is thinking hard about resource allocations use them as a pawn. Could be an answer for the "What to do with People?" post
+- Every podcast I've ever listened to, ranked. One takeaway point from each.
+- “I want death to find me planting my cabbages, worrying about neither myself or my imperfect garden”
+- What fraction of the population should be utility monsters?
+- Long term investment in private college - pay people to go to school together and then get fraction of earnings over next 10 years. Maybe fraction ramps down.
+- Interests Web from scraping Facebook interests? - you like frisbee and The Power Broker, maybe you should try this blog
+- Blog web by scraping blogrolls?
+- List out "Action Items" that come up in podcasts for people to take on
+- Parse Sprouts ad and make meal list
+- How should you pick squares in superbowl pool?
+- How to come up with new ideas: generate a random name and decide most generous interpretation of what that company would do
+    - Above, run by GPT3
+- bradyneal causal-inference-course
+- GPT3 to write customer service reviews
+- Perceived vs algorithmic utility wrt repugnant conclusion
+- Write a personal constitution/ mission statement
+- Psychedelic setting
+- ML split taker at track
+- Neuron seconds per calorie or cortex neuron seconds per calorie
+- Make your own children’s book photo booth
+- Story about discovery of "neural resonance" where brain is directly stimulated for peak euphoria but keeps blowing up
+- Shawn birthday present rope cut to cornhole length
+- Prediction market wrapped assets
+- Lobbying for laws to be enacted with statistical data in mind
+    - Experimental lobbyist. Randomness advocate.
+- "bliss farming" companies collect experiences and market them with words similar to a flavor profile. Public can buy and consume experience.
+- Why is offense seemingly easier then defense vis a vis weapons? Can we make an analogy to sports? How do defenses beat offenses when defense has to be reactionary?
+- Optimal family size for successful children
+- Altruism by pushing got more birth
+- Experimentation advocate
+- How does randomness in Gene combination working?
+- Do football players get paid for wins or Twitter mentions?
+    - Should they?
+- Stability of top fortune 500 companies over time as evidence of lock in
+- Monopolies give slack for social change
+- The benefits of tacking on to bills
+- Free template for pickup sports checkins
+- Sci fi screenplay for Bliss farmers?
+- Neural networks that is optimized for lossless encoding of a book
+- Fitness of "thought leaders" in a social/political/economic environment is not aligned with positive societal change
+    - How can the supporting infrastructure be arranged to align those things?
+    - Similar to Scott Sumner fantasy intellectuals?
+- 
