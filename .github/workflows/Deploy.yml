@@ -13,7 +13,7 @@ jobs:
       with:
         persist-credentials: false
     - name: Download latest books csv
-      run:  curl https://raw.githubusercontent.com/jacobwood27/books/main/books_show.csv > /projects/books/books_show.csv
+      run:  curl https://raw.githubusercontent.com/jacobwood27/books/main/books_show.csv > projects/books/books_show.csv
     # NOTE: Python is necessary for the pre-rendering (minification) step
     - name: Install python
       uses: actions/setup-python@v2
