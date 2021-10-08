@@ -8,12 +8,26 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
+    
     - name: Checkout
       uses: actions/checkout@v2
       with:
         persist-credentials: false
+        
     - name: Download latest books csv
       run:  curl https://raw.githubusercontent.com/jacobwood27/books/main/books_show.csv > projects/books/books_show.csv
+    - name: Commit this csv
+      run: |
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add projects/books/books_show.csv
+        git commit -am "Automated update"
+    - name: GitHub Push
+      uses: ad-m/github-push-action@v0.6.0
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: main
+        
     # NOTE: Python is necessary for the pre-rendering (minification) step
     - name: Install python
       uses: actions/setup-python@v2
@@ -26,6 +40,7 @@ jobs:
       uses: julia-actions/setup-julia@v1
       with:
         version: 1.6
+        
     # NOTE
     #   The steps below ensure that NodeJS and Franklin are loaded then it
     #   installs highlight.js which is needed for the prerendering step
@@ -39,6 +54,7 @@ jobs:
             using NodeJS; run(`$(npm_cmd()) install highlight.js`);
             using Franklin;
             optimize()'
+            
     - name: Build and Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
