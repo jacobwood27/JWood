@@ -4,6 +4,8 @@ on:
     branches:
       - main
       - master
+  schedule:
+      - cron: '0 0 * * *' # Once per day at midnight
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
