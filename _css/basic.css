@@ -58,7 +58,7 @@ header .blog-name a {
 
 header li a:hover {
   color: black;
-  border-bottom: 2px solid black;
+  /* border-bottom: 2px solid black; */
 }
 
 #menu-icon {
