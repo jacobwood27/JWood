@@ -15,6 +15,8 @@ In a similar vein, I've attempted to keep a list of scored and ranked books I've
 * 2 - Good, but would not read again
 * 1 - Would not recommend
 
-\tableinput{}{/projects/books/books_show.csv}
+~~~
+<iframe frameborder="1" height=1000 width="100%" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQZ12YmqX9mOhZQha4MIRYFbTfT9hL79GhrNmMtJQRb3KSo-XmHRwFKYzEebJXoBjzN4NISAoFUEBKJ/pubhtml?gid=0&amp;single=true&amp;widget=false&amp;chrome=false&amp;headers=false"></iframe>
+~~~
 
 @@

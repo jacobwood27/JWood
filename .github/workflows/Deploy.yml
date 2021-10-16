@@ -4,8 +4,7 @@ on:
     branches:
       - main
       - master
-  schedule:
-      - cron: '0 0 * * *' # Once per day at midnight
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -15,20 +14,6 @@ jobs:
       uses: actions/checkout@v2
       with:
         persist-credentials: false
-        
-    - name: Download latest books csv
-      run:  curl https://raw.githubusercontent.com/jacobwood27/books/main/books_show.csv > projects/books/books_show.csv
-    - name: Commit this csv
-      run: |
-        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        git add projects/books/books_show.csv
-        git commit --allow-empty -am "Automated update"
-    - name: GitHub Push
-      uses: ad-m/github-push-action@v0.6.0
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: main
         
     # NOTE: Python is necessary for the pre-rendering (minification) step
     - name: Install python
