@@ -1,6 +1,6 @@
 @def title = "Inklings"
 
-Here are some thoughts I have had that I hope to flesh out. 
+Here are some notes I have jotted down that I hope to flesh out. 
 
 - Teach for America but business practices 3rd world
 - Progress studies
@@ -17,7 +17,6 @@ Here are some thoughts I have had that I hope to flesh out.
 - Blog web by scraping blogrolls?
 - List out "Action Items" that come up in podcasts for people to take on
 - Parse Sprouts ad and make meal list
-- How should you pick squares in superbowl pool?
 - How to come up with new ideas: generate a random name and decide most generous interpretation of what that company would do
     - Above, run by GPT3
 - bradyneal causal-inference-course
@@ -33,21 +32,21 @@ Here are some thoughts I have had that I hope to flesh out.
 - Prediction market wrapped assets
 - Lobbying for laws to be enacted with statistical data in mind
     - Experimental lobbyist. Randomness advocate.
-- "bliss farming" companies collect experiences and market them with words similar to a flavor profile. Public can buy and consume experience.
+- Fiction short story about "bliss farming" companies collect experiences and market them with words similar to a flavor profile. Public can buy and consume experience. 
 - Why is offense seemingly easier then defense vis a vis weapons? Can we make an analogy to sports? How do defenses beat offenses when defense has to be reactionary?
 - Optimal family size for successful children
-- Altruism by pushing got more birth
-- Experimentation advocate
-- How does randomness in Gene combination working?
+- Utility created by lobbying for higher birthrates
+- How does randomness in gene combination work?
 - Do football players get paid for wins or Twitter mentions?
-    - Should they?
+    - What should they get paid for?
 - Stability of top fortune 500 companies over time as evidence of lock in
 - Monopolies give slack for social change
 - The benefits of tacking on to bills
 - Free template for pickup sports checkins
-- Sci fi screenplay for Bliss farmers?
 - Neural networks that is optimized for lossless encoding of a book
+    - Are there data compression schemes that do this?
 - Fitness of "thought leaders" in a social/political/economic environment is not aligned with positive societal change
     - How can the supporting infrastructure be arranged to align those things?
     - Similar to Scott Sumner fantasy intellectuals?
-- 
+- MIT 18.404J - Theory of Computation
+- Catherine Project
