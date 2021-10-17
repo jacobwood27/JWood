@@ -65,6 +65,8 @@ header li a:hover {
   display: none;
 }
 
+
+
 @media (max-width: 480px) {
   header {
     padding-left: 6%;
@@ -103,6 +105,13 @@ medium display: nav goes under name
   nav {
     width: 100%;
   }
+
+  .books-page {
+    width: 100vw;
+    left: 0%;
+    margin-left: 0;
+  }
+  
 }
 
 /*
@@ -189,14 +198,22 @@ table tbody tr td {
   border: 1px solid lightgray;
 }
 
+
+.im-100 {text-align: center;}
+.im-100 img {
+    padding: 0;
+    width: 100%;
+}
+
 .books-page {
   width: 60vw;
   left: 50%;
   margin-left: -10vw;
 }
 
-.im-100 {text-align: center;}
-.im-100 img {
-    padding: 0;
-    width: 100%;
+.full-width {
+  width: 80vw;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
