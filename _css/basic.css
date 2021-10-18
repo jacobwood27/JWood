@@ -198,11 +198,18 @@ table tbody tr td {
   border: 1px solid lightgray;
 }
 
-
 .im-100 {text-align: center;}
 .im-100 img {
     padding: 0;
     width: 100%;
+}
+
+.im-60 {text-align: center;}
+.im-60 img {
+    padding: 0;
+    padding-left: 20%;
+    padding-right: 20%;
+    width: 60%;
 }
 
 .books-page {
