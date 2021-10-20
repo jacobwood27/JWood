@@ -11,4 +11,4 @@ Hello. Here are some things I have made.
 - [Family Podcasts](/projects/podcasts)
 - [Wood Home Videos](/projects/home_videos)
 - [Fantasy Football Results Visualization](/projects/ff_viz)
-- [Birdie Brigade Map](/projects/bb_map)
+- [Birdie Brigade Map](/projects/birdie_brigade)
