@@ -1,0 +1,117 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/github.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=stylesheet  href="/css/basic.css"> <link rel=icon  href="/assets/favicon.png"> <title>Birdie Brigade</title> <header> <div class=blog-name ><a href="/">Jacob Wood</a></div> <nav> <ul> <li><a href="/projects/">Projects</a> <li><a href="/projects/books/">Books</a> <li><a href="/projects/inklings/">Inklings</a> <li><a href="/now">Now</a> </ul> <img src="/assets/hamburger.svg" id=menu-icon > </nav> </header> <div class=franklin-content ><p>One of the great joys in my life is playing golf with my father. Golf can be a great time, especially when you are playing well. Unfortunately, we don&#39;t play as often as we have in the past and this generally leads to a disappointing scorecard. Instead of focusing on the totaled up score, which can be spoiled with a single poor hole, we now chase birdies. We count a course as &quot;checked off&quot; if at least one of our group members birdies a single hole. The goal is to check off all the public golf courses in San Diego. Naturally, this feat should be tracked by a piece of wall art. This project describes the design and build of the &quot;Birdie Brigade&quot; map gifted to my father as a Christmas present in 2019.</p> <p>Picture of welcome sign at the wedding:</p> <div class=im-100 ><img src="/projects/superbowl_squares/sb_squares.jpg" alt=""></div> <h2 id=courses ><a href="#courses" class=header-anchor >Courses</a></h2> <p>The courses selected were all 18 hole public golf courses listed on the <a href="https://www.sandiego.org/explore/things-to-do/sports/golf/san-diego-golf-courses.aspx">San Diego County Website</a>. The addresses were pulled directly from Google Maps.</p> <table><tr><th align=right ><strong>Course Name</strong><th align=right ><strong>Address</strong><tr><td align=right >Coronado Municipal Golf Course<td align=right >2000 Visalia Row, Coronado, CA 92118<tr><td align=right >Balboa Park Golf Course<td align=right >2600 Golf Course Dr, San Diego, CA 92102<tr><td align=right >Carlton Oaks Golf Course<td align=right >9200 Inwood Dr, Santee, CA 92071<tr><td align=right >Steele Canyon Golf Club<td align=right >3199 Stonefield Dr, Jamul, CA 91935<tr><td align=right >Sycuan Casino and Golf Resort<td align=right >3007 Dehesa Rd, El Cajon, CA 92019<tr><td align=right >Barona Creek Golf Club<td align=right >1932 Wildcat Canyon Rd, Lakeside, CA 92040<tr><td align=right >Borrego Springs Resort Golf Club &amp; Spa<td align=right >1112 Tilting T Dr, Borrego Springs, CA 92004<tr><td align=right >Cottonwood - Rancho San Diego<td align=right >3121 Willow Glen Dr, El Cajon, CA 92019<tr><td align=right >Mission Trails Golf Course<td align=right >7380 Golfcrest Pl, San Diego, CA 92119<tr><td align=right >Rams Hill Golf Club<td align=right >1881 Rams Hill Rd, Borrego Springs, CA 92004<tr><td align=right >Warner Springs Ranch<td align=right >31652 Hwy 79, Warner Springs, California 92086<tr><td align=right >Torrey Pines Golf Course<td align=right >11480 N Torrey Pines Rd, La Jolla, CA 92037<tr><td align=right >The Crossings at Carlsbad<td align=right >5800 The Crossings Dr, Carlsbad, CA 92008<tr><td align=right >The Grand Golf Club at Fairmont Grand Del Mar<td align=right >5200 Grand Del Mar Way, San Diego, CA 92130<tr><td align=right >Aviara Golf Club &amp; Resort<td align=right >7447 Batiquitos Drive, Carlsbad. CA 92011<tr><td align=right >Oceanside Golf Course<td align=right >825 Douglas Dr, Oceanside, CA 92058<tr><td align=right >Maderas Golf Club<td align=right >17750 Old Coach Rd, Poway, CA 92064<tr><td align=right >Rancho Bernardo Inn Golf Resort<td align=right >17550 Bernardo Oaks Dr, San Diego, CA 92128<tr><td align=right >Boulder Oaks Golf Club<td align=right >10333 Meadow Glen Way E, Escondido, CA 92026<tr><td align=right >Carmel Mountain Ranch Golf Course<td align=right >14050 Carmel Ridge Rd, San Diego, CA 92128<tr><td align=right >Castle Creek Country Club<td align=right >8797 Circle R Dr, Escondido, CA 92026<tr><td align=right >Eagle Crest Golf Course<td align=right >2492 Old Ranch Rd, Escondido, CA 92027<tr><td align=right >Mt. Woodson Golf Course<td align=right >16422 N Woodson Dr, Ramona, CA 92065<tr><td align=right >Pala Mesa Golf Resort<td align=right >2001 Old Hwy 395, Fallbrook, CA 92028<tr><td align=right >San Vicente Golf<td align=right >24157 San Vicente Rd, Ramona, CA 92065<tr><td align=right >The Vineyard Golf Course<td align=right >925 San Pasqual Rd, Escondido, CA 92025<tr><td align=right >Twin Oaks Golf Course<td align=right >1425 N Twin Oaks Valley Rd, San Marcos, CA 92069<tr><td align=right >Bonita Golf Club<td align=right >5540 Sweetwater Rd, Bonita, CA 91902<tr><td align=right >Chula Vista Municipal Golf Course<td align=right >4475 Bonita Rd, Bonita, CA 91902<tr><td align=right >Oaks North Golf Course<td align=right >12602 Oaks N Dr, San Diego, CA 92128</table> <p>Here they are plotted on a <a href="https://www.easymapmaker.com/map/7106b86e4a5ea165b3bdf0e471dc85fa">map</a>: <iframe width="100%" height=600  frameborder=0  scrolling=no  marginheight=0  marginwidth=0  src="https://www.easymapmaker.com/map/7106b86e4a5ea165b3bdf0e471dc85fa"> </iframe> We wish things were a little more evenly spread, but some creative gerrymandering never hurt anyone.</p> <h2 id=making_the_map ><a href="#making_the_map" class=header-anchor >Making the Map</a></h2> <h3 id=gerrymandering ><a href="#gerrymandering" class=header-anchor >Gerrymandering</a></h3> <p>Our goal is to split the county up into mutually exclusive and collectively exhaustive puzzle pieces, each one containing a single golf course. Ideally the pieces would not be too weirdly shaped or disproportionally sized &#40;spoiler: not going to happen&#41;.</p> <p>The county border is from the <a href="https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.2019.html">US Census Cartographic Database</a> and the haphazard slicing is all done in <a href="https://www.gimp.org/">Gimp</a>.</p> <div class=im-100 ><img src="/projects/birdie_brigade/gerrymandered.png" alt=""></div> <p>We then threshold out just the borders and trace the path as a vector image in Inkscape for some nice clean lines:</p> <div class=im-100 ><img src="/projects/birdie_brigade/skeleton_big2-fs8.png" alt=""></div> <p>There are some big puzzle pieces in there. For fun, let&#39;s see how poorly we did. We can segment the image and then count the number of pixels for each color as a way to measure the relative land area of each piece:</p> <div class=im-100 ><img src="/projects/birdie_brigade/piece_area_bar.png" alt=""></div> <p>That does not look great, but context is everything. We can use the <a href="https://en.wikipedia.org/wiki/Gini_coefficient">Gini Coefficient</a>, frequently used to express the wealth inequality within a population, to get a sense of how unequal our area split is. </p> <pre><code class="julia hljs"><span class=hljs-keyword >function</span> gini(Y) <span class=hljs-comment >#https://en.wikipedia.org/wiki/Gini_coefficient</span>
+    n = length(Y)
+    <span class=hljs-number >2</span> * sum([i * y <span class=hljs-keyword >for</span> (i,y) <span class=hljs-keyword >in</span> enumerate(Y)]) / n / sum(Y) - (n + <span class=hljs-number >1</span>)/n
+<span class=hljs-keyword >end</span>
+
+<span class=hljs-comment >#Data from pixel count</span>
+Y =  [  <span class=hljs-number >652035</span>, <span class=hljs-number >85537</span>, <span class=hljs-number >68347</span>, <span class=hljs-number >132239</span>, <span class=hljs-number >148672</span>, 
+        <span class=hljs-number >144864</span>, <span class=hljs-number >58396</span>, <span class=hljs-number >87449</span>, <span class=hljs-number >146416</span>, <span class=hljs-number >109556</span>, 
+        <span class=hljs-number >175960</span>, <span class=hljs-number >95408</span>, <span class=hljs-number >22489</span>, <span class=hljs-number >48258</span>, <span class=hljs-number >34507</span>, 
+        <span class=hljs-number >57059</span>, <span class=hljs-number >129303</span>, <span class=hljs-number >61193</span>, <span class=hljs-number >164995</span>, <span class=hljs-number >336881</span>, 
+        <span class=hljs-number >350866</span>, <span class=hljs-number >63771</span>, <span class=hljs-number >50841</span>, <span class=hljs-number >852818</span>, <span class=hljs-number >609101</span>, 
+        <span class=hljs-number >507403</span>, <span class=hljs-number >296592</span>, <span class=hljs-number >543643</span>, <span class=hljs-number >726209</span>, <span class=hljs-number >2298115</span>]
+        
+gini(sort!(Y))</code></pre> <pre><code class="julia hljs"><span class=hljs-number >0.5847794379088993</span></code></pre>
+<p>A suitable comparison is probably the distribution of county area within state lines. The <a href="https://www.census.gov/library/publications/2011/compendia/usa-counties-2011.html#LND">US Census website</a> makes this data &#40;as of 2011&#41; easily available and encoded in column LND110210D of <a href="https://www2.census.gov/library/publications/2011/compendia/usa-counties/excel/LND01.xls">this table</a> &#40;1.5MB download&#41;. </p>
+<pre><code class="julia hljs"><span class=hljs-keyword >using</span> CSV
+<span class=hljs-keyword >using</span> DataFrames
+
+<span class=hljs-comment ># keep the numeric code column as a string so we don&#x27;t wipe leading zeros</span>
+df = CSV.read(<span class=hljs-string >&quot;projects/birdie_brigade/LND01.csv&quot;</span>, DataFrame, types=<span class=hljs-built_in >Dict</span>(<span class=hljs-number >2</span>=&gt;<span class=hljs-built_in >String</span>))
+
+<span class=hljs-comment ># Get all the state names</span>
+states = <span class=hljs-built_in >Dict</span>()
+<span class=hljs-keyword >for</span> row <span class=hljs-keyword >in</span> eachrow(df)
+    <span class=hljs-comment >#states end with 000, but we don&#x27;t want United States or DC</span>
+    <span class=hljs-keyword >if</span> row.STCOU[<span class=hljs-number >3</span>:<span class=hljs-number >5</span>]==<span class=hljs-string >&quot;000&quot;</span> &amp;&amp; row.STCOU[<span class=hljs-number >1</span>:<span class=hljs-number >2</span>]!=<span class=hljs-string >&quot;00&quot;</span> &amp;&amp; row.STCOU[<span class=hljs-number >1</span>:<span class=hljs-number >2</span>]!=<span class=hljs-string >&quot;11&quot;</span>
+        states[row.STCOU[<span class=hljs-number >1</span>:<span class=hljs-number >2</span>]] = row.Areaname
+    <span class=hljs-keyword >end</span>
+<span class=hljs-keyword >end</span>
+
+gini_df = DataFrame(state = <span class=hljs-built_in >String</span>[], gini = <span class=hljs-built_in >Float64</span>[])
+<span class=hljs-keyword >for</span> (k,v) <span class=hljs-keyword >in</span> states
+    Y = [row.LND110210D <span class=hljs-keyword >for</span> row <span class=hljs-keyword >in</span> eachrow(df) <span class=hljs-keyword >if</span> row.STCOU[<span class=hljs-number >1</span>:<span class=hljs-number >2</span>]==k &amp;&amp; row.STCOU[<span class=hljs-number >3</span>:<span class=hljs-number >5</span>]!=<span class=hljs-string >&quot;000&quot;</span>]
+    push!(gini_df, [v, gini(sort(Y))])
+<span class=hljs-keyword >end</span>
+sort!(gini_df,:gini)</code></pre>
+<pre><code class="julia hljs"><span class=hljs-number >50</span>×<span class=hljs-number >2</span> DataFrame
+ Row │ state           gini      
+     │ <span class=hljs-built_in >String</span>          <span class=hljs-built_in >Float64</span>   
+─────┼───────────────────────────
+   <span class=hljs-number >1</span> │ ARKANSAS        <span class=hljs-number >0.0995015</span>
+   <span class=hljs-number >2</span> │ OHIO            <span class=hljs-number >0.101162</span>
+   <span class=hljs-number >3</span> │ IOWA            <span class=hljs-number >0.110149</span>
+   <span class=hljs-number >4</span> │ INDIANA         <span class=hljs-number >0.130984</span>
+   <span class=hljs-number >5</span> │ MISSISSIPPI     <span class=hljs-number >0.136827</span>
+   <span class=hljs-number >6</span> │ ALABAMA         <span class=hljs-number >0.143195</span>
+   <span class=hljs-number >7</span> │ MISSOURI        <span class=hljs-number >0.146193</span>
+   <span class=hljs-number >8</span> │ KANSAS          <span class=hljs-number >0.152884</span>
+   <span class=hljs-number >9</span> │ CONNECTICUT     <span class=hljs-number >0.153839</span>
+  <span class=hljs-number >10</span> │ VERMONT         <span class=hljs-number >0.156479</span>
+  <span class=hljs-number >11</span> │ DELAWARE        <span class=hljs-number >0.174417</span>
+  <span class=hljs-number >12</span> │ SOUTH CAROLINA  <span class=hljs-number >0.178281</span>
+  .  │       .             .
+  <span class=hljs-number >40</span> │ MASSACHUSETTS   <span class=hljs-number >0.356184</span>
+  <span class=hljs-number >41</span> │ RHODE ISLAND    <span class=hljs-number >0.385959</span>
+  <span class=hljs-number >42</span> │ UTAH            <span class=hljs-number >0.400773</span>
+  <span class=hljs-number >43</span> │ IDAHO           <span class=hljs-number >0.413553</span>
+  <span class=hljs-number >44</span> │ NEVADA          <span class=hljs-number >0.427948</span>
+  <span class=hljs-number >45</span> │ VIRGINIA        <span class=hljs-number >0.439749</span>
+  <span class=hljs-number >46</span> │ OREGON          <span class=hljs-number >0.447592</span>
+  <span class=hljs-number >47</span> │ MAINE           <span class=hljs-number >0.46536</span>
+  <span class=hljs-number >48</span> │ CALIFORNIA      <span class=hljs-number >0.485764</span>
+  <span class=hljs-number >49</span> │ HAWAII          <span class=hljs-number >0.53521</span>
+  <span class=hljs-number >50</span> │ ALASKA          <span class=hljs-number >0.618291</span></code></pre>
+<p>Our gerrymandering, with a Gini of 0.584, would come in at 50th, just barely eking ahead of Alaska at 0.618. This is probably good news for US counties, but not great news for us. Fortunately, it does not matter at all.</p>
+<h3 id=course_labels ><a href="#course_labels" class=header-anchor >Course Labels</a></h3>
+<p>I wanted to place the course names inside each puzzle piece in a style similar to a <a href="https://en.wikipedia.org/wiki/Tag_cloud">word cloud</a>. As a novice Gimp user I was able to take some inspiration from the process shared by Roosevelt Graphics <a href="https://rooseveltgraphicarts.wordpress.com/tutorials/buffalo-typography-tutorial/">here</a>. I don&#39;t have Illustrator so this was all completed in Gimp. </p>
+<p>For each course I manipulated the words &#40;and sometimes the individual letters, as in the case of Oceanside&#41; separately. The Unified Transform tool was used extensively. The end result looks like:</p>
+<div class=im-100 ><img src="/projects/birdie_brigade/all_courses_small-fs8.png" alt=""></div>
+<h3 id=puzzle_piece_coloring ><a href="#puzzle_piece_coloring" class=header-anchor >Puzzle Piece Coloring</a></h3>
+<p>Currently, the puzzle pieces that fill in the map are just black. I haven&#39;t decided how to color them. Here are my 3 thoughts:</p>
+<ul>
+<li><p>Part of a larger image - the pieces themselves, when all placed, will form a picture</p>
+
+</ul>
+<div class=im-100 ><img src="/projects/birdie_brigade/puzzle_pic-fs8.png" alt=""></div>
+<ul>
+<li><p>Course specific picture - each individual piece has a picture of that course</p>
+
+</ul>
+<div class=im-100 ><img src="/projects/birdie_brigade/courses_pics_frames-fs8.png" alt=""></div>
+<ul>
+<li><p>Colored course label - the pieces are just colored versions of the backdrop</p>
+
+</ul>
+<div class=im-100 ><img src="/projects/birdie_brigade/courses_colorchange-fs8.png" alt=""></div>
+<h2 id=building ><a href="#building" class=header-anchor >Building</a></h2>
+<h3 id=printing ><a href="#printing" class=header-anchor >Printing</a></h3>
+<p>The end goal I was hoping for was a backdrop displaying the course names, a raised border surrounding each puzzle piece, and pieces themselves to fit snugly in the frame.</p>
+<p>To begin, I used the &quot;Trace Bitmap&quot; feature in Inkscape to trace the entire graphic and convert in to a vector representation.</p>
+<p>The backdrop was easy. That is just the course names &#40;minus the frame lines, in case I wasn&#39;t able to line the frame up perfectly I didn&#39;t want any lines poking out&#41;. The canvas was sized to 16x20, exported to a .png at 600 dpi, and sent to Costco Photo Center for printing.</p>
+<p>3D printing was an option, but laser cut acrylic seemed to be the perfect match for the border and puzzle pieces. If I started with a blank sheet and then made cuts only around the border of each piece the end result would be a perfect frame and the pieces, guaranteed to fit snugly with only a laser&#39;s width of wiggle room, would come along for free. <a href="https://www.ponoko.com/">Ponkoko.com</a> offers custom precision laser cutting on a variety of materials for impressive prices. They provide a template and instructions for preparation in Inkscape.</p>
+<div class=im-100 ><img src="/projects/birdie_brigade/ponoko_cut-fs8.png" alt=""></div>
+<h3 id=assembly ><a href="#assembly" class=header-anchor >Assembly</a></h3>
+<p>This is the scary part. The frame needed to be attached to the backdrop. I used a glue stick and some helping hands to line things up and it turned out pretty well&#33; The end result was framed and wrapped up with a bag of the puzzle pieces. We have some work to do to fill in the map&#33;</p>
+<p>TODO: Picture of end result frame</p>
+<h2 id=ingredients ><a href="#ingredients" class=header-anchor >Ingredients</a></h2>
+<ul>
+<li><p><a href="https://www.sandiego.org/explore/things-to-do/sports/golf/san-diego-golf-courses.aspx">San Diego County Website</a> - golf course identification</p>
+
+<li><p><a href="https://www.easymapmaker.com/">easymapmaker.com</a> - easy online map maker and kml generator</p>
+
+<li><p><a href="https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.2019.html">US Census Cartographic Database</a> - county border definition</p>
+
+<li><p><a href="https://www.gimp.org/">Gimp</a> - free and powerful image editor</p>
+
+<li><p><a href="https://inkscape.org/">Inkscape</a> - free vector graphics editor</p>
+
+<li><p><a href="https://www.ponoko.com/">Ponkoko.com</a> - custom laser cutting and engraving</p>
+
+</ul>
+<div class=page-foot >
+  <div class=copyright >
+    Last modified: October 20, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+  </div>
+</div>
+</div>
