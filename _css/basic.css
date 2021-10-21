@@ -224,3 +224,12 @@ table tbody tr td {
   left: 50%;
   transform: translateX(-50%);
 }
+
+.fa {
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 0px;
+  font-size: 40px;
+  text-align: center;
+  text-decoration: none !important;
+}
