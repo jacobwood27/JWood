@@ -179,6 +179,12 @@ table {
   margin-bottom: 1.5em;
 }
 
+.resume li p {
+  margin: 5px 0;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+}
+
 tr:first-of-type {
   background: #eae9f4;
 }
@@ -233,3 +239,8 @@ table tbody tr td {
   text-align: center;
   text-decoration: none !important;
 }
+
+.blank {
+  height: 0.5em;
+}
+
