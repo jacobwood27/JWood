@@ -430,6 +430,138 @@ task_init_album = asyncio.create_task(init_album(id))
 # Wait for album creation to return
 id_album = await task_init_album
 ```
+The images snapped by the photostrip application need to be formatted before printing. I designed a template that fit with the rest of the wedding theme for our printed photostrips. It looks like:
+\fig{/projects/photobooth/ps_template_base.png}
+
+PIL is used to place the images into the template and add the strip-specific QR code to the bottom right (and overlay with a few more leaves for good measure).
+```Python
+class PhotoStrip:
+    BG = "ps_template_base.png"
+    FG = "ps_template_overlay.png"
+
+    #Location of rectangles
+    tl_coords = [   [(177, 177), (2577, 177)],
+                    [(177,1544), (2577,1544)],
+                    [(177,2912), (2577,2912)],
+                    [(177,4279), (2577,4279)]
+                ]
+    p_w = 2225-177
+    p_h = 1313-177
+    tl_QR = [(1690, 6497), (4090,6497)]
+    QR_w = 2376-1690
+    QR_h = 2376-1690
+
+    def __init__(self):
+        self.idx = 0
+        self.im = Image.open(self.BG)
+        self.im = self.im.convert('RGBA')
+
+    def show(self):
+        self.im.show()
+
+    def add_im(self, im):
+        im = im.resize((self.p_w, self.p_h), resample=Image.LANCZOS)
+        self.im.paste(im,self.tl_coords[self.idx][0])
+        self.im.paste(im,self.tl_coords[self.idx][1])
+        self.idx += 1
+    
+    def add_QR(self, qr):
+        qr = qr.resize((self.QR_w, self.QR_h))
+        self.im.paste(qr, self.tl_QR[0])
+        self.im.paste(qr, self.tl_QR[1])
+
+    def save(self, fname):
+        fg_im = Image.open(self.FG).convert("RGBA")
+        self.im.paste(fg_im,mask=fg_im)
+        self.im.save(fname, quality=95)
+```
+
+After completing the photostrip all the media is uploaded to the shared Google Photos album. The user is presented with a QR code on screen to view the album and the QR code is provided on the printed photostrip.
+
+### Flipbook
+The flipbook modality gives the user a chance to create a physical flipbook and a digital .gif. The interaction is much the same as the photostrip described above. The user takes 15 snapshots which are compiled into a gif, which is uploaded to their new Google Photos album:
+\fig{/projects/photobooth/flipbook_small.gif}
+
+The snapshots are also formatted into a 8.5x11 image that is printed onto plain printer paper. The user is shown [instructions](https://www.youtube.com/watch?v=29SCiHN9zCI) for cutting and stapling the paper into a physical flipbook to take home. It works, sort of!
+\fig{/projects/photobooth/flipbook.png}
+<!-- TODO: Add video of flipbook flipping. -->
+
+### Video
+The video selection allows the user to record a 30 second video. It doesn't provide a physical manifestation, but rather just uploads the video to a Google Photos album. The tricky part (for me) here was maintaining a full quality, full framerate recording while presenting the processed live video to the user in the application. 
+
+To accomplish this I used [v4l2loopback](https://github.com/umlaeute/v4l2loopback) to create two dummy video feeds, /dev/video1 and /dev/video2. A [gstreamer](https://gstreamer.freedesktop.org/) pipeline plumbs everything together. There may be a few unnecessary queues in the resulting pipeline, but it works.
+@@im-100
+\fig{/projects/photobooth/video_route.svg}
+@@
+```bash
+# Make dummy video devices
+sudo modprobe v4l2loopback video_nr=1,2
+
+# Initiate pipeline
+gst-launch-1.0 -e v4l2src device=/dev/video0 do-timestamp=true ! image/jpeg,width=1920,height=1080,framerate=30/1 ! jpegdec ! videoconvert ! tee name=t t. ! queue  ! videoscale ! 'video/x-raw,width=1280,height=720' !  v4l2sink device=/dev/video1 sync=false t. ! queue  !  v4l2sink device=/dev/video2 sync=false
+
+# Throw switch to start recording
+gst-launch-1.0 -e v4l2src device=/dev/video2 ! x264enc tune=zerolatency ! mp4mux name=mux  ! filesink location='vid.mp4' sync=false alsasrc ! lamemp3enc ! queue ! mux.
+```
+
+### Extras
+**Paper Refill**  
+
+The printer I borrowed from work was very large, but not large enough to house more than 20 glossy 4x6 sheets for printing photostrips. My cousin (shoutout [Jack](https://www.linkedin.com/in/jack-kilgore-8814801a1)) volunteered to replace the paper as needed during the night. Instead of requiring constant monitoring the system tracked (well, open-loop tracked) the amount of paper left in the tray and texted Jack when the situation got dire. This was done with the [yagmail](https://pypi.org/project/yagmail/) package and the Verizon SMS gateway:
+```Python
+import yagmail
+yag = yagmail.SMTP()
+yag.send('PHONENUMBER@vzwpix.com', '', 'Help, I am running out of glossy paper!')
+```
+
+**LED Strip**  
+
+I had a WS2811 LED strip lying around and thought it might bring some life to the physical photobooth. It ended up looking okay, but would probably have looked much better about 5 times as many lights.
+
+The LED strip itself was controlled by an Arduino, which was connected over USB serial to the laptop running the photobooth. The LED strip operated in two modes that were triggered with specific serial commands.
+
+The standby command put the LEDs in [TwinkleFox](https://github.com/FastLED/FastLED/blob/master/examples/TwinkleFox/TwinkleFox.ino). This is provided as an example in the FastLED library and has the lights fade in and out at random in a pleasing pattern.
+<!-- TODO: Add gif of lights in twinkle -->
+
+While the photobooth is in operation the LEDs are used to communicate a countdown timer to the user. This again makes use of the FastLED library to do the heavy lifting, we just need to receive the serial command and pick which lights turn on.
+```Python
+# Connect to Arduino
+ARDUINO = serial.Serial(port="/dev/ttyACM0", baudrate=9600, timeout=.1)
+
+# In the event loop, write to serial port
+ARDUINO.write(bytes(str(round(NUM_LEDS*time_elapsed/time_allowed)) + "\r", 'utf-8'))
+```
+```
+inNum = Serial.parseInt();
+for(int i = 0; i < NUM_LEDS; i = i + 1) {
+    if (i < inNum) {
+        leds[i] = CRGB::White;
+    } else {
+        leds[i] = CRGB::Black;
+    }
+}
+FastLED.show();
+```
+<!-- TODO: Add gif of lights in order -->
+
+## Hardware
+The photobooth itself ended up being slightly imposing. This is mostly because the only two-tray printer I had access to was massive.
+ 
+### Architecture
+By the end of the project there were quite a few components to keep track of. I had to track down a larger USB hub to accomodate everything:
+\fig{/projects/photobooth/components.svg}
+
+### Frame
+The simple frame was constructed with 1x2 furring strips cut haphazardly to length. The corners are joined with bolts, wing nuts, and small angle brackets. This allows for easy disassembly and assembly. 
+\fig{/projects/photobooth/photobooth_frame.jpg}
+
+The monitor can be attached directly to the frame with its VESA mount. The WS2811 LED strip was ziptied to a large piece of cardboard which is attached to the frame with some more zip ties.
+\fig{/projects/photobooth/monitor_attached.jpg}
+
+The original intent was to wrap the entire frame in a watercolor blue mural. Unfortunately the original watercolor attempt didn't make it back after the wedding. The remainder of the paper was painted (a little too splashy, and didn't quite get it to dry uniformly) and used to cover the front of the photbooth. A tablecloth from the rehearsal dinner was used to cover the rest of the frame.
+
+\fig{/projects/photobooth/finished_booth.jpg}
+
 
 ## Ingredients
 - [PySimpleGUI](https://pysimplegui.readthedocs.io/en/latest/) - a Python GUI For Humans
@@ -437,3 +569,6 @@ id_album = await task_init_album
 - [Mediapipe](https://google.github.io/mediapipe/)
 - [Excalidraw](https://excalidraw.com/) - diagram creation
 - [gphotospy](https://github.com/davidedelpapa/gphotospy)
+- [PIL]()
+- [qrcode]()
+- [yagmail]()
