@@ -1,4 +1,4 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/github.min.css"> <link rel=stylesheet  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=stylesheet  href="/css/basic.css"> <link rel=icon  href="/assets/favicon.png"> <title>Photobooth</title> <header> <div class=blog-name ><a href="/">Jacob Wood</a></div> <nav> <ul> <li><a href="/projects/">Projects</a> <li><a href="/projects/books/">Books</a> <li><a href="/projects/inklings/">Inklings</a> <li><a href="/resume">Resume</a> <li><a href="/now">Now</a> </ul> <img src="/assets/hamburger.svg" id=menu-icon > </nav> </header> <div class=franklin-content ><p>My wife and I planned on having a small photobooth at our wedding in case people wanted to print and keep a small memento. A week before the wedding I had a few ideas pop up that I thought would be fun to incorporate into the photobooth. Unfortunately you end up kind of busy doing a bunch of other things the week of your wedding, so I didn&#39;t get to finish this photobooth in time. To round out the learning process I did complete it after the wedding - this project documents the build.</p> <h2 id=existing_solutions ><a href="#existing_solutions" class=header-anchor >Existing Solutions</a></h2> <h3 id=tabletphone_apps ><a href="#tabletphone_apps" class=header-anchor >Tablet/Phone Apps</a></h3> <p><a href="https://www.simplebooth.com/">SimpleBooth</a> or <a href="https://myphotoboothapp.com/">myphotoboothapp</a> seem to be effective apps, but lack the customization I thought would be entertaining. Requires hardware.</p> <h3 id=rental ><a href="#rental" class=header-anchor >Rental</a></h3> <p>Rental photobooths are available in our area, but they tend to be pricy and require an attendant for the night.</p> <h3 id=python_application ><a href="#python_application" class=header-anchor >Python Application</a></h3> <p><a href="https://pypi.org/project/pibooth/">Pibooth</a> looks to be a great application and would certainly get the job done. This would be the preferred solution if I wasn&#39;t looking for a learning exercise. Requires hardware.</p> <h2 id=software ><a href="#software" class=header-anchor >Software</a></h2> <p>I wanted to implement a few novel things in this photobooth:</p> <ul> <li><p>Completely touchless operation</p> <li><p>Different interaction modalities</p> <li><p>Landing screen minigame</p> <li><p>Automatic cloud upload of full-res media</p> </ul> <h3 id=architecture ><a href="#architecture" class=header-anchor >Architecture</a></h3> <p>In order to interact touchlessly with the application we&#39;ll rely on some human pose detection and image processing. The Python ecosystem offers plenty of existing libraries to do all of the heavy lifting, so we&#39;ll write the entire application in Python.</p> <p><a href="https://pysimplegui.readthedocs.io/en/latest/">PySimpleGUI</a> offers an impressive set of features and seemed to cross off everything I was looking for in a GUI. It was my first time using this package and it will likely see future use.</p> <p>The general outline I assumed for this application was a collection of &quot;layouts&quot;, each with distinct elements, for each planned user interaction. The layouts are all children of the main window environment and get shown/hidden as necessary. <img src="/projects/photobooth/layout_diagram.png" alt=""></p> <p><a href="https://opencv.org/">OpenCV</a> will be used for image capture and manipulation.</p> <p>Google&#39;s <a href="https://google.github.io/mediapipe/">Mediapipe</a> performs impressively lightweight face, hand, and pose recognition and is used extensively throughout.</p> <h3 id=landing_page ><a href="#landing_page" class=header-anchor >Landing Page</a></h3> <p>The landing page houses most of the fun stuff. This is where the user will select their chosen modality and this is where they will be able to play the minigame. The layout should looke like: <img src="/projects/photobooth/landing_diagram.png" alt=""></p> <p>This is easy enough to create in PySimpleGUI layout language:</p> <pre><code class="Python hljs">LANDING_LAYOUT = [  
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/github.min.css"> <link rel=stylesheet  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=stylesheet  href="/css/basic.css"> <link rel=icon  href="/assets/favicon.png"> <title>Photobooth</title> <header> <div class=blog-name ><a href="/">Jacob Wood</a></div> <nav> <ul> <li><a href="/projects/">Projects</a> <li><a href="/projects/books/">Books</a> <li><a href="/projects/inklings/">Inklings</a> <li><a href="/resume">Resume</a> <li><a href="/now">Now</a> </ul> <img src="/assets/hamburger.svg" id=menu-icon > </nav> </header> <div class=franklin-content ><p>My wife and I planned on having a small photobooth at our wedding in case people wanted to print and keep a small memento. A week before the wedding I had a few ideas pop up that I thought would be fun to incorporate into the photobooth. Unfortunately you end up kind of busy doing a bunch of other things the week of your wedding, so I didn&#39;t get to finish this photobooth in time. To round out the learning process I did complete it after the wedding - this project documents the build.</p> <p><strong>Table of Contents</strong> <div class=franklin-toc ><ol><li><a href="#existing_solutions">Existing Solutions</a><li><a href="#software">Software</a><ol><li><a href="#architecture">Architecture</a><li><a href="#landing">Landing</a><li><a href="#photostrip">Photostrip</a></ol><li><a href="#ingredients">Ingredients</a></ol></div></p> <h2 id=existing_solutions ><a href="#existing_solutions" class=header-anchor >Existing Solutions</a></h2> <p><strong>Tablet/Phone Apps</strong> <a href="https://www.simplebooth.com/">SimpleBooth</a> or <a href="https://myphotoboothapp.com/">myphotoboothapp</a> seem to be effective apps, but lack the customization I thought would be entertaining. Requires hardware.</p> <p><strong>Rental</strong> Rental photobooths are available in our area, but they tend to be pricy and require an attendant for the night.</p> <p><strong>Python Application</strong> <a href="https://pypi.org/project/pibooth/">Pibooth</a> looks to be a great application and would certainly get the job done. This would be the preferred solution if I wasn&#39;t looking for a learning exercise. Requires hardware.</p> <h2 id=software ><a href="#software" class=header-anchor >Software</a></h2> <p>I wanted to implement a few novel things in this photobooth:</p> <ul> <li><p>Completely touchless operation</p> <li><p>Different interaction modalities</p> <li><p>Landing screen minigame</p> <li><p>Automatic cloud upload of full-res media</p> </ul> <h3 id=architecture ><a href="#architecture" class=header-anchor >Architecture</a></h3> <p>In order to interact touchlessly with the application we&#39;ll rely on some human pose detection and image processing. The Python ecosystem offers plenty of existing libraries to do all of the heavy lifting, so we&#39;ll write the entire application in Python.</p> <p><a href="https://pysimplegui.readthedocs.io/en/latest/">PySimpleGUI</a> offers an impressive set of features and seemed to cross off everything I was looking for in a GUI. It was my first time using this package and it will likely see future use.</p> <p>The general outline I assumed for this application was a collection of &quot;layouts&quot;, each with distinct elements, for each planned user interaction. The layouts are all children of the main window environment and get shown/hidden as necessary. <img src="/projects/photobooth/layout_diagram.svg" alt=""></p> <p><a href="https://opencv.org/">OpenCV</a> will be used for image capture and manipulation.</p> <p>Google&#39;s <a href="https://google.github.io/mediapipe/">Mediapipe</a> performs impressively lightweight face, hand, and pose recognition and is used extensively throughout.</p> <h3 id=landing ><a href="#landing" class=header-anchor >Landing</a></h3> <p>The landing page houses most of the fun stuff. This is where the user will select their chosen modality and this is where they will be able to play the minigame. The layout should looke like: <img src="/projects/photobooth/landing_diagram.svg" alt=""></p> <p>This is easy enough to create in PySimpleGUI layout language:</p> <pre><code class="Python hljs">LANDING_LAYOUT = [  
         [sg.Text(<span class=hljs-string >&#x27;Welcome to Our (touch free) Photobooth!&#x27;</span>, font=<span class=hljs-string >&#x27;AmaticSC 100&#x27;</span>)],
         [sg.Image(<span class=hljs-string >&#x27;cam_placeholder.png&#x27;</span>, key=<span class=hljs-string >&#x27;landing_im&#x27;</span>)], 
         [sg.Text(<span class=hljs-string >&#x27;please select an option above with your camera hands&#x27;</span>,justification=<span class=hljs-string >&#x27;center&#x27;</span>, size=(<span class=hljs-number >100</span>,<span class=hljs-number >1</span>), font=<span class=hljs-string >&#x27;AmaticSC 60&#x27;</span>)],
@@ -76,4 +76,255 @@ needed_count = <span class=hljs-number >10</span> <span class=hljs-comment >#req
                             (<span class=hljs-built_in >round</span>((c[<span class=hljs-number >0</span>]+<span class=hljs-number >0.5</span>*s/needed_count*S_box[<span class=hljs-number >0</span>])*cap_x), <span class=hljs-built_in >round</span>((c[<span class=hljs-number >1</span>]+<span class=hljs-number >0.5</span>*s/needed_count*S_box[<span class=hljs-number >1</span>])*cap_y)), 
                             (<span class=hljs-built_in >round</span>((c[<span class=hljs-number >0</span>]+<span class=hljs-number >0.5</span>*s/needed_count*S_box[<span class=hljs-number >0</span>]+S_box[<span class=hljs-number >0</span>]-s/needed_count*S_box[<span class=hljs-number >0</span>])*cap_x), <span class=hljs-built_in >round</span>((c[<span class=hljs-number >1</span>]+<span class=hljs-number >0.5</span>*s/needed_count*S_box[<span class=hljs-number >1</span>]+S_box[<span class=hljs-number >1</span>]-s/needed_count*S_box[<span class=hljs-number >1</span>])*cap_y)),
                             (<span class=hljs-number >0</span>,<span class=hljs-number >255</span>,<span class=hljs-number >0</span>), 
-                            <span class=hljs-number >2</span>)</code></pre> <p>So far this is what we have on the landing page:</p> <p>Let&#39;s add the minigame. The </p> <div class=im-100 ><img src="/projects/photobooth/minigame_diagram.svg" alt=""></div> <h2 id=ingredients ><a href="#ingredients" class=header-anchor >Ingredients</a></h2> <ul> <li><p><a href="https://pysimplegui.readthedocs.io/en/latest/">PySimpleGUI</a> - a Python GUI For Humans</p> <li><p><a href="https://opencv.org/">OpenCV</a></p> <li><p><a href="https://google.github.io/mediapipe/">Mediapipe</a></p> <li><p><a href="https://excalidraw.com/">Excalidraw</a> - diagram creation</p> </ul> <div class=page-foot > <div class=copyright > <a href="mailto:contact@jacobw.xyz" class="fa fa-envelope"></a> <a href="https://github.com/jacobwood27" class="fa fa-github"></a> <br> <br> Last modified: November 10, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div>
+                            <span class=hljs-number >2</span>)</code></pre> <p>So far this is what we have on the landing page:</p> <p>Let&#39;s add the minigame. This is what we are shooting for:</p> <div class=im-100 ><img src="/projects/photobooth/minigame_diagram.svg" alt=""></div> <p>First we will track all the heads of our photobooth participants. We want a track to follow detections from frame to frame, resize itself if a head gets bigger or smaller, and rotate when a head rotates. The code that does most of the work looks like:</p> <pre><code class="Python hljs"><span class=hljs-comment >#Define a tracked face object</span>
+<span class=hljs-keyword >class</span> <span class="hljs-title class_">TrackedFace</span>:
+    <span class=hljs-keyword >def</span> <span class="hljs-title function_">__init__</span>(<span class=hljs-params >self, points, cam_x, cam_y</span>):
+        self.live = <span class=hljs-literal >True</span>
+        self.points = points
+        self.cam_x = cam_x
+        self.cam_y = cam_y
+        c_c, c_rad, c_rot = self.ear_circle()
+        self.c_c = c_c
+        self.c_rad = c_rad
+        self.c_rot = c_rot
+        self.X = c_c[<span class=hljs-number >0</span>]
+        self.Y = c_c[<span class=hljs-number >1</span>]
+        self.dia = <span class=hljs-number >2</span>*c_rad
+
+    <span class=hljs-keyword >def</span> <span class="hljs-title function_">still_alive</span>(<span class=hljs-params >self</span>):
+        self.live = <span class=hljs-literal >True</span>
+
+    <span class=hljs-keyword >def</span> <span class="hljs-title function_">reset</span>(<span class=hljs-params >self</span>):
+        self.live = <span class=hljs-literal >False</span>
+        
+    <span class=hljs-keyword >def</span> <span class="hljs-title function_">ear_circle</span>(<span class=hljs-params >self, face_bigger=<span class=hljs-number >1.2</span></span>):
+        lx = self.points[<span class=hljs-number >4</span>][<span class=hljs-number >0</span>] * self.cam_x
+        ly = self.points[<span class=hljs-number >4</span>][<span class=hljs-number >1</span>] * self.cam_y
+        rx = self.points[<span class=hljs-number >5</span>][<span class=hljs-number >0</span>] * self.cam_x
+        ry = self.points[<span class=hljs-number >5</span>][<span class=hljs-number >1</span>] * self.cam_y
+        dia = np.math.sqrt((lx-rx)**<span class=hljs-number >2</span> + (ly-ry)**<span class=hljs-number >2</span>)
+        rad = face_bigger * dia/<span class=hljs-number >2</span>
+        c = (<span class=hljs-built_in >round</span>((lx+rx)/<span class=hljs-number >2</span>), <span class=hljs-built_in >round</span>((ly+ry)/<span class=hljs-number >2</span>))
+        rot = np.arctan2(ly-ry,lx-rx)
+        <span class=hljs-keyword >return</span> c, rad, rot
+
+track_list = [] 
+
+<span class=hljs-keyword >with</span> mp.solutions.face_detection.FaceDetection(min_detection_confidence=<span class=hljs-number >0.4</span>) <span class=hljs-keyword >as</span> face_detection:
+    face_res = face_detection.process(image)
+
+    <span class=hljs-keyword >if</span> face_res.detections:
+        <span class=hljs-keyword >for</span> detection <span class=hljs-keyword >in</span> face_res.detections:
+            kp = [(d.x, d.y) <span class=hljs-keyword >for</span> d <span class=hljs-keyword >in</span> detection.location_data.relative_keypoints]
+            lx = kp[<span class=hljs-number >4</span>][<span class=hljs-number >0</span>] * cap_x
+            ly = kp[<span class=hljs-number >4</span>][<span class=hljs-number >1</span>] * cap_y
+            rx = kp[<span class=hljs-number >5</span>][<span class=hljs-number >0</span>] * cap_x
+            ry = kp[<span class=hljs-number >5</span>][<span class=hljs-number >1</span>] * cap_y
+            cx = (lx+rx)/<span class=hljs-number >2</span> <span class=hljs-comment >#center coords of tracked face</span>
+            cy = (ly+ry)/<span class=hljs-number >2</span> <span class=hljs-comment >#center coords of tracked face</span>
+
+            max_thresh = <span class=hljs-number >1.0</span>
+            best_thresh = max_thresh*<span class=hljs-number >2</span>
+            best_track = <span class=hljs-literal >None</span>
+            <span class=hljs-keyword >for</span> face <span class=hljs-keyword >in</span> track_list:
+                tx = face.X
+                ty = face.Y
+                tr = face.c_rad
+                d = np.math.sqrt((tx-cx)**<span class=hljs-number >2</span> + (ty-cy)**<span class=hljs-number >2</span>)
+                n_d = d/tr
+                <span class=hljs-keyword >if</span> n_d &lt; best_thresh:
+                    best_thresh = n_d
+                    best_track = face
+            <span class=hljs-keyword >if</span> best_thresh &lt; max_thresh: <span class=hljs-comment >#Then we will call the face the same - this isn&#x27;t perfect so you can still &quot;shake off&quot; the stuck heads. Testing shows this is a feature.</span>
+                best_track.still_alive()
+                best_track.X = <span class=hljs-built_in >round</span>(cx)
+                best_track.Y = <span class=hljs-built_in >round</span>(cy)
+                best_track.c_c = (<span class=hljs-built_in >round</span>(cx),<span class=hljs-built_in >round</span>(cy))
+                best_track.c_rot = np.arctan2(ly-ry,lx-rx)
+                best_track.dia = np.math.sqrt((lx-rx)**<span class=hljs-number >2</span> + (ly-ry)**<span class=hljs-number >2</span>)
+        
+            <span class=hljs-keyword >else</span>: <span class=hljs-comment >#new track</span>
+                best_track = TrackedFace(kp, cap_x, cap_y)
+                track_list.append(best_track)
+    
+            <span class=hljs-keyword >if</span> annotate:
+                mp.solutions.drawing_utils.draw_detection(frame, detection)
+                cv2.circle(frame, best_track.c_c, <span class=hljs-built_in >round</span>(best_track.c_rad), (<span class=hljs-number >255</span>,<span class=hljs-number >0</span>,<span class=hljs-number >0</span>)) 
+                lx = <span class=hljs-built_in >int</span>(<span class=hljs-built_in >round</span>(best_track.X + best_track.c_rad*np.cos(best_track.c_rot)))
+                ly = <span class=hljs-built_in >int</span>(<span class=hljs-built_in >round</span>(best_track.Y + best_track.c_rad*np.sin(best_track.c_rot)))
+                cv2.circle(frame, (lx, ly), <span class=hljs-number >8</span>, (<span class=hljs-number >255</span>,<span class=hljs-number >0</span>,<span class=hljs-number >0</span>), -<span class=hljs-number >1</span>)</code></pre> <p>We want the flying heads to originate from either the side walls or the upper border of the frame. They will be generated with a randomly drawn size, spin rate, and launch angle. We&#39;ll pick a &quot;launch velocity&quot; such that they will intersect their randomly drawn target when following a ballistic trajectory enforced with some artificial gravity. They should be able to determine when they are near enough to another head to become stuck, from which point their movements will be dictated by the sticky connection instead of following the ballistic arc.</p> <pre><code class="Python hljs"><span class=hljs-keyword >class</span> <span class="hljs-title class_">FlyingHead</span>:
+    <span class=hljs-keyword >def</span> <span class="hljs-title function_">__init__</span>(<span class=hljs-params >self, P_t, image, rad, s_a, cam_x, cam_y, a = <span class=hljs-number >10</span>, w_max = <span class=hljs-number >60</span>, head_scale = <span class=hljs-number >0.8</span></span>):
+
+        Xt = P_t[<span class=hljs-number >0</span>]
+        Yt = P_t[<span class=hljs-number >1</span>]
+        dia = <span class=hljs-built_in >round</span>(<span class=hljs-number >2</span>*rad)
+
+        self.cam_x = cam_x
+        self.cam_y = cam_y
+
+        pix_avail = self.cam_x + <span class=hljs-number >2</span>*Yt
+        pix_select = np.random.randint(<span class=hljs-number >0</span>,pix_avail)
+        <span class=hljs-keyword >if</span> pix_select &lt; Yt:
+            Xi = -dia
+            Yi = Yt - pix_select
+            Ai = np.random.rand() * <span class=hljs-number >3.14</span>/<span class=hljs-number >3</span>
+        <span class=hljs-keyword >elif</span> pix_select &lt; Yt + self.cam_x:
+            Yi = -dia
+            Xi = pix_select - Yt
+            <span class=hljs-keyword >if</span> Xi &lt; Xt:
+                Ai = np.random.rand() * <span class=hljs-number >3.14</span>/<span class=hljs-number >4</span>
+            <span class=hljs-keyword >else</span>:
+                Ai = <span class=hljs-number >3.1415</span> - np.random.rand() * <span class=hljs-number >3.14</span>/<span class=hljs-number >4</span>
+        <span class=hljs-keyword >else</span>:
+            Xi = self.cam_x + dia
+            Yi = pix_select - self.cam_x - Yt
+            Ai = <span class=hljs-number >3.14</span> - np.random.rand() * <span class=hljs-number >3.14</span>/<span class=hljs-number >3</span>
+
+        dX = Xt - Xi
+        dY = Yt - Yi
+
+        v = np.math.sqrt(<span class=hljs-number >0.5</span>*a*dX**<span class=hljs-number >2</span>/(np.math.cos(Ai)**<span class=hljs-number >2</span>)/(dY + dX*np.math.tan(Ai)))
+        
+        self.X = Xi
+        self.Y = Yi
+        self.Vx = v * np.math.cos(Ai)
+        self.Vy = -v * np.math.sin(Ai)
+        self.a = a
+        self.im = cv2.resize(cv2.imread(image, -<span class=hljs-number >1</span>), (dia, dia))
+        self.dia = dia * head_scale
+        self.rad_px = <span class=hljs-built_in >round</span>(dia/<span class=hljs-number >2</span>)
+        self.w = -w_max + <span class=hljs-number >2</span>*w_max*np.random.rand()
+        self.thet = np.random.rand() * <span class=hljs-number >360</span>
+        self.stuck = <span class=hljs-literal >False</span>
+        self.track = <span class=hljs-literal >None</span>
+        self.stuck_d = <span class=hljs-literal >None</span>
+        self.stuck_thet = <span class=hljs-literal >None</span>
+        self.orig_rot = <span class=hljs-literal >None</span>
+        self.points = s_a
+
+    <span class=hljs-keyword >def</span> <span class="hljs-title function_">move</span>(<span class=hljs-params >self, dt</span>):
+        <span class=hljs-keyword >if</span> self.stuck <span class=hljs-keyword >and</span> self.track.live:
+            xt = self.track.X
+            yt = self.track.Y
+            thet = self.stuck_thet + (self.track.c_rot-self.orig_rot)
+
+            d = self.stuck_d
+            X_new = xt + d*np.math.cos(thet)
+            Y_new = yt + d*np.math.sin(thet)
+            self.Vx = (X_new - self.X) /dt
+            self.Vy = (Y_new - self.Y) /dt
+            self.X = X_new
+            self.Y = Y_new
+            self.thet = self.orig_rot_thet - (self.track.c_rot-self.orig_rot)*<span class=hljs-number >57.3</span>
+        
+        <span class=hljs-keyword >else</span>:
+            self.stuck = <span class=hljs-literal >False</span>
+            self.X += self.Vx * dt
+            self.Y += self.Vy * dt
+            self.Vy += self.a * dt
+            self.thet += self.w * dt
+        
+    <span class=hljs-keyword >def</span> <span class="hljs-title function_">near</span>(<span class=hljs-params >self, track, thresh=<span class=hljs-number >1.0</span></span>):
+        x1 = self.X
+        y1 = self.Y
+        x2 = track.X
+        y2 = track.Y
+        <span class=hljs-keyword >return</span> np.math.sqrt((x2-x1)**<span class=hljs-number >2</span> + (y2-y1)**<span class=hljs-number >2</span>) &lt; thresh*(self.dia+track.dia)/<span class=hljs-number >2</span>
+    
+    <span class=hljs-keyword >def</span> <span class="hljs-title function_">pos</span>(<span class=hljs-params >self</span>):
+        <span class=hljs-keyword >return</span> (<span class=hljs-built_in >round</span>(self.X), <span class=hljs-built_in >round</span>(self.Y))
+    
+    <span class=hljs-keyword >def</span> <span class="hljs-title function_">draw</span>(<span class=hljs-params >self, frame</span>):
+        add_overlay(frame, imutils.rotate(self.im, self.thet), <span class=hljs-built_in >round</span>(self.X-self.rad_px), <span class=hljs-built_in >round</span>(self.Y-self.rad_px))
+
+    <span class=hljs-keyword >def</span> <span class="hljs-title function_">stick</span>(<span class=hljs-params >self, track</span>):
+        self.stuck = <span class=hljs-literal >True</span>
+        self.track = track
+
+        x1 = self.X
+        y1 = self.Y
+        x2 = track.X
+        y2 = track.Y
+        self.stuck_d = np.math.sqrt((x2-x1)**<span class=hljs-number >2</span> + (y2-y1)**<span class=hljs-number >2</span>)
+        thet = np.arctan2(y1-y2,x1-x2)
+        self.stuck_thet = thet
+        self.orig_rot_thet = self.thet
+        self.orig_rot = track.c_rot</code></pre> <p>Now we can tie the flying and tracked heads together inside the video processing loop&#33; And then we can sum up the current score. If this is the best score of the day, grab a snapshot of the current players and add it to the landing page.</p> <pre><code class="Python hljs"><span class=hljs-comment ># Spawn a flying head about every 5th frame if there are people using the photobooth</span>
+head_list = []
+<span class=hljs-keyword >if</span> face_res.detections:
+    p_spawn = <span class=hljs-number >0.2</span>
+    max_heads = <span class=hljs-number >40</span>
+    <span class=hljs-keyword >if</span> np.random.rand() &lt; p_spawn <span class=hljs-keyword >and</span> <span class=hljs-built_in >len</span>(head_list)&lt;max_heads:
+        targ = random.choice(track_list)
+
+        <span class=hljs-comment ># Pick either a Jacob head or an Erin head at random (50% chance of picking either)</span>
+        <span class=hljs-keyword >if</span> np.random.rand() &gt; <span class=hljs-number >0.5</span>:
+            face_pic = random.choice(JACOB_PICS)
+            score_associated = -<span class=hljs-number >2</span>
+        <span class=hljs-keyword >else</span>:
+            face_pic = random.choice(ERIN_PICS)
+            score_associated = <span class=hljs-number >1</span>
+
+        head_size_min = <span class=hljs-number >25</span>
+        head_size_max = <span class=hljs-number >45</span>    
+        head_size = head_size_min + (head_size_max-head_size_min)*random.random()
+        head_list.append(FlyingHead(targ.c_c, face_pic, head_size, score_associated, cap_x, cap_y, a=<span class=hljs-number >20</span>))
+
+points = <span class=hljs-number >0</span>
+<span class=hljs-keyword >for</span> head <span class=hljs-keyword >in</span> head_list:
+    head.move(loop_dt)
+
+    <span class=hljs-keyword >if</span> head.Y &gt; CAM_Y: <span class=hljs-comment >#remove heads that were missed</span>
+        head_list.remove(head)
+        <span class=hljs-keyword >continue</span>
+
+    <span class=hljs-keyword >if</span> <span class=hljs-keyword >not</span> head.stuck: <span class=hljs-comment >#heads stick to tracks</span>
+        <span class=hljs-keyword >for</span> track <span class=hljs-keyword >in</span> track_list:
+            <span class=hljs-keyword >if</span> head.near(track):
+                head.stick(track)
+                <span class=hljs-keyword >break</span>
+    
+    <span class=hljs-keyword >if</span> <span class=hljs-keyword >not</span> head.stuck: <span class=hljs-comment >#heads stick to stuck heads</span>
+        <span class=hljs-keyword >for</span> head2 <span class=hljs-keyword >in</span> head_list:
+            <span class=hljs-keyword >if</span> head2.stuck <span class=hljs-keyword >and</span> head.near(head2):
+                head.stick(head2.track)
+                <span class=hljs-keyword >break</span>
+    
+    <span class=hljs-keyword >if</span> head.stuck:
+        points += head.points
+
+gui[<span class=hljs-string >&#x27;current_score&#x27;</span>].update(<span class=hljs-string >&#x27;Current Score: &#x27;</span> + <span class=hljs-built_in >str</span>(points))
+
+<span class=hljs-keyword >if</span> points &gt; HIGH_SCORE_TODAY:
+    HIGH_SCORE_TODAY = points
+    gui[<span class=hljs-string >&#x27;high_score&#x27;</span>].update(<span class=hljs-string >&#x27;High Score: &#x27;</span> + <span class=hljs-built_in >str</span>(points))
+
+    high_score_face_pics = []
+    <span class=hljs-keyword >for</span> track <span class=hljs-keyword >in</span> track_list:
+        res = im2.copy()
+        mask = np.zeros_like(im2)
+        mask = cv2.circle(mask, (track.X,track.Y), <span class=hljs-built_in >round</span>(track.c_rad), (<span class=hljs-number >255</span>,<span class=hljs-number >255</span>,<span class=hljs-number >255</span>), -<span class=hljs-number >1</span>)
+        res[:, :, <span class=hljs-number >3</span>] = mask[:,:,<span class=hljs-number >0</span>]
+        
+        res = res[track.Y-<span class=hljs-built_in >round</span>(track.c_rad):track.Y+<span class=hljs-built_in >round</span>(track.c_rad), track.X-<span class=hljs-built_in >round</span>(track.c_rad):track.X+<span class=hljs-built_in >round</span>(track.c_rad)]
+        high_score_face_pics.append(cv2.resize(res,(<span class=hljs-number >80</span>,<span class=hljs-number >80</span>)))
+
+    gui[<span class=hljs-string >&#x27;high_score_face&#x27;</span>].update(data=cv2.imencode(<span class=hljs-string >&#x27;.png&#x27;</span>, cv2.hconcat(high_score_face_pics))[<span class=hljs-number >1</span>].tobytes())  <span class=hljs-comment ># Update image in window</span></code></pre> <p>The game in action looks like:</p> <h3 id=photostrip ><a href="#photostrip" class=header-anchor >Photostrip</a></h3> <p>The photostrip interaction modality is the standard photobooth use case. We show the users a live video feed, take 4 snapshots, jazz them up a bit, and print them out. </p> <div class=im-100 ><img src="/projects/photobooth/photostrip_diagram.svg" alt=""></div> <p>There are a few places here where we want to do multiple things simultaneously. For example, we want to create the Google Photos album while the user is taking the photostrip pictures. We will make use of Python&#39;s asynchronous capabilities to accomplish this.</p> <div class=im-100 ><img src="/projects/photobooth/async_diagram.svg" alt=""></div> <p>For interacting with Google Photos we make use of <a href="https://github.com/davidedelpapa/gphotospy">gphotospy</a>, an easy to use Python implementation of the Google Photos API. </p> <pre><code class="Python hljs">service = authorize.init(CLIENT_SECRET_FILE)
+ALBUM_MANAGER = Album(service)
+<span class=hljs-keyword >async</span> <span class=hljs-keyword >def</span> <span class="hljs-title function_">init_album</span>(<span class=hljs-params ><span class=hljs-built_in >id</span></span>):
+    <span class=hljs-comment ># Create a new album</span>
+    new_album = ALBUM_MANAGER.create(<span class=hljs-built_in >id</span>)
+    
+    <span class=hljs-comment ># Get ID and set share options</span>
+    id_album = new_album.get(<span class=hljs-string >&quot;id&quot;</span>)
+    share_results = ALBUM_MANAGER.share(id_album)
+    shareUrl = share_results[<span class=hljs-string >&quot;shareableUrl&quot;</span>]
+    <span class=hljs-keyword >return</span> id_album
+
+<span class=hljs-comment ># Kick off album creation</span>
+task_init_album = asyncio.create_task(init_album(<span class=hljs-built_in >id</span>))
+
+<span class=hljs-comment ># Do other stuff...</span>
+
+<span class=hljs-comment ># Wait for album creation to return</span>
+id_album = <span class=hljs-keyword >await</span> task_init_album</code></pre> <h2 id=ingredients ><a href="#ingredients" class=header-anchor >Ingredients</a></h2> <ul> <li><p><a href="https://pysimplegui.readthedocs.io/en/latest/">PySimpleGUI</a> - a Python GUI For Humans</p> <li><p><a href="https://opencv.org/">OpenCV</a></p> <li><p><a href="https://google.github.io/mediapipe/">Mediapipe</a></p> <li><p><a href="https://excalidraw.com/">Excalidraw</a> - diagram creation</p> <li><p><a href="https://github.com/davidedelpapa/gphotospy">gphotospy</a></p> </ul> <div class=page-foot > <div class=copyright > <a href="mailto:contact@jacobw.xyz" class="fa fa-envelope"></a> <a href="https://github.com/jacobwood27" class="fa fa-github"></a> <br> <br> Last modified: November 10, 2021. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div>
