@@ -218,6 +218,15 @@ table tbody tr td {
     width: 60%;
 }
 
+
+.im-30 {text-align: center;}
+.im-30 img {
+    padding: 0;
+    padding-left: 35%;
+    padding-right: 35%;
+    width: 30%;
+}
+
 .books-page {
   width: 60vw;
   left: 50%;

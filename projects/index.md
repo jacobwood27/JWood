@@ -1,6 +1,6 @@
 @def title = "Projects"
 
-Hello. Here are some things I have made. 
+Here are some things I have made. 
 
 - [Disc Golf Tracking](/projects/disc_golf)
 - [Superbowl Squares](/projects/superbowl_squares)

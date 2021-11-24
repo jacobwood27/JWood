@@ -1,4 +1,4 @@
-@def title = "Inklings"
+@def title = "Incubator"
 
 Here are some notes I have jotted down that I hope to flesh out. 
 
@@ -28,7 +28,6 @@ Here are some notes I have jotted down that I hope to flesh out.
 - Neuron seconds per calorie or cortex neuron seconds per calorie
 - Make your own children’s book photo booth
 - Story about discovery of "neural resonance" where brain is directly stimulated for peak euphoria but keeps blowing up
-- Shawn birthday present rope cut to cornhole length
 - Prediction market wrapped assets
 - Lobbying for laws to be enacted with statistical data in mind
     - Experimental lobbyist. Randomness advocate.
