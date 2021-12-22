@@ -160,11 +160,12 @@ function get_outcome(P)
 end
 ```
 
-And the simulation will be run by comparing the random results to a vector of input coordinates. We can use multiple threads (make sure to use an atomic for the variable that is shared across threads) to speed things up.
+And the simulation will be run by comparing the random results to a vector of input coordinates. We can use multiple threads to speed things up.
 ```
 function sim(coords, P1, P2; N=10000000)
-    winnings = Threads.Atomic{Int}(0)
+    Y = zeros(Int16, N)
     payoff = 25
+
     Threads.@threads for i = 1:N
 
         t1 = get_outcome(P1)
@@ -173,7 +174,7 @@ function sim(coords, P1, P2; N=10000000)
         for j=1:4
             for c in coords
                 if t1[j]==c[1] && t2[j]==c[2]
-                    Threads.atomic_add!(winnings, payoff)
+                    Y[i] += payoff
                     break
                 end
             end
@@ -181,12 +182,16 @@ function sim(coords, P1, P2; N=10000000)
 
     end
 
+    ȳ = sum(Y)/N
+    s_y = sqrt(1/(N-1)*sum((Y.-ȳ).^2))
+    ci_3σ = 3*s_y/sqrt(N)
+
     println()
     println("After $N runs:")
-    println("Expected return on \$$(length(coords)) = \$$(winnings[]/N)")
+    println("Expected return on \$$(length(coords)) = \$$ȳ  (99% CI: \$$(round(ȳ-ci_3σ,digits=4)) - \$$(round(ȳ+ci_3σ,digits=4)))")
     println()
 
-    return winnings[]/length(coords)/N
+    return ȳ/length(coords)
 end
 ```
 
@@ -199,15 +204,15 @@ C = [(4,8)]
 sim(C, P1, P2)
 ```
 ```plaintext
-After 10000000 runs:
-Expected return on $1 = $0.999695
+After 1000000 runs:
+Expected return on $1 = $0.9989  (99% CI: $0.9813 - $1.0165)
 ```
 
 ### With 2 Squares
 Two purchased squares can be aligned in 3 distinct ways:
 
-✅✅ | ✅⬜ | ✅⬜\\
-⬜⬜ | ✅⬜ | ⬜✅
+✅✅ &nbsp; ✅⬜ &nbsp; ✅⬜\\
+⬜⬜ &nbsp; ✅⬜ &nbsp; ⬜✅
 
 ```
 P1 = [0.14, 0.48, 0.13, 0.22, 0.03]
@@ -220,11 +225,11 @@ C = [   [(1,1), (1,2)],
 ```
 
 ```plaintext
-Expected return on $2 = $1.9988025
+Expected return on $2 = $1.995625  (99% CI: $1.9707 - $2.0205)
 
-Expected return on $2 = $1.9997625
+Expected return on $2 = $2.001975  (99% CI: $1.9771 - $2.0269)
 
-Expected return on $2 = $2.0050025
+Expected return on $2 = $1.993350  (99% CI: $1.9686 - $2.0181)
 ```
 
 Hmm, no meaningful variation across those runs.
@@ -232,9 +237,9 @@ Hmm, no meaningful variation across those runs.
 ### With 3 Squares
 Three purchased squares can be aligned in 6 distinct ways:
 
-✅✅✅ | ✅✅⬜ | ✅✅⬜ | ✅⬜⬜ | ✅⬜⬜ | ✅⬜⬜\\
-⬜⬜⬜ | ⬜⬜✅ | ✅⬜⬜ | ✅⬜⬜ | ✅⬜⬜ | ⬜✅⬜\\
-⬜⬜⬜ | ⬜⬜⬜ | ⬜⬜⬜ | ⬜✅⬜ | ✅⬜⬜ | ⬜⬜✅
+✅✅✅ &nbsp; ✅✅⬜ &nbsp; ✅✅⬜ &nbsp; ✅⬜⬜ &nbsp; ✅⬜⬜ &nbsp; ✅⬜⬜\\
+⬜⬜⬜ &nbsp; ⬜⬜✅ &nbsp; ✅⬜⬜ &nbsp; ✅⬜⬜ &nbsp; ✅⬜⬜ &nbsp; ⬜✅⬜\\
+⬜⬜⬜ &nbsp; ⬜⬜⬜ &nbsp; ⬜⬜⬜ &nbsp; ⬜✅⬜ &nbsp; ✅⬜⬜ &nbsp; ⬜⬜✅
 
 ```
 P1 = [0.14, 0.48, 0.13, 0.22, 0.03]
@@ -250,19 +255,117 @@ C = [   [(1,1), (1,2), (1,3)],
 ```
 
 ```plaintext
-Expected return on $3 = $2.9988275
+Expected return on $3 = $2.981750  (99% CI: $2.9513 - $3.0122)
 
-Expected return on $3 = $3.005655
+Expected return on $3 = $3.009350  (99% CI: $2.9790 - $3.0397)
 
-Expected return on $3 = $2.99696
+Expected return on $3 = $2.999225  (99% CI: $2.9688 - $3.0296)
 
-Expected return on $3 = $2.9966
+Expected return on $3 = $3.000825  (99% CI: $2.9705 - $3.0311)
 
-Expected return on $3 = $2.999255
+Expected return on $3 = $3.008625  (99% CI: $2.9781 - $3.0392)
 
-Expected return on $3 = $3.001155
+Expected return on $3 = $2.995750  (99% CI: $2.9656 - $3.0259)
 ```
 Still no variation in the results!
+
+### Exotic Probabilities
+Perhaps we are only seeing neutral results because of the probability distribution we are using. Let's see if some more exotic probability distributions change things up.
+
+With all outcomes equally likely:
+```
+P1 = [0.2, 0.2, 0.2, 0.2, 0.2]
+P2 = [0.2, 0.2, 0.2, 0.2, 0.2]
+C = [   [(1,1), (1,2), (1,3)],
+        [(1,1), (1,2), (2,3)],
+        [(1,1), (1,2), (2,1)],
+        [(1,1), (2,1), (3,2)],
+        [(1,1), (2,1), (3,1)],
+        [(1,1), (2,2), (3,3)],
+    ]
+[sim(c, P1, P2) for c in C]
+```
+
+```plaintext
+Expected return on $3 = $3.007775  (99% CI: $2.9747 - $3.0408)
+
+Expected return on $3 = $2.992625  (99% CI: $2.9604 - $3.0248)
+
+Expected return on $3 = $3.000900  (99% CI: $2.9683 - $3.0335)
+
+Expected return on $3 = $2.988875  (99% CI: $2.9566 - $3.0211)
+
+Expected return on $3 = $3.005950  (99% CI: $2.9730 - $3.0389)
+
+Expected return on $3 = $3.002600  (99% CI: $2.9706 - $3.0346)
+```
+
+With only one outcome possible:
+```
+P1 = [0.0, 0.0, 0.0, 0.0, 1.0]
+P2 = [0.0, 0.0, 0.0, 1.0, 0.0]
+C = [   [(1,1), (1,2), (1,3)],
+        [(1,1), (1,2), (2,3)],
+        [(1,1), (1,2), (2,1)],
+        [(1,1), (2,1), (3,2)],
+        [(1,1), (2,1), (3,1)],
+        [(1,1), (2,2), (3,3)],
+    ]
+[sim(c, P1, P2) for c in C]
+```
+
+```plaintext
+Expected return on $3 = $3.012750  (99% CI: $2.9699 - $3.0556)
+
+Expected return on $3 = $2.987775  (99% CI: $2.9469 - $3.0287)
+
+Expected return on $3 = $3.020800  (99% CI: $2.9797 - $3.0619)
+
+Expected return on $3 = $3.002900  (99% CI: $2.9628 - $3.0430)
+
+Expected return on $3 = $2.989750  (99% CI: $2.9498 - $3.0297)
+
+Expected return on $3 = $2.982950  (99% CI: $2.9430 - $3.0229)
+```
+
+Still no variation across results. It seems as though no strategy outperforms any other strategy.
+
+
+## Math
+We probably should have started with the math, but oh well.
+
+The expected value of a bet is the expected returns minus the cost of the bet. For simplicity, we will assume the cost of each square is 1 unit, so we can write:
+\[
+    E[Bet] = E[Return] - cost = E[Return] - n_{squares}
+\]
+
+The expected value of the return is just the sum of the expected returns of each quarter. The expected value of the sum of a collection of events [is linear](https://en.wikipedia.org/wiki/Expected_value#Basic_properties), even if the events are not independent. 
+
+\[
+    E[Return] = E[Q_1 + Q_2 + Q_3 + Q_4] = E[Q_1] + E[Q_2] + E[Q_3] + E[Q_4]
+\]
+
+And the expected value of the returns of each quarter is just the sum of the expected value of the returns for each purchased square for that quarter. If each purchased square is indexed as $(X_i, Y_i)$, the return for each quarter is $R_Q$, and the probability that a team finishes with a score corresponding to a specific row/column is $P_{Team,row/col}$, then:
+
+\[
+    E[Q] = \sum_{i=1}^{n_{squares}}{R_Q \times P_{Team1,X_i} \times P_{Team2,Y_i}}
+\]
+
+No row or column is more likely than any other a priori (each has probability $1/10$), so we can simplify things to look like:
+\[
+    E[Q] = n_{squares} \times R_Q \times \frac{1}{10} \times \frac{1}{10} \\[10pt]
+    E[Return] = n_{squares} \times \frac{1}{100} \times (R_{Q1} + R_{Q2} + R_{Q3} + R_{Q4})
+\]
+
+If the house is not taking a cut then the returns for each quarter must sum up to the total paid in, so $R_{Q1} + R_{Q2} + R_{Q3} + R_{Q4} = 100$. Finally:
+
+\[
+    E[Bet] = n_{squares} \times \frac{1}{100} \times 100 - n_{squares} \\[10pt]
+    E[Bet] = 0
+\]
+
+As expected, regardless of the structure of the purchased squares, the expectation on the bet is neutral.
+
 
 ## Results
 We can poke around with more purchased squares, we can change the predicted score categories, but the answer remains the same: you cannot buy squares in a strategic way. 

@@ -1,0 +1,4 @@
+TODO
+ - Change now and resume to About
+ - Update placeholder pictures
+ - 

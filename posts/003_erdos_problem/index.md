@@ -1,4 +1,4 @@
-
+@def title="Erdos Problem"
 
 This is a "stream of consciousness" post that attempts to solve the problem that bubbled up on Hacker News described here: [https://mapehe.github.io/math-problem/index.html](https://mapehe.github.io/math-problem/index.html)
 

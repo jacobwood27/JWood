@@ -267,13 +267,13 @@ body { counter-reset: eqnum; }
   white-space: normal;
 }
 
-.katex-display::after {
+/* .katex-display::after {
   counter-increment: eqnum;
   content: "(" counter(eqnum) ")";
   position: relative;
   float: right;
   padding-right: 5px;
-}
+} */
 
 /* ==================================================================
     CODE & HIGHLIGHT.JS
