@@ -2,9 +2,8 @@
 
 My wife  and I were married on September 18, 2021 which turned out to be a beautiful San Diego day. We opted to do a majority of the preparation ourselves and this was a great excuse to try my hand in some graphic design. 
 
-TODO Picture of welcome sign at the wedding:
 @@im-100
-\fig{/projects/superbowl_squares/sb_squares.jpg}
+\fig{/projects/wedding_design/ej_sign.jpg}
 @@
 
 ## Inputs
@@ -203,3 +202,4 @@ Wedding Favor labels
 - [Google Fonts](https://fonts.google.com/) - Resource for free fonts
 - [Costco Photo Center](https://www.costcophotocenter.com/prints) - Cheap and high quality printing
 - [pngquant](https://pngquant.org/) - png image compression 
+- [jpegoptim](https://github.com/tjko/jpegoptim) - jpeg image compression

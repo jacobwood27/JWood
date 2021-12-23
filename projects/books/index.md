@@ -8,11 +8,11 @@ I find *lists of favorite things* made by individuals I respect, and strive to t
 * [Nick Beckstead](https://www.nickbeckstead.com/audiobooks)
 * [Derek Sivers](https://sive.rs/book)
 
-In a similar vein, I've attempted to keep a list of scored and ranked books I've read. The 1-4 stars scale roughly reflects:
+In a similar vein, I've attempted to keep a list of scored and ranked books I've read. The 1-4 stars scale attempts to convey advice I would give to a person like me who was not yet read this book:
 
-* 4 - Among the best
-* 3 - Glad to have read
-* 2 - Good, but would not read again
+* 4 - Definitely read
+* 3 - Recommend reading
+* 2 - Read if interested
 * 1 - Would not recommend
 
 <!-- @@ -->
