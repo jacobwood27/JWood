@@ -1,21 +1,20 @@
 @def title="2021 Christmas Giving Game"
 
 The charities I have selected for 2021 are, in no particular order:
- - [Center for Alcohol Policy Solutions](https://www.alcoholpolicysolutions.center/) - Advancing high impact policy solutions to save lives and promote health
- - [RadicalxChange](https://www.radicalxchange.org/) - Global movement for next-generation political economies
- - [Strong Minds](https://strongminds.org/) - Treating depression at scale in Africa
- - [New Incentives](https://www.newincentives.org/) - Small cash incentives to boost childhood vaccination rates
- - [Clean Air Task Force](https://www.catf.us/) - Decarbonize the global energy system to address climate change
- - [Fridays for Future](https://fridaysforfuture.org/) - Grassroots youth-led protests for climate justice
- - [The Humane League](https://thehumaneleague.org/) - End the abuse of animals raised for food
- - [Modern Agriculture Foundation](https://www.modern-agriculture.org/) - Promote alternative protein research
- - [Carnegie–Tsinghua Center for Global Policy](https://carnegietsinghua.org/about/?fa=contact?lang=en) - Beijing-based think tank hosts dialogues with participants from the United States, China, and other countries
- - [California YIMBY](https://cayimby.org/) - Grassroots movement supporting local YIMBY organizations that advocate for more affordable housing
- - [Center for Human-Compatible AI](https://humancompatible.ai/) - Carries out technical and advocacy work to help ensure the safety of AI systems 
- - [D-Prize](https://d-prize.org/) - Support new entrepreneurs who distribute proven poverty interventions
+ - [Center for Alcohol Policy Solutions](https://www.alcoholpolicysolutions.center/) ([pdf](caps.pdf)) - Advancing high impact policy solutions to save lives and promote health
+ - [Strong Minds](https://strongminds.org/) ([pdf](sm.pdf)) - Treating depression at scale in Africa
+ - [New Incentives](https://www.newincentives.org/) ([pdf](ni.pdf)) - Small cash incentives to boost childhood vaccination rates
+ - [Clean Air Task Force](https://www.catf.us/) ([pdf](catf.pdf)) - Decarbonize the global energy system to address climate change
+ - [Fridays for Future](https://fridaysforfuture.org/) ([pdf](fff.pdf)) - Grassroots youth-led protests for climate justice
+ - [The Humane League](https://thehumaneleague.org/) ([pdf](thl.pdf)) - End the abuse of animals raised for food
+ - [Modern Agriculture Foundation](https://www.modern-agriculture.org/) ([pdf](maf.pdf)) - Promote alternative protein research
+ - [Carnegie–Tsinghua Center for Global Policy](https://carnegietsinghua.org/about/?fa=contact?lang=en) ([pdf](ctc.pdf)) - Beijing-based think tank hosts dialogues with participants from the United States, China, and other countries
+ - [California YIMBY](https://cayimby.org/) ([pdf](yimby.pdf)) - Grassroots movement supporting local YIMBY organizations that advocate for more affordable housing
+ - [Center for Human-Compatible AI](https://humancompatible.ai/) ([pdf](chai.pdf)) - Carries out technical and advocacy work to help ensure the safety of AI systems 
+ - [D-Prize](https://d-prize.org/) ([pdf](dp.pdf)) - Support new entrepreneurs who distribute proven poverty interventions
 
 
-Similar to last year, each gift recipient will receive giving dollars and a specific charity to pitch. After the pitches and ensuing discussion the recipients will be allowed to allocate their giving dollars as they see fit. The winning charity with the most allocated dollars will have its donation doubled! 
+Similar to last year, each gift recipient will receive giving dollars and a one-pager on a specific charity to pitch. After the pitches and ensuing discussion the recipients will be allowed to allocate their giving dollars as they see fit. The winning charity with the most allocated dollars will have its donation doubled! 
  
 \fig{/posts/004_2021_xmas_giving/5.png}
 
