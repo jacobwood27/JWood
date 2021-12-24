@@ -564,11 +564,11 @@ The original intent was to wrap the entire frame in a watercolor blue mural. Unf
 
 
 ## Ingredients
-- [PySimpleGUI](https://pysimplegui.readthedocs.io/en/latest/) - a Python GUI For Humans
-- [OpenCV](https://opencv.org/)
-- [Mediapipe](https://google.github.io/mediapipe/)
+- [PySimpleGUI](https://pysimplegui.readthedocs.io/en/latest/) - Python GUI For Humans
+- [OpenCV](https://opencv.org/) - Open source computer vision
+- [Mediapipe](https://google.github.io/mediapipe/) - Google ML live/streaming image processing
 - [Excalidraw](https://excalidraw.com/) - diagram creation
-- [gphotospy](https://github.com/davidedelpapa/gphotospy)
-- [PIL]()
-- [qrcode]()
-- [yagmail]()
+- [gphotospy](https://github.com/davidedelpapa/gphotospy) - Google Photos Python library
+- [PIL](https://pillow.readthedocs.io/en/stable/index.html) - Python Imaging Library
+- [qrcode](https://pypi.org/project/qrcode/) - QR code generation in Python
+- [yagmail](https://pypi.org/project/yagmail/) - Python GMAIL/SMTP client 

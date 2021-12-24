@@ -153,8 +153,12 @@ h6 {
   text-align: center;
 }
 
+.franklin-toc ol {
+  list-style-type: none;
+}
+
 .franklin-toc ol ol {
-  list-style-type: lower-alpha;
+  list-style-type: none; /*lower-alpha; */
 }
 
 .franklin-content th,
