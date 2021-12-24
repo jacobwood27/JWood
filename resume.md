@@ -6,7 +6,6 @@
 
 ### Aerospace Engineer at General Atomics Electromagnetic Systems
 2017 - present  
-
 - Completed conceptual design of low speed aircraft, high speed projectiles, underwater vehicles, and full railgun operational systems
 - Developed tools for trade space scoping and exploration, parametric system sizing, flight command and control, experimental analysis, and mission simulation
 - Conducted full computational fluid analyses at multiple levels of fidelity within subsonic to hypersonic flight regimes
@@ -26,6 +25,7 @@
 
 ### PEERS Workshop Facilitator at UCLA
 2015 - 2016
+ - Developed weekly material 
 
 @@blank@@
 
@@ -34,7 +34,7 @@
 
 @@blank@@
 
-## Education
+# Education
 ### MS in Aerospace Engineering from UCLA
 2015
 - Emphasis in fluid mechanics
@@ -44,12 +44,11 @@
 
 ### BS in Aerospace Engineering from UCLA
 2014
-- Emphasis in
+- Emphasis in space systems and design
 - Vishal Parikh Memorial Scholarship - Outstanding performance in the field of rocket propulsion
 
-## Extra - Curricular
+# Extra - Curricular
 
-
-## Interests
+# Interests
 
 @@
