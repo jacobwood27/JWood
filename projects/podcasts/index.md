@@ -66,20 +66,47 @@ Here are the podcasts I listen to regularly and my favorite episodes of each.
  - How the World's Companies Wound Up in a Deepening Supply Chain Nightmare
 
 ### Probable Causation
+ - Episode 6: Manisha Shah on criminalizing sex work
+ - Episode 8: Amanda Agan on Ban the Box
+ - Episode 49: Michael Makowsky on the minimum wage, EITC, and recidivism
 
 ### The Realignment
+ - 171 | Ross Douthat: The Limits of Modern Medicine in a Post-COVID World
+ - 131 | Katherine Gehl: Breaking the Duopoly with Political Innovation
+ - 124 | Niall Ferguson: The Politics and History of Catastrophe
 
 ### The 80,000 Hours Podcast
+ - #17 - Prof Will MacAskill on moral uncertainty, utilitarianism, & how to avoid being a moral monster
+ - #24 - Stefan Schubert on why it's a bad idea to break the rules, even if it's for a good cause
+ - #35 - Tara Mac Aulay on the audacity to fix the world without asking permission
+ - #43 - Daniel Ellsberg on the institutional insanity that maintains nuclear doomsday machines
+ - #45 - Tyler Cowen's case for maximising econ growth, stabilising civilization & thinking long-term
+ - #48 - Brian Christian on better living through the wisdom of computer science
+ - #52 - Prof Glen Weyl on uprooting capitalism and democracy for a just society
+ - #63 - Vitalik Buterin on better ways to fund public goods, blockchain's failures, & effective giving
+ - #67 - Prof David Chalmers on the nature and ethics of consciousness
+ - #79 - A.J. Jacobs on radical honesty, following the whole Bible, and reframing global problems as puzzles
+ - #86 - Hilary Greaves on Pascal's mugging, strong longtermism, and whether existing can be good for us
+ - #90 - Ajeya Cotra on worldview diversification and how big the future could be
+ - #107 - Chris Olah on what the hell is going on inside neural networks
+ - #116 - Luisa Rodriguez on why global catastrophes seem unlikely to kill us all
 
 ### The a16z Podcast
+ - Anatomy of the SolarWinds Hack: Who What When Where Why How
+ - Psychedelics: Striking a Balance Between Benefits and Side Effects
 
 ### bio eats world
+ - Journal Club: Bioengineering Bith... Again!
+ - The Biology of Pain
 
 ### AXRP
+ - 12 - AI Existential Risk with Paul Christiano
 
 ### China Talk
 
 ### Clearer Thinking with Spencer Greenberg
+ - The clash between social justice and anti-wokeness (with Amber Dawn and Holly Elmore)
+ - 
 
 ### Complexity
 
