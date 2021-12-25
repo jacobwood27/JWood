@@ -96,7 +96,7 @@ Here are the podcasts I listen to regularly and my favorite episodes of each.
  - Psychedelics: Striking a Balance Between Benefits and Side Effects
 
 ### bio eats world
- - Journal Club: Bioengineering Bith... Again!
+ - Journal Club: Bioengineering Birth... Again!
  - The Biology of Pain
 
 ### AXRP
@@ -105,8 +105,11 @@ Here are the podcasts I listen to regularly and my favorite episodes of each.
 ### China Talk
 
 ### Clearer Thinking with Spencer Greenberg
- - The clash between social justice and anti-wokeness (with Amber Dawn and Holly Elmore)
- - 
+ - [The clash between social justice and anti-wokeness (with Amber Dawn and Holly Elmore)](https://clearerthinkingpodcast.com/episode/085)
+ - [Utopia on earth and morality without guilt (with Joe Carlsmith)](https://clearerthinkingpodcast.com/episode/065)
+ - [Chinese Culture and Love Addiction with Ava King](https://clearerthinkingpodcast.com/episode/050)
+ - [Utilitarianism and Its Flavors with Nick Beckstead](https://clearerthinkingpodcast.com/episode/042)
+ - [Cults and Social Needs with Alice Mottola](https://clearerthinkingpodcast.com/episode/041)
 
 ### Complexity
 
