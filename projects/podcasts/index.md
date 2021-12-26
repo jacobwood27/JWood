@@ -110,25 +110,55 @@ Here are the podcasts I listen to regularly and my favorite episodes of each.
  - [Chinese Culture and Love Addiction with Ava King](https://clearerthinkingpodcast.com/episode/050)
  - [Utilitarianism and Its Flavors with Nick Beckstead](https://clearerthinkingpodcast.com/episode/042)
  - [Cults and Social Needs with Alice Mottola](https://clearerthinkingpodcast.com/episode/041)
+ - [Enlightenment and Sex Work with Aella](https://clearerthinkingpodcast.com/episode/017)
 
 ### Complexity
+ - [Tina Eliassi-Rad on Democracies as Complex Systems](https://complexity.simplecast.com/episodes/73)
+ - [Orit Peleg on the Collective Behavior of Honeybees & Fireflies](https://complexity.simplecast.com/episodes/58)
+ - [Chris Kempes on The Physical Constraints on Life & Evolution](https://complexity.simplecast.com/episodes/17)
 
 ### Dan Carlin's Hardcore History
+ - [Blueprint for Armageddon Series](https://www.dancarlin.com/product/hardcore-history-50-55-blueprint-for-armageddon-series/)
 
 ### Econtalk
+ - [Jennifer Frey on Education, Philosophy, and the University](https://www.econtalk.org/jennifer-frey-on-education-philosophy-and-the-university/)
+ - [Sam Quinones on Meth, Fentanyl, and the Least of Us](https://www.econtalk.org/sam-quinones-on-meth-fentanyl-and-the-least-of-us/)
+ - [Glen Weyl on Antitrust, Capitalism, and Radical Reform](https://www.econtalk.org/glen-weyl-on-antitrust-capitalism-and-radical-reform/)
+ - [Michael Easter on the Comfort Crisis](https://www.econtalk.org/michael-easter-on-the-comfort-crisis/)
+ - [Leon Kass on Human Flourishing, Living Well, and Aristotle](https://www.econtalk.org/leon-kass-on-human-flourishing-living-well-and-aristotle/)
+ - [Richard Davies on Extreme Economies](https://www.econtalk.org/richard-davies-on-extreme-economies/)
+ - [Ryan Holiday on Stillness Is the Key](https://www.econtalk.org/ryan-holiday-on-stillness-is-the-key/)
+ - [Chris Arnade on Dignity](https://www.econtalk.org/chris-arnade-on-dignity/)
+ - [Emily Oster on Cribsheet](https://www.econtalk.org/emily-oster-on-cribsheet/)
+ - [Sebastian Junger on Tribe](https://www.econtalk.org/sebastian-junger-on-tribe/)
+ - [Alain Bertaud on Cities, Planning, and Order Without Design](https://www.econtalk.org/alain-bertaud-on-cities-planning-and-order-without-design/)
+ - [Michael Munger on Crony Capitalism](https://www.econtalk.org/michael-munger-on-crony-capitalism/)
 
 ### Future of Life Institute
+ - [Roman Yampolskiy on the Uncontrollability, Incomprehensibility, and Unexplainability of AI](https://futureoflife.org/2021/03/19/roman-yampolskiy-on-the-uncontrollability-incomprehensibility-and-unexplainability-of-ai/)
+ - [Stephen Batchelor on Awakening, Embracing Existential Risk, and Secular Buddhism](https://futureoflife.org/2020/10/15/stephen-batchelor-on-awakening-embracing-existential-risk-and-secular-buddhism/)
+ - [FLI Podcast: On the Future of Computation, Synthetic Biology, and Life with George Church](https://futureoflife.org/2020/05/15/on-the-future-of-computation-synthetic-biology-and-life-with-george-church/)
 
-### Making Sense
+### Making Sense with Sam Harris
+ - [#259 - The Reckoning to Come](https://www.samharris.org/podcasts/making-sense-episodes/259-reckoning-come)
+ - [#242 - Psychedelics and the Self](https://www.samharris.org/podcasts/making-sense-episodes/242-psychedelics-self)
+ - [#219 - The Power of Compassion](https://www.samharris.org/podcasts/making-sense-episodes/219-power-compassion)
+ - [#156 - The Evolution of Culture](https://www.samharris.org/podcasts/making-sense-episodes/156-evolution-culture)
 
 ### The Portal
+ - []()
 
 ### Rationally Speaking
+ - []()
 
 ### Sinica
+ - []()
 
 ### Future Perfect
+ - []()
 
 ### The Argument
+ - []()
 
 ### Utilitarian
+ - []()
