@@ -49,3 +49,21 @@ Here are some notes I have jotted down that I hope to flesh out.
     - Similar to Scott Sumner fantasy intellectuals?
 - MIT 18.404J - Theory of Computation
 - Catherine Project
+- People change their minds from small local experiences. Where can staged experience be powerful?
+- Entropy and uncertainty principle. What happens with one particle universe? Two particle universe?
+- When people say consciousness they mean emotional display? Or memory forming?
+- Can substrate dependence vary with dimensionality of universe?
+- App to check all Goodreads title availability at your library
+- Positive consciousness is cycles lining up. Conscious is inherently a 4d phenomenon. Low energy state for the 3d interactions if they must fit in 4d.
+- Stable or unstable oscillations after exogenous economic shocks
+- Are all mutations equally likely? Is some genetic information labeled "Important! Do not touch!"
+- Occam's razor - do we want simplest rules? Or simplest outcome? Many worlds has “simple rules” but information heavy outcome, probably
+- Why can’t we make busses free?
+- It’s not that we are self interested, it’s that aligning self interest and societal interest distributes the problem to all of society
+- How do we know life started 3.8 billion years ago?
+- Meta selection - possible to have more mutations if things look bleak for wider search space?
+- Disc golf design optimization with XFOIL? Or probably can easily poke CFD solutions
+    - Record my throws for initial conditions (release angle, spin rate, forward velocity)
+How many shuffles do I need to perform? Start by measuring my shuffling performance
+- App that sells your data explicitly
+- Quantum mechanics is evidence for simulation - creators don’t want us to be able to prove small things?
