@@ -56,6 +56,12 @@
     <priority>0.5</priority>
 </url>
 <url>
+    <loc>https://jacobw.xyz/posts/005_shuffle/index.html</loc>
+    <lastmod>2022-01-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+</url>
+<url>
     <loc>https://jacobw.xyz/projects/wedding_design/index.html</loc>
     <lastmod>2022-01-04</lastmod>
     <changefreq>monthly</changefreq>
