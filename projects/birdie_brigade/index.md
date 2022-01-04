@@ -2,9 +2,8 @@
 
 One of the great joys in my life is playing golf with my father. Golf can be a great time, especially when you are playing well. Unfortunately, we don't play as often as we have in the past and this generally leads to a disappointing scorecard. Instead of focusing on the totaled up score, which can be spoiled with a single poor hole, we now chase birdies. We count a course as "checked off" if at least one of our group members birdies a single hole. The goal is to check off all the public golf courses in San Diego. Naturally, this feat should be tracked by a piece of wall art. This project describes the design and build of the "Birdie Brigade" map gifted to my father as a Christmas present in 2019.
 
-Picture of welcome sign at the wedding:
 @@im-100
-\fig{/projects/superbowl_squares/sb_squares.jpg}
+\fig{/projects/birdie_brigade/all_courses_small-fs8.png}
 @@
 
 ## Courses
@@ -190,8 +189,9 @@ The backdrop was easy. That is just the course names (minus the frame lines, in 
 ### Assembly
 This is the scary part. The frame needed to be attached to the backdrop. I used a glue stick and some helping hands to line things up and it turned out pretty well! The end result was framed and wrapped up with a bag of the puzzle pieces. We have some work to do to fill in the map!
 
-TODO: Picture of end result frame
-
+@@im-100
+\fig{/projects/birdie_brigade/completed.jpg}
+@@
 
 
 

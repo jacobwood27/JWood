@@ -111,7 +111,7 @@ Of these, I selected the bottom right solution as the most "crossword-looking" s
 
 ## Board Fill
 
-To being the filling process I identified the theme answers I wanted to incorporate:
+To begin the filling process I identified the theme answers I wanted to incorporate:
  - JOHNCONWAY
  - DEEPTHOUGHT
  - THISPUZZLE

@@ -4,6 +4,9 @@ Here are the podcasts I listen to regularly and a few of my favorite episodes of
 
 \toc
 
+
+\\
+
 ### The 80,000 Hours Podcast
  - [#17 - Prof Will MacAskill on moral uncertainty, utilitarianism, & how to avoid being a moral monster](https://80000hours.org/podcast/episodes/will-macaskill-moral-philosophy/)
  - [#24 - Stefan Schubert on why it's a bad idea to break the rules, even if it's for a good cause](https://80000hours.org/podcast/episodes/stefan-schubert-considering-considerateness/)
@@ -42,7 +45,8 @@ Here are the podcasts I listen to regularly and a few of my favorite episodes of
  - [E76 Alain Bertaud on Cities, Markets, and People](https://conversationswithtyler.com/episodes/alain-bertaud/)
  - [E106 Audrey Tang on the Technology of Democracy](https://conversationswithtyler.com/episodes/audrey-tang/)
  - [E109 Jimmy Wales on Systems and Incentives](https://conversationswithtyler.com/episodes/jimmy-wales/)
- - [E118 Srah Parcak on Archaeology from Space](https://conversationswithtyler.com/episodes/sarah-parcak/)
+ - [E118 Sarah Parcak on Archaeology from Space](https://conversationswithtyler.com/episodes/sarah-parcak/)
+ - [E119 Dana Gioia on Becoming an Information Billionaire](https://conversationswithtyler.com/episodes/dana-gioia/)
 
 ### Future of Life Institute
  - [Roman Yampolskiy on the Uncontrollability, Incomprehensibility, and Unexplainability of AI](https://futureoflife.org/2021/03/19/roman-yampolskiy-on-the-uncontrollability-incomprehensibility-and-unexplainability-of-ai/)
@@ -73,6 +77,7 @@ Here are the podcasts I listen to regularly and a few of my favorite episodes of
  - [This Conversation with Richard Powers is a Gift](https://open.spotify.com/episode/0n3khB2yDytQWr0M1rVWxn?si=xKv-zHPLT0eyb3HI2pLBDQ)
 
 ### Econtalk
+ - [Megan McArdle on Belonging, Home, and National Identity](https://www.econtalk.org/megan-mcardle-on-belonging-home-and-national-identity/)
  - [Jennifer Frey on Education, Philosophy, and the University](https://www.econtalk.org/jennifer-frey-on-education-philosophy-and-the-university/)
  - [Sam Quinones on Meth, Fentanyl, and the Least of Us](https://www.econtalk.org/sam-quinones-on-meth-fentanyl-and-the-least-of-us/)
  - [Glen Weyl on Antitrust, Capitalism, and Radical Reform](https://www.econtalk.org/glen-weyl-on-antitrust-capitalism-and-radical-reform/)

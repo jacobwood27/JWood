@@ -2,6 +2,7 @@
 
 Here are some thoughts I have had. 
 
+- [7 Shuffles Analysis](/posts/005_shuffle)
 - [2021 Christmas Giving Game](/posts/004_2021_xmas_giving)
 - [Paul Erdos Checkerboard Problem](/posts/003_erdos_problem)
 - [Ethical Meat Eating (DRAFT)](/posts/002_ethical_meat)

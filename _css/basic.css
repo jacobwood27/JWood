@@ -227,6 +227,12 @@ table tbody tr td {
     width: 30%;
 }
 
+.vid-100 {text-align: center;}
+.vid-100 video {
+  height: auto !important;
+  width: 100% !important; 
+}
+
 .books-page {
   width: 60vw;
   left: 50%;

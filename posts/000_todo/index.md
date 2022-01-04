@@ -67,3 +67,4 @@ Here are some notes I have jotted down that I hope to flesh out.
 How many shuffles do I need to perform? Start by measuring my shuffling performance
 - App that sells your data explicitly
 - Quantum mechanics is evidence for simulation - creators don’t want us to be able to prove small things?
+- How does sped up audio not change freq content?
