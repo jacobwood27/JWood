@@ -21,3 +21,17 @@ Similar to last year, each gift recipient will receive giving dollars and a one-
 This year I am tweaking the format slightly - each recipient will be assigned two charities and they will be required to select one of the two to pitch. The intent here is to allow the recipients to perform an initial evaluation before coming up with selling points for their charity. We'll see how it goes.
 
 We tried this for the first time with my family last year (2020) and it led to some interesting Christmas dinner conversation and some surprising results. Looking forward to seeing the results this year!
+
+
+## Retrospective
+The new format went over well! All the participants appreciated the chance to evaluate before pitching. Another thing that went well was giving the participants more time to evaluate options - I handed out the gift envelopes during a few hours of down time and we then played the game in the evening. Finally, the quick information at the top of the handouts (regarding charity location and size) went over well and will be repeated.
+
+Next year I think I want to give each person two charities in the same cause area if that works out. I also want to spend more time on the handouts as that ends up being the major source of information discussed. I would like to add more numbers/charts to these handouts.
+
+The fan favorite this year was by far the [Modern Agriculture Foundation](https://www.modern-agriculture.org/). Interestingly (well, likely due to the emphasis in the 1-page handout) the pitches revolved more around the environmental impacts than the ethical treatment of farm animals. The charity seemed to come across as one that might drive systemic change and uproot whole systems instead of incrementally addressing a problem which came across well. It also did not seem to be too far off into the future.
+
+The runner-up was [New Incentives](https://www.newincentives.org/). NI was recieved well in large margin due to the vaccine politics of the moment. It also was able to convey a powerful single metric ($47 gets one additional child vaccinated) backed by RCT analysis. 
+
+[D-Prize](https://d-prize.org/) performed well due to a perceived agility - participants liked the structure of the organization and the ability to send many small prizes to organizations with largely <$5k in current funding.
+
+[Strong Minds](https://strongminds.org/) was my expected top pick and I was a bit surprised it didn't come out in the lead. It 

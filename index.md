@@ -1,3 +1,3 @@
 @def title = "Jacob Wood"
 
-\fig{/me_plants.jpg}
+\fig{/me_island3.jpg}
