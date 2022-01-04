@@ -30,8 +30,8 @@ Next year I think I want to give each person two charities in the same cause are
 
 The fan favorite this year was by far the [Modern Agriculture Foundation](https://www.modern-agriculture.org/). Interestingly (well, likely due to the emphasis in the 1-page handout) the pitches revolved more around the environmental impacts than the ethical treatment of farm animals. The charity seemed to come across as one that might drive systemic change and uproot whole systems instead of incrementally addressing a problem which came across well. It also did not seem to be too far off into the future.
 
-The runner-up was [New Incentives](https://www.newincentives.org/). NI was recieved well in large margin due to the vaccine politics of the moment. It also was able to convey a powerful single metric ($47 gets one additional child vaccinated) backed by RCT analysis. 
+The runner-up was [New Incentives](https://www.newincentives.org/). NI was recieved well in large margin due to the vaccine politics of the moment. It also was able to convey a powerful single metric (47 USD gets one additional child vaccinated) backed by RCT analysis. 
 
-[D-Prize](https://d-prize.org/) performed well due to a perceived agility - participants liked the structure of the organization and the ability to send many small prizes to organizations with largely <$5k in current funding.
+[D-Prize](https://d-prize.org/) performed well due to a perceived agility - participants liked the structure of the organization and the ability to send many small prizes to organizations with largely <5k USD in current funding.
 
 [Strong Minds](https://strongminds.org/) was my expected top pick and I was a bit surprised it didn't come out in the lead. It 
