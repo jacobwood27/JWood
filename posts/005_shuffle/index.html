@@ -1,8 +1,8 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/github.min.css"> <link rel=stylesheet  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=stylesheet  href="/css/basic.css"> <link rel=icon  href="/assets/favicon.png"> <title>Shuffle</title> <header> <div class=blog-name ><a href="/">Jacob Wood</a></div> <nav> <ul> <li><a href="/projects/">Projects</a> <li><a href="/posts/">Posts</a> <li><a href="/projects/books/">Books</a> <li><a href="/projects/podcasts/">Podcasts</a> <li><a href="/now">Now</a> </ul> <img src="/assets/hamburger.svg" id=menu-icon > </nav> </header> <div class=franklin-content ><p>Folk wisdom claims 7 shuffles is sufficient to thoroughly mix up a deck of cards. This claim originates from a <a href="https://escholarship.org/content/qt0k4654kx/qt0k4654kx.pdf?t&#61;p3z6d7">paper</a> published in 1986 by David Aldous and Persi Diaconis and summarized <a href="https://www.nytimes.com/1990/01/09/science/in-shuffling-cards-7-is-winning-number.html">in the New York Times</a> in 1990. </p> <p>Does my mediocre shuffling reflect this common wisdom? This post is an attempt to investigate that question.</p> <div class=franklin-toc ><ol><li><a href="#collecting_data">Collecting Data</a><ol><li><a href="#video_recording">Video Recording</a><ol><li><a href="#shuffling_-_head_on">Shuffling - Head On </a><li><a href="#shuffling_-_angled_down">Shuffling - Angled Down</a><li><a href="#post_shuffle_riffle">Post Shuffle Riffle</a><ol><li><a href="#transfer_learning_post_processing">Transfer Learning Post Processing</a><ol><li><a href="#data_labelling">Data Labelling</a><li><a href="#model_training">Model Training</a></ol></ol><li><a href="#post_shuffle_conveyor_belt">Post Shuffle Conveyor Belt</a></ol></ol><li><a href="#building_a_shuffling_model">Building a Shuffling Model</a><li><a href="#investigating_performance">Investigating Performance</a><li><a href="#ingredients">Ingredients</a></ol></div> <h2 id=collecting_data ><a href="#collecting_data" class=header-anchor >Collecting Data</a></h2> <p>The first step to assessing my shuffling performance is to investigate a few real world shuffles. To start I recorded 5 the results of 5 shuffles by hand to get a sense of the variation in the distribution. Each run involved shuffling the deck with a riffle shuffle but not aligning the left and right hand piles:</p> <div class=im-100 ><img src="/posts/005_shuffle/card_shuffle1.png" alt=""></div> <p>The resulting order was then recorded as a string of 1s &#40;card from left hand&#41; and 2s &#40;card from right hand&#41;. The 5 initial shuffles were:</p> <pre><code class="plaintext hljs">1112212122121212121212121212121212121212121212111221
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/github.min.css"> <link rel=stylesheet  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=stylesheet  href="/css/basic.css"> <link rel=icon  href="/assets/favicon.png"> <title>Shuffle</title> <header> <div class=blog-name ><a href="/">Jacob Wood</a></div> <nav> <ul> <li><a href="/projects/">Projects</a> <li><a href="/posts/">Posts</a> <li><a href="/projects/books/">Books</a> <li><a href="/projects/podcasts/">Podcasts</a> <li><a href="/now">Now</a> </ul> <img src="/assets/hamburger.svg" id=menu-icon > </nav> </header> <div class=franklin-content ><p>Folk wisdom claims 7 shuffles is sufficient to thoroughly mix up a deck of cards. This claim originates from a <a href="https://escholarship.org/content/qt0k4654kx/qt0k4654kx.pdf?t&#61;p3z6d7">paper</a> published in 1986 by David Aldous and Persi Diaconis and summarized <a href="https://www.nytimes.com/1990/01/09/science/in-shuffling-cards-7-is-winning-number.html">in the New York Times</a> in 1990. </p> <p>Does my mediocre shuffling reflect this common wisdom? This post is an attempt to investigate that question.</p> <hr /> <p><strong>Table of Contents</strong> <div class=franklin-toc ><ol><li><a href="#collecting_data">Collecting Data</a><ol><li><a href="#shuffling_-_head_on">Shuffling - Head On </a><li><a href="#shuffling_-_angled_down">Shuffling - Angled Down</a><li><a href="#post_shuffle_conveyor_belt">Post Shuffle Conveyor Belt</a><li><a href="#post_shuffle_riffle">Post Shuffle Riffle</a><ol><li><a href="#transfer_learning_post_processing">Transfer Learning Post Processing</a><ol><li><a href="#data_labelling">Data Labelling</a><li><a href="#model_training">Model Training</a><li><a href="#deploying_the_model">Deploying the Model </a></ol></ol></ol><li><a href="#building_a_shuffling_model">Building a Shuffling Model</a><ol><li><a href="#data_exploration">Data Exploration</a></ol><li><a href="#investigating_performance">Investigating Performance</a><li><a href="#ingredients">Ingredients</a></ol></div></p> <hr /> <h1 id=collecting_data ><a href="#collecting_data" class=header-anchor >Collecting Data</a></h1> <p>The first step to assessing my shuffling performance is to investigate a few real world shuffles. To start I recorded 5 the results of 5 shuffles by hand to get a sense of the variation in the distribution. Each run involved shuffling the deck with a riffle shuffle but not aligning the left and right hand piles:</p> <div class=im-100 ><img src="/posts/005_shuffle/card_shuffle1.png" alt=""></div> <p>The resulting order was then recorded as a string of 1s &#40;card from left hand&#41; and 2s &#40;card from right hand&#41;. The 5 initial shuffles were:</p> <pre><code class="plaintext hljs">1112212122121212121212121212121212121212121212111221
 1222212212212121221212121212121212222112112211221122
 2221121212211212112121221211221212121122222112212122
 2222122121221121212121122112211222121222211222112211
-2221221221122221212112221122121212212211122122121221</code></pre> <p>Eyeballing here shows quite a bit of variation from shuffle to shuffle. I set out to record the results of 100 independent shuffles to start to quantify the distribution.</p> <h3 id=video_recording ><a href="#video_recording" class=header-anchor >Video Recording</a></h3> <p>Initial attempts at data collection all revolved around recording video of cards and processing it to back out the shuffled sequence.</p> <h4 id=shuffling_-_head_on ><a href="#shuffling_-_head_on" class=header-anchor >Shuffling - Head On </a></h4> <p>The most straightforward approach seemed to be recording the cards falling during the shuffling sequence in slow motion &#40;phone camera can capture at 240fps&#41;. The video was recorded in a semi-reproducible environment to ease processing:</p> <div class=im-60 ><img src="/posts/005_shuffle/front_view.png" alt=""></div> <p>A sample of the resulting video looks like:</p> <div class=vid-100 ><video controls mute autoplay loop> <source src="/posts/005_shuffle/front_shuffle.webm" type="video/webm"> </video></div> <p>Even at 240fps some of the faster cards aren&#39;t captured in transit, and the ones that are captured are blurry and tough to detect with any sort of definable edge or feature. We can address this by instead capturing the face of the shuffle pile as it changes &#40;the time constant between dropping new cards is much larger than the one associated with the drop itself&#41;.</p> <h4 id=shuffling_-_angled_down ><a href="#shuffling_-_angled_down" class=header-anchor >Shuffling - Angled Down</a></h4> <p>The new and improved data collection environment involved even more cardboard:</p> <div class=im-60 ><img src="/posts/005_shuffle/top_view.png" alt=""></div> <p>Initially, the video collected during a shuffle looks promising. It is easy to identify transitions between shuffled cards and which hand is dropping the card:</p> <div class=vid-100 ><video controls mute autoplay loop> <source src="/posts/005_shuffle/top_shuffle.webm" type="video/webm"> </video></div> <p>However, when we look a little closer we don&#39;t notice any funny business:</p> <div class=vid-100 ><video controls mute autoplay loop> <source src="/posts/005_shuffle/top_slow2.webm" type="video/webm"> </video></div> <p>Which is a problem because there was indeed some funny business. The 3 of clubs was tucked between the 9 and 4 of spades. </p> <div class=im-60 ><img src="/posts/005_shuffle/missing3c.png" alt=""></div> <p>You can make out the edge of the card in the video, but we never see the face because the shuffle isn&#39;t perfect and I release both the 3 of clubs and the 4 of spades at the same time. </p> <p>This doesn&#39;t happen in every shuffle, but it does happen occasionally. We might argue that we can just throw out shuffles where we don&#39;t process 52 different cards to avoid the missed card measurement error. However, that would introduce a systematic bias into the measurement - we would be removing all the worst shuffles from the dataset and our resulting impression of our shuffling performance would be better than it should be.</p> <h4 id=post_shuffle_riffle ><a href="#post_shuffle_riffle" class=header-anchor >Post Shuffle Riffle</a></h4> <p>One way to address the systematic bias mentioned above is to decouple the event of the shuffle from the recording of it. That way, if we were to make an error that invalidates the recording, we have no reason to expect the error would alter the perceived distribution. One way to do this is to record the order of the cards after the shuffle. If we record the order before and after each shuffle we can back out the 1s and 2s that make up our riffle model.</p> <p>If we take the cards and riffle them in front of the camera we can then look for cards in each frame and record the order. </p> <div class=vid-100 ><video controls mute autoplay loop> <source src="/posts/005_shuffle/post_riffle_slow.webm" type="video/webm"> </video></div> <p>This strategy is also prone to missing a card, but we can address the problem this time. We can record two different riffles and compare the resulting orders, using the knowledge from the second recording to fill in gaps or resolve discrepancies. If we are unable to order the cards with sufficient confidence we can drop that shuffle from the dataset without introducing bias.</p> <h5 id=transfer_learning_post_processing ><a href="#transfer_learning_post_processing" class=header-anchor >Transfer Learning Post Processing</a></h5> <p>Of course, we won&#39;t be processing the video by hand. I was hoping to use this project to do some in-the-wild machine learning so we will leverage that here. There are a <a href="https://github.com/search?q&#61;playing&#43;card&#43;detection">few projects</a> on Github doing playing card detection but they are generally looking for whole cards on specific backdrops. We will train a new model and make use of the controlled environment it is being deployed in.</p> <h6 id=data_labelling ><a href="#data_labelling" class=header-anchor >Data Labelling</a></h6> <p>We&#39;ll start off by labelling a bit of the data we collected to train on. We&#39;ll use Python and OpenCV to flip through the video files and write frames:</p> <pre><code class="Python hljs"><span class=hljs-keyword >import</span> cv2</code></pre>
+2221221221122221212112221122121212212211122122121221</code></pre> <p>Eyeballing here shows quite a bit of variation from shuffle to shuffle. I set out to record the results of 100 independent shuffles to start to quantify the distribution.</p> <h2 id=shuffling_-_head_on ><a href="#shuffling_-_head_on" class=header-anchor >Shuffling - Head On </a></h2> <p>The most straightforward approach seemed to be recording the cards falling during the shuffling sequence in slow motion &#40;phone camera can capture at 240fps&#41;. The video was recorded in a semi-reproducible environment to ease processing:</p> <div class=im-60 ><img src="/posts/005_shuffle/front_view.png" alt=""></div> <p>A sample of the resulting video looks like:</p> <div class=vid-100 ><video controls mute autoplay loop> <source src="/posts/005_shuffle/front_shuffle.webm" type="video/webm"> </video></div> <p>Even at 240fps some of the faster cards aren&#39;t captured in transit, and the ones that are captured are blurry and tough to detect with any sort of definable edge or feature. We can address this by instead capturing the face of the shuffle pile as it changes &#40;the time constant between dropping new cards is much larger than the one associated with the drop itself&#41;.</p> <h2 id=shuffling_-_angled_down ><a href="#shuffling_-_angled_down" class=header-anchor >Shuffling - Angled Down</a></h2> <p>The new and improved data collection environment involved even more cardboard:</p> <div class=im-60 ><img src="/posts/005_shuffle/top_view.png" alt=""></div> <p>Initially, the video collected during a shuffle looks promising. It is easy to identify transitions between shuffled cards and which hand is dropping the card:</p> <div class=vid-100 ><video controls mute autoplay loop> <source src="/posts/005_shuffle/top_shuffle.webm" type="video/webm"> </video></div> <p>However, when we look a little closer we don&#39;t notice any funny business:</p> <div class=vid-100 ><video controls mute autoplay loop> <source src="/posts/005_shuffle/top_slow2.webm" type="video/webm"> </video></div> <p>Which is a problem because there was indeed some funny business. The 3 of clubs was tucked between the 9 and 4 of spades. </p> <div class=im-60 ><img src="/posts/005_shuffle/missing3c.png" alt=""></div> <p>You can make out the edge of the card in the video, but we never see the face because the shuffle isn&#39;t perfect and I release both the 3 of clubs and the 4 of spades at the same time. </p> <p>This doesn&#39;t happen in every shuffle, but it does happen occasionally. We might argue that we can just throw out shuffles where we don&#39;t process 52 different cards to avoid the missed card measurement error. However, that would introduce a systematic bias into the measurement - we would be removing all the worst shuffles from the dataset and our resulting impression of our shuffling performance would be better than it should be.</p> <h2 id=post_shuffle_conveyor_belt ><a href="#post_shuffle_conveyor_belt" class=header-anchor >Post Shuffle Conveyor Belt</a></h2> <p>We had a lot of cardboard to spare and I had to try getting the power tools involved somehow. The gravity-fed rubber band and drill feeder worked, but was more trouble than it was worth.</p> <div class=vid-100 ><video controls mute autoplay loop> <source src="/posts/005_shuffle/bottom_belt.webm" type="video/webm"> </video></div> <h2 id=post_shuffle_riffle ><a href="#post_shuffle_riffle" class=header-anchor >Post Shuffle Riffle</a></h2> <p>One way to address the systematic bias mentioned above is to decouple the event of the shuffle from the recording of it. That way, if we were to make an error that invalidates the recording, we have no reason to expect the error would alter the perceived distribution. One way to do this is to record the order of the cards after the shuffle. If we record the order before and after each shuffle we can back out the 1s and 2s that make up our riffle model.</p> <p>If we take the cards and riffle them in front of the camera we can then look for cards in each frame and record the order. </p> <div class=vid-100 ><video controls mute autoplay loop> <source src="/posts/005_shuffle/post_riffle_slow.webm" type="video/webm"> </video></div> <p>This strategy is also prone to missing a card, but we can address the problem this time. We can record two different riffles and compare the resulting orders, using the knowledge from the second recording to fill in gaps or resolve discrepancies. If we are unable to order the cards with sufficient confidence we can drop that shuffle from the dataset without introducing bias.</p> <h3 id=transfer_learning_post_processing ><a href="#transfer_learning_post_processing" class=header-anchor >Transfer Learning Post Processing</a></h3> <p>Of course, we won&#39;t be processing the video by hand. I was hoping to use this project to do some in-the-wild machine learning so we will leverage that here. There are a <a href="https://github.com/search?q&#61;playing&#43;card&#43;detection">few projects</a> on Github doing playing card detection but they are generally looking for whole cards on specific backdrops. We will train a new model and make use of the controlled environment it is being deployed in.</p> <h4 id=data_labelling ><a href="#data_labelling" class=header-anchor >Data Labelling</a></h4> <p>We&#39;ll start off by labelling a bit of the data we collected to train on. We&#39;ll use Python and OpenCV to flip through the video files and write frames:</p> <pre><code class="Python hljs"><span class=hljs-keyword >import</span> cv2</code></pre>
 <p>Most of the models we will be considering want small and square images as input. Fortunately, we riffled in a very consistent fashion so we can crop all the video frames in the same small square. We&#39;ll use 224x224 as our image size for now.</p>
 <div class=im-60 ><img src="/posts/005_shuffle/sample_full_frame_rect.jpg" alt=""></div>
 <pre><code class="Python hljs"><span class=hljs-keyword >def</span> <span class="hljs-title function_">prep_frame</span>(<span class=hljs-params >f</span>):
@@ -78,8 +78,8 @@ grid[<span class=hljs-number >4</span>].set_title(<span class=hljs-string >&quot
 ims = []
 <span class=hljs-keyword >for</span> _ <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(<span class=hljs-number >3</span>):
     <span class=hljs-keyword >for</span> s <span class=hljs-keyword >in</span> <span class=hljs-string >&quot;cdhs0&quot;</span>:
-        im_file = random.choice(os.listdir(<span class=hljs-string >&quot;post_riffle/suit_data/&quot;</span>+s))
-        im = cv2.imread(<span class=hljs-string >&quot;post_riffle/suit_data/&quot;</span>+s+<span class=hljs-string >&quot;/&quot;</span>+im_file)
+        im_file = random.choice(os.listdir(<span class=hljs-string >&quot;suit_data/&quot;</span>+s))
+        im = cv2.imread(<span class=hljs-string >&quot;suit_data/&quot;</span>+s+<span class=hljs-string >&quot;/&quot;</span>+im_file)
         ims.append(im[...,::-<span class=hljs-number >1</span>])
 
 <span class=hljs-keyword >for</span> ax, im <span class=hljs-keyword >in</span> <span class=hljs-built_in >zip</span>(grid, ims):
@@ -88,7 +88,7 @@ ims = []
 plt.show()</code></pre>
 <div class=im-100 ><img src="/posts/005_shuffle/suit_verify.png" alt=""></div>
 <p>Rinse and repeat for the ranks of each card.</p>
-<h6 id=model_training ><a href="#model_training" class=header-anchor >Model Training</a></h6>
+<h4 id=model_training ><a href="#model_training" class=header-anchor >Model Training</a></h4>
 <p>Now that we have a subset of our data labelled we can train an algorithm to label the rest of the videos we will take. </p>
 <p>There are plenty of models out there that do a great job of parsing images and learning their requisite features. We would like to take a model that is good at understanding images and have it learn to classify our specific images. This is the definition of <a href="https://en.wikipedia.org/wiki/Transfer_learning">transfer learning</a>. </p>
 <p>We&#39;ll follow along with the TensorFlow example detailed <a href="https://www.tensorflow.org/hub/tutorials/tf2_image_retraining">here</a> for the most part.</p>
@@ -223,15 +223,269 @@ Epoch 10/10
 <p>Tough to beat that. We probably could have gotten away with only 5 epochs, but oh well.</p>
 <div class=im-100 ><img src="/posts/005_shuffle/train_loss.png" alt=""></div>
 <p>Finally, we can save the trained model:</p>
-<pre><code class="Python hljs">model.save(<span class=hljs-string >&quot;/home/woojac/proj/031_shuffle/suit_predictor02&quot;</span>)</code></pre>
-<h4 id=post_shuffle_conveyor_belt ><a href="#post_shuffle_conveyor_belt" class=header-anchor >Post Shuffle Conveyor Belt</a></h4>
-<p>Because we had a lot of cardboard to spare I had to try getting the power tools involved. The gravity-fed rubber band and drill feeder worked, but was more trouble than it was worth.</p>
+<pre><code class="Python hljs">model.save(<span class=hljs-string >&quot;suit_predictor&quot;</span>)</code></pre>
+<h4 id=deploying_the_model ><a href="#deploying_the_model" class=header-anchor >Deploying the Model </a></h4>
+<p>Now we need to use our models to identify all the cards in a riffle as it goes by and back out the shuffled string of 1s and 2s.</p>
+<p>We&#39;ll start by loading in our models and the classes the predictions represent:</p>
+<pre><code class="Python hljs">ranks = (<span class=hljs-string >&#x27;0&#x27;</span>, <span class=hljs-string >&#x27;2&#x27;</span>, <span class=hljs-string >&#x27;3&#x27;</span>, <span class=hljs-string >&#x27;4&#x27;</span>, <span class=hljs-string >&#x27;5&#x27;</span>, <span class=hljs-string >&#x27;6&#x27;</span>, <span class=hljs-string >&#x27;7&#x27;</span>, <span class=hljs-string >&#x27;8&#x27;</span>, <span class=hljs-string >&#x27;9&#x27;</span>, <span class=hljs-string >&#x27;a&#x27;</span>, <span class=hljs-string >&#x27;j&#x27;</span>, <span class=hljs-string >&#x27;k&#x27;</span>, <span class=hljs-string >&#x27;q&#x27;</span>, <span class=hljs-string >&#x27;z&#x27;</span>)
+rank_model = tf.keras.models.load_model(<span class=hljs-string >&quot;rank_predictor&quot;</span>)
+
+suits = (<span class=hljs-string >&#x27;0&#x27;</span>, <span class=hljs-string >&#x27;c&#x27;</span>, <span class=hljs-string >&#x27;d&#x27;</span>, <span class=hljs-string >&#x27;h&#x27;</span>, <span class=hljs-string >&#x27;s&#x27;</span>)
+suit_model = tf.keras.models.load_model(<span class=hljs-string >&quot;suit_predictor&quot;</span>)
+
+image_size = (<span class=hljs-number >224</span>, <span class=hljs-number >224</span>)</code></pre>
+<p>We also need to make sure we do the same preprocessing on new images that we did on previous ones. That means cropping, scaling, and normalizing:</p>
+<pre><code class="Python hljs"><span class=hljs-keyword >def</span> <span class="hljs-title function_">prep_frame</span>(<span class=hljs-params >f</span>):
+    <span class=hljs-keyword >return</span> cv2.resize(f[<span class=hljs-number >0</span>:<span class=hljs-number >800</span>, <span class=hljs-number >700</span>:<span class=hljs-number >1500</span>], (<span class=hljs-number >224</span>,<span class=hljs-number >224</span>))
+
+normalization_layer = tf.keras.layers.Rescaling(<span class=hljs-number >1.</span> / <span class=hljs-number >255</span>)
+preprocessing_model = tf.keras.Sequential([normalization_layer])
+<span class=hljs-keyword >def</span> <span class="hljs-title function_">prep_input</span>(<span class=hljs-params >inp</span>):
+    f = prep_frame(inp)
+    arr = np.array([f[...,::-<span class=hljs-number >1</span>].astype(np.float32)])
+    <span class=hljs-keyword >return</span> preprocessing_model(arr)</code></pre>
+<p>It is also going to be helpful to label the images directly as we monitor some results. We will borrow the draw_text function from <a href="https://stackoverflow.com/questions/60674501/how-to-make-black-background-in-cv2-puttext-with-python-opencv">this</a> stackoverflow answer:</p>
+<pre><code class="Python hljs"><span class=hljs-keyword >def</span> <span class="hljs-title function_">draw_text</span>(<span class=hljs-params >img, text, font=cv2.FONT_HERSHEY_PLAIN, pos=(<span class=hljs-params ><span class=hljs-number >0</span>, <span class=hljs-number >0</span></span>), font_scale=<span class=hljs-number >3</span>, font_thickness=<span class=hljs-number >2</span>, text_color=(<span class=hljs-params ><span class=hljs-number >0</span>, <span class=hljs-number >0</span>, <span class=hljs-number >0</span></span>), text_color_bg=(<span class=hljs-params ><span class=hljs-number >255</span>, <span class=hljs-number >255</span>, <span class=hljs-number >255</span></span>)</span>):
+    x, y = pos
+    text_size, _ = cv2.getTextSize(text, font, font_scale, font_thickness)
+    text_w, text_h = text_size
+    cv2.rectangle(img, pos, (x + text_w, y + text_h), text_color_bg, -<span class=hljs-number >1</span>)
+    cv2.putText(img, text, (x, y + text_h + font_scale - <span class=hljs-number >1</span>), font, font_scale, text_color, font_thickness)</code></pre>
+<p>Now we can see how we did by making predictions on new video frames. To prevent spurious classifications we will only record a card if we ID it two frames in a row.</p>
+<pre><code class="Python hljs">cap = cv2.VideoCapture(<span class=hljs-string >&quot;INPUT2.MOV&quot;</span>)
+
+last_card = <span class=hljs-string >&quot;&quot;</span>
+card_order = []
+viz = <span class=hljs-literal >True</span>
+
+<span class=hljs-keyword >while</span> <span class=hljs-literal >True</span>:
+    ret, frame = cap.read()
+    <span class=hljs-keyword >if</span> <span class=hljs-keyword >not</span> ret:
+        <span class=hljs-built_in >print</span>(<span class=hljs-string >&quot;No frame&quot;</span>)
+        <span class=hljs-keyword >break</span>
+            
+    inp = prep_input(frame)
+    
+    preds = suit_model.predict(inp)
+    suit_pred = suits[np.argmax(preds)]
+
+    preds = rank_model.predict(inp)
+    rank_pred = ranks[np.argmax(preds)]
+
+    <span class=hljs-keyword >if</span> rank_pred!=<span class=hljs-string >&quot;z&quot;</span> <span class=hljs-keyword >and</span> suit_pred!=<span class=hljs-string >&quot;0&quot;</span>:
+        card = rank_pred + suit_pred
+        <span class=hljs-keyword >if</span> card == last_card <span class=hljs-keyword >and</span> (<span class=hljs-built_in >len</span>(card_order)==<span class=hljs-number >0</span> <span class=hljs-keyword >or</span> card_order[-<span class=hljs-number >1</span>] != card):
+            card_order.append(card)
+        <span class=hljs-keyword >if</span> card == last_card <span class=hljs-keyword >and</span> viz:
+            draw_text(frame, rank_pred + suit_pred, pos=(<span class=hljs-number >800</span>, <span class=hljs-number >500</span>))
+        last_card = card
+        
+    <span class=hljs-keyword >if</span> viz:
+        cv2.imshow(<span class=hljs-string >&#x27;frame&#x27;</span>, frame)
+        <span class=hljs-keyword >if</span> cv2.waitKey(<span class=hljs-number >3</span>) == <span class=hljs-built_in >ord</span>(<span class=hljs-string >&#x27;q&#x27;</span>):
+            <span class=hljs-keyword >break</span>
+
+cv2.destroyAllWindows()</code></pre>
 <div class=vid-100 ><video controls mute autoplay loop>
-  <source src="/posts/005_shuffle/bottom_belt.webm" type="video/webm">
+  <source src="/posts/005_shuffle/class_detect.webm" type="video/webm">
 </video></div>
-<h2 id=building_a_shuffling_model ><a href="#building_a_shuffling_model" class=header-anchor >Building a Shuffling Model</a></h2>
-<h2 id=investigating_performance ><a href="#investigating_performance" class=header-anchor >Investigating Performance</a></h2>
-<h2 id=ingredients ><a href="#ingredients" class=header-anchor >Ingredients</a></h2>
+<p>If the video we processed above has two independent riffles in it we should end up with a <code>card_order</code> vector that is, ideally, 104 elements long with 52 unique elements. That probably won&#39;t be the case. Instead, we probably get something that looks like:</p>
+<pre><code class="Plaintext hljs">0d
+8c
+jc
+0h
+jh
+9s
+9d
+kh
+.
+.
+.
+0s
+9h
+9d
+as
+0d
+8c
+jc
+0h
+jh
+8s
+9s
+9d
+kh
+.
+.
+.
+0s
+9h</code></pre>
+<p>Our two most robust measurements should be the last card of the first riffle and the last card of the second riffle. We can use these to split the vector in half and start lining things up &#40;we could also detect the break between riffle 1 and riffle 2 using the timestamps in the video&#41;. In the example above the last card would be the <code>9h</code>.</p>
+<pre><code class="Plaintext hljs">After 9h split and align:
+
+    9d
+    as
+    0d
+0d  8c
+8c  jc
+jc  0h
+0h  jh
+jh  8s
+9s  9s
+9d  9d
+kh  kh
+.   .
+.   .
+.   .
+0s  0s
+9h  9h</code></pre>
+<p>Now we can crawl through the two vectors and look for similar neighbors. On the first pass we will just note what is missing and mark it with an empty character:</p>
+<pre><code class="Python hljs">num_el = <span class=hljs-built_in >len</span>(<span class=hljs-built_in >set</span>(card_order))
+
+last_card = card_order[-<span class=hljs-number >1</span>]
+
+r1 = card_order[:card_order.index(last_card)+<span class=hljs-number >1</span>]
+r2 = card_order[card_order.index(last_card)+<span class=hljs-number >1</span>:]
+
+i = <span class=hljs-number >0</span>
+<span class=hljs-keyword >while</span> i &lt; num_el:
+    <span class=hljs-keyword >if</span> r1[i] == r2[i] <span class=hljs-keyword >or</span> r1[i]==<span class=hljs-string >&quot;  &quot;</span> <span class=hljs-keyword >or</span> r2[i]==<span class=hljs-string >&quot;  &quot;</span>:
+        i += <span class=hljs-number >1</span>
+        <span class=hljs-keyword >continue</span>
+    <span class=hljs-keyword >elif</span> i &gt; <span class=hljs-built_in >len</span>(r1):
+        r1.append(<span class=hljs-string >&quot;  &quot;</span>)
+    <span class=hljs-keyword >elif</span> i &gt; <span class=hljs-built_in >len</span>(r2):
+        r2.append(<span class=hljs-string >&quot;  &quot;</span>)
+    <span class=hljs-keyword >elif</span> r1[i] == r2[i+<span class=hljs-number >1</span>]:
+        r1.insert(i,<span class=hljs-string >&quot;  &quot;</span>)
+    <span class=hljs-keyword >elif</span> r2[i] == r1[i+<span class=hljs-number >1</span>]:
+        r2.insert(i,<span class=hljs-string >&quot;  &quot;</span>)
+    <span class=hljs-keyword >elif</span> r1[i] == r2[i+<span class=hljs-number >2</span>]:
+        r1.insert(i,<span class=hljs-string >&quot;  &quot;</span>)
+    <span class=hljs-keyword >elif</span> r2[i] == r1[i+<span class=hljs-number >2</span>]:
+        r2.insert(i,<span class=hljs-string >&quot;  &quot;</span>)
+    i = <span class=hljs-number >0</span>
+
+[<span class=hljs-built_in >print</span>(i,j) <span class=hljs-keyword >for</span> i,j <span class=hljs-keyword >in</span> <span class=hljs-built_in >zip</span>(r1,r2)]</code></pre>
+<pre><code class="Plaintext hljs">After alignment first pass:
+
+   9d
+   as
+0d 0d
+8c 8c
+jc jc
+0h 0h
+jh jh
+   8s
+9s 9s
+9d 9d
+kh kh
+0s 0s
+9h 9h</code></pre>
+<p>Then we can crawl through again and determine what to do with the empty characters. We either toss them or infill based on how many other entries for that particular card we see elsewhere:</p>
+<pre><code class="Python hljs"><span class=hljs-built_in >ord</span> = []
+<span class=hljs-keyword >for</span> (e1,e2) <span class=hljs-keyword >in</span> <span class=hljs-built_in >zip</span>(r1, r2):
+    <span class=hljs-keyword >if</span> e1 == <span class=hljs-string >&quot;  &quot;</span>:
+        <span class=hljs-keyword >if</span> card_order.count(e2) &gt; <span class=hljs-number >1</span>:
+            <span class=hljs-keyword >continue</span>
+        <span class=hljs-keyword >else</span>:
+            <span class=hljs-built_in >ord</span>.append(e2)
+    <span class=hljs-keyword >elif</span> e2 == <span class=hljs-string >&quot;  &quot;</span>:
+        <span class=hljs-keyword >if</span> card_order.count(e1) &gt; <span class=hljs-number >1</span>:
+            <span class=hljs-keyword >continue</span>
+        <span class=hljs-keyword >else</span>:
+            <span class=hljs-built_in >ord</span>.append(e1)
+    <span class=hljs-keyword >elif</span> e1 == e2:
+        <span class=hljs-built_in >ord</span>.append(e1)</code></pre>
+<pre><code class="Plaintext hljs">as
+0d
+8c
+jc
+0h
+jh
+8s
+9s
+9d
+kh
+0s
+9h</code></pre>
+<p>Almost there. Our last step is to link two deck orders and back out the shuffle sequence. For example, we might see these two deck orders in a row:</p>
+<pre><code class="Plaintext hljs">as  8s
+0d  as
+8c  0d
+jc  9s
+0h  8c
+jh  9d
+8s  kh
+9s  jc
+9d  0h
+kh  jh
+0s  0s
+9h  9h</code></pre>
+<p>To back out the order we first find where the cut happened and then iterate through the resulting deck to see which hand each card came out of:</p>
+<pre><code class="Python hljs"><span class=hljs-keyword >def</span> <span class="hljs-title function_">get_shuffle</span>(<span class=hljs-params >o1, o2</span>):
+    i = <span class=hljs-number >0</span>
+    <span class=hljs-keyword >for</span> e <span class=hljs-keyword >in</span> o2:
+        <span class=hljs-keyword >if</span> e==o1[i]:
+            i+=<span class=hljs-number >1</span>
+        <span class=hljs-keyword >else</span>:
+            cut_loc = i
+    lh = o1[:cut_loc]
+    rh = o1[cut_loc:]
+    
+    o = <span class=hljs-string >&quot;&quot;</span>
+    il = <span class=hljs-number >0</span>
+    ir = <span class=hljs-number >0</span>
+    <span class=hljs-keyword >for</span> e <span class=hljs-keyword >in</span> o2:
+        <span class=hljs-keyword >if</span> il&lt;<span class=hljs-built_in >len</span>(lh) <span class=hljs-keyword >and</span> e==lh[il]:
+            o += <span class=hljs-string >&quot;1&quot;</span>
+            il += <span class=hljs-number >1</span>
+        <span class=hljs-keyword >elif</span> e==rh[ir]:
+            o += <span class=hljs-string >&quot;2&quot;</span>
+            ir += <span class=hljs-number >1</span>
+        <span class=hljs-keyword >else</span>:
+            ValueError(<span class=hljs-string >&quot;not feasible shuffle result&quot;</span>)
+            
+    <span class=hljs-keyword >return</span> o</code></pre>
+<pre><code class="Python hljs">o1 = [<span class=hljs-string >&quot;as&quot;</span>,<span class=hljs-string >&quot;0d&quot;</span>,<span class=hljs-string >&quot;8c&quot;</span>,<span class=hljs-string >&quot;jc&quot;</span>,<span class=hljs-string >&quot;0h&quot;</span>,<span class=hljs-string >&quot;jh&quot;</span>,<span class=hljs-string >&quot;8s&quot;</span>,<span class=hljs-string >&quot;9s&quot;</span>,<span class=hljs-string >&quot;9d&quot;</span>,<span class=hljs-string >&quot;kh&quot;</span>,<span class=hljs-string >&quot;0s&quot;</span>,<span class=hljs-string >&quot;9h&quot;</span>]
+o2 = [<span class=hljs-string >&quot;8s&quot;</span>,<span class=hljs-string >&quot;as&quot;</span>,<span class=hljs-string >&quot;0d&quot;</span>,<span class=hljs-string >&quot;9s&quot;</span>,<span class=hljs-string >&quot;8c&quot;</span>,<span class=hljs-string >&quot;9d&quot;</span>,<span class=hljs-string >&quot;kh&quot;</span>,<span class=hljs-string >&quot;jc&quot;</span>,<span class=hljs-string >&quot;0h&quot;</span>,<span class=hljs-string >&quot;jh&quot;</span>,<span class=hljs-string >&quot;0s&quot;</span>,<span class=hljs-string >&quot;9h&quot;</span>]
+get_shuffle(o1,o2)</code></pre>
+<pre><code class="Plaintext hljs">&#x27;211212211122&#x27;</code></pre>
+<p>Whew. A lengthy process but the result is a decent data collection pipeline.</p>
+<h1 id=building_a_shuffling_model ><a href="#building_a_shuffling_model" class=header-anchor >Building a Shuffling Model</a></h1>
+<p>A recording of 100 of my shuffles can be found <a href="https://raw.githubusercontent.com/jacobwood27/031_shuffle/main/rec.txt">here</a>.</p>
+<p>This part of the project is all done in <a href="https://julialang.org/">Julia</a>.</p>
+<h2 id=data_exploration ><a href="#data_exploration" class=header-anchor >Data Exploration</a></h2>
+<p>Bring in a few packages</p>
+<pre><code class="julia hljs"><span class=hljs-keyword >using</span> Plots, StatsPlots
+<span class=hljs-keyword >using</span> Random
+<span class=hljs-keyword >using</span> Distributions
+<span class=hljs-keyword >using</span> StatsBase</code></pre>
+<p>And read in the data from the recorded file into a vector of vectors of <code>Int</code>.</p>
+<pre><code class="julia hljs">S_rec = [[parse(<span class=hljs-built_in >Int</span>,c) <span class=hljs-keyword >for</span> c <span class=hljs-keyword >in</span> l] <span class=hljs-keyword >for</span> l <span class=hljs-keyword >in</span> readlines(<span class=hljs-string >&quot;rec.txt&quot;</span>)]</code></pre>
+<p>One way we can &quot;score&quot; a shuffle is by counting the number of card runs there were. A perfect shuffle, with two piles of 26 cards interwoven one at a time, would score 52 on this metric.</p>
+<pre><code class="julia hljs"><span class=hljs-keyword >function</span> score_shuffle(S)
+    score = <span class=hljs-number >1</span>
+    <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-number >2</span>:<span class=hljs-number >52</span>
+        <span class=hljs-keyword >if</span> S[i] != S[i-<span class=hljs-number >1</span>]
+            score += <span class=hljs-number >1</span>
+        <span class=hljs-keyword >end</span>
+    <span class=hljs-keyword >end</span>
+    score
+<span class=hljs-keyword >end</span></code></pre>
+<pre><code class="julia hljs">scores = score_shuffle.(S_rec)
+plot(scores, st=:scatter, legend=<span class=hljs-literal >false</span>, smooth=<span class=hljs-literal >true</span>,
+    xlabel=<span class=hljs-string >&quot;Row&quot;</span>, ylabel=<span class=hljs-string >&quot;Score&quot;</span>)</code></pre>
+<div class=im-100 ><img src="/posts/005_shuffle/shuffle_scores_over_time.svg" alt=""></div>
+<p>Ooph. A large range of performance and definitely got tired over time.</p>
+<p>The first action in shuffling is splitting the deck into two halves. Ideally you end up with two stacks of 26 cards. The standard approach to modeling this action is to fit the card split into a binomial distribution.</p>
+<pre><code class="julia hljs">split_vec = [count(s.==<span class=hljs-number >1</span>) <span class=hljs-keyword >for</span> s <span class=hljs-keyword >in</span> S_vec]
+histogram(split_vec, bins=<span class=hljs-number >16.5</span>:<span class=hljs-number >1</span>:<span class=hljs-number >35.5</span>, xticks=<span class=hljs-number >17</span>:<span class=hljs-number >35</span>, normalize=:pdf, label=<span class=hljs-string >&quot;observed&quot;</span>)
+plot!(Binomial(<span class=hljs-number >52</span>), st=:line, xlims=(<span class=hljs-number >17</span>,<span class=hljs-number >35</span>), label = <span class=hljs-string >&quot;expected (binomial)&quot;</span>,
+    xlabel=<span class=hljs-string >&quot;Number of Cards in Left Hand&quot;</span>, ylabel=<span class=hljs-string >&quot;Fraction of Cases&quot;</span>)</code></pre>
+<div class=im-100 ><img src="/posts/005_shuffle/split_hist.svg" alt=""></div>
+<p>The binomial distribution is not a great fit here. 84/100 cases I ended up with &lt;26 cards in my left hand and the distribution is much sharper &#40;centered around 24&#41; than the binomial would indicate. </p>
+<h1 id=investigating_performance ><a href="#investigating_performance" class=header-anchor >Investigating Performance</a></h1>
+<h1 id=ingredients ><a href="#ingredients" class=header-anchor >Ingredients</a></h1>
 <ul>
 <li><p>pngquant</p>
 
@@ -258,6 +512,8 @@ Epoch 10/10
 <li><p>Tensorflow 2.7.0</p>
 
 <li><p>Tensorflow_hub 0.12.0</p>
+
+<li><p>Julia 1.7.1</p>
 
 </ul>
 <div class=page-foot >
