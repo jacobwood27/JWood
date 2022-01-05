@@ -1,5 +1,271 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/github.min.css"> <link rel=stylesheet  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=stylesheet  href="/css/basic.css"> <link rel=icon  href="/assets/favicon.png"> <title>Shuffle</title> <header> <div class=blog-name ><a href="/">Jacob Wood</a></div> <nav> <ul> <li><a href="/projects/">Projects</a> <li><a href="/posts/">Posts</a> <li><a href="/projects/books/">Books</a> <li><a href="/projects/podcasts/">Podcasts</a> <li><a href="/now">Now</a> </ul> <img src="/assets/hamburger.svg" id=menu-icon > </nav> </header> <div class=franklin-content ><p>Folk wisdom claims 7 shuffles is sufficient to thoroughly mix up a deck of cards. This claim originates from a <a href="https://escholarship.org/content/qt0k4654kx/qt0k4654kx.pdf?t&#61;p3z6d7">paper</a> published in 1986 by David Aldous and Persi Diaconis and summarized <a href="https://www.nytimes.com/1990/01/09/science/in-shuffling-cards-7-is-winning-number.html">in the New York Times</a> in 1990. </p> <p>Does my mediocre shuffling reflect this common wisdom? This post is an attempt to investigate that question.</p> <h2 id=collecting_data ><a href="#collecting_data" class=header-anchor >Collecting Data</a></h2> <p>The first step to assessing my shuffling performance is to investigate a few real world shuffles. To start I recorded 5 the results of 5 shuffles by hand to get a sense of the variation in the distribution. Each run involved shuffling the deck with a riffle shuffle but not aligning the left and right hand piles:</p> <div class=im-100 ><img src="/posts/005_shuffle/card_shuffle1.png" alt=""></div> <p>The resulting order was then recorded as a string of 1s &#40;card from left hand&#41; and 2s &#40;card from right hand&#41;. The 5 initial shuffles were:</p> <pre><code class="plaintext hljs">1112212122121212121212121212121212121212121212111221
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/github.min.css"> <link rel=stylesheet  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=stylesheet  href="/css/basic.css"> <link rel=icon  href="/assets/favicon.png"> <title>Shuffle</title> <header> <div class=blog-name ><a href="/">Jacob Wood</a></div> <nav> <ul> <li><a href="/projects/">Projects</a> <li><a href="/posts/">Posts</a> <li><a href="/projects/books/">Books</a> <li><a href="/projects/podcasts/">Podcasts</a> <li><a href="/now">Now</a> </ul> <img src="/assets/hamburger.svg" id=menu-icon > </nav> </header> <div class=franklin-content ><p>Folk wisdom claims 7 shuffles is sufficient to thoroughly mix up a deck of cards. This claim originates from a <a href="https://escholarship.org/content/qt0k4654kx/qt0k4654kx.pdf?t&#61;p3z6d7">paper</a> published in 1986 by David Aldous and Persi Diaconis and summarized <a href="https://www.nytimes.com/1990/01/09/science/in-shuffling-cards-7-is-winning-number.html">in the New York Times</a> in 1990. </p> <p>Does my mediocre shuffling reflect this common wisdom? This post is an attempt to investigate that question.</p> <div class=franklin-toc ><ol><li><a href="#collecting_data">Collecting Data</a><ol><li><a href="#video_recording">Video Recording</a><ol><li><a href="#shuffling_-_head_on">Shuffling - Head On </a><li><a href="#shuffling_-_angled_down">Shuffling - Angled Down</a><li><a href="#post_shuffle_riffle">Post Shuffle Riffle</a><ol><li><a href="#transfer_learning_post_processing">Transfer Learning Post Processing</a><ol><li><a href="#data_labelling">Data Labelling</a><li><a href="#model_training">Model Training</a></ol></ol><li><a href="#post_shuffle_conveyor_belt">Post Shuffle Conveyor Belt</a></ol></ol><li><a href="#building_a_shuffling_model">Building a Shuffling Model</a><li><a href="#investigating_performance">Investigating Performance</a><li><a href="#ingredients">Ingredients</a></ol></div> <h2 id=collecting_data ><a href="#collecting_data" class=header-anchor >Collecting Data</a></h2> <p>The first step to assessing my shuffling performance is to investigate a few real world shuffles. To start I recorded 5 the results of 5 shuffles by hand to get a sense of the variation in the distribution. Each run involved shuffling the deck with a riffle shuffle but not aligning the left and right hand piles:</p> <div class=im-100 ><img src="/posts/005_shuffle/card_shuffle1.png" alt=""></div> <p>The resulting order was then recorded as a string of 1s &#40;card from left hand&#41; and 2s &#40;card from right hand&#41;. The 5 initial shuffles were:</p> <pre><code class="plaintext hljs">1112212122121212121212121212121212121212121212111221
 1222212212212121221212121212121212222112112211221122
 2221121212211212112121221211221212121122222112212122
 2222122121221121212121122112211222121222211222112211
-2221221221122221212112221122121212212211122122121221</code></pre> <p>Eyeballing here shows quite a bit of variation from shuffle to shuffle. I set out to record the results of 100 independent shuffles to start to quantify the distribution.</p> <h3 id=video_recording ><a href="#video_recording" class=header-anchor >Video Recording</a></h3> <p>Initial attempts at data collection all revolved around recording video of cards and processing it to back out the shuffled sequence.</p> <h4 id=shuffling_-_head_on ><a href="#shuffling_-_head_on" class=header-anchor >Shuffling - Head On </a></h4> <p>The most straightforward approach seemed to be recording the cards falling during the shuffling sequence in slow motion &#40;phone camera can capture at 240fps&#41;. A sample of the resulting video looks like:</p> <div class=im-100 ><img src="/posts/005_shuffle/card_shuffle1.png" alt=""></div> <div class=vid-100 ><video controls> <source src="/posts/005_shuffle/front_shuffle.webm" type="video/webm"> </video></div> <p>Even at 240fps we miss some of the faster cards in transit. We can address this by instead capturing the shuffle pile as it changes.</p> <h3 id=shuffling_-_angled_down ><a href="#shuffling_-_angled_down" class=header-anchor >Shuffling - Angled Down</a></h3> <h2 id=building_a_model ><a href="#building_a_model" class=header-anchor >Building a Model</a></h2> <h2 id=investigating_performance ><a href="#investigating_performance" class=header-anchor >Investigating Performance</a></h2> <div class=page-foot > <div class=copyright > <a href="mailto:mail@jacobw.xyz" class="fa fa-envelope"></a> <a href="https://github.com/jacobwood27" class="fa fa-github"></a> <br> <br> Last modified: January 04, 2022. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div>
+2221221221122221212112221122121212212211122122121221</code></pre> <p>Eyeballing here shows quite a bit of variation from shuffle to shuffle. I set out to record the results of 100 independent shuffles to start to quantify the distribution.</p> <h3 id=video_recording ><a href="#video_recording" class=header-anchor >Video Recording</a></h3> <p>Initial attempts at data collection all revolved around recording video of cards and processing it to back out the shuffled sequence.</p> <h4 id=shuffling_-_head_on ><a href="#shuffling_-_head_on" class=header-anchor >Shuffling - Head On </a></h4> <p>The most straightforward approach seemed to be recording the cards falling during the shuffling sequence in slow motion &#40;phone camera can capture at 240fps&#41;. The video was recorded in a semi-reproducible environment to ease processing:</p> <div class=im-60 ><img src="/posts/005_shuffle/front_view.png" alt=""></div> <p>A sample of the resulting video looks like:</p> <div class=vid-100 ><video controls mute autoplay loop> <source src="/posts/005_shuffle/front_shuffle.webm" type="video/webm"> </video></div> <p>Even at 240fps some of the faster cards aren&#39;t captured in transit, and the ones that are captured are blurry and tough to detect with any sort of definable edge or feature. We can address this by instead capturing the face of the shuffle pile as it changes &#40;the time constant between dropping new cards is much larger than the one associated with the drop itself&#41;.</p> <h4 id=shuffling_-_angled_down ><a href="#shuffling_-_angled_down" class=header-anchor >Shuffling - Angled Down</a></h4> <p>The new and improved data collection environment involved even more cardboard:</p> <div class=im-60 ><img src="/posts/005_shuffle/top_view.png" alt=""></div> <p>Initially, the video collected during a shuffle looks promising. It is easy to identify transitions between shuffled cards and which hand is dropping the card:</p> <div class=vid-100 ><video controls mute autoplay loop> <source src="/posts/005_shuffle/top_shuffle.webm" type="video/webm"> </video></div> <p>However, when we look a little closer we don&#39;t notice any funny business:</p> <div class=vid-100 ><video controls mute autoplay loop> <source src="/posts/005_shuffle/top_slow2.webm" type="video/webm"> </video></div> <p>Which is a problem because there was indeed some funny business. The 3 of clubs was tucked between the 9 and 4 of spades. </p> <div class=im-60 ><img src="/posts/005_shuffle/missing3c.png" alt=""></div> <p>You can make out the edge of the card in the video, but we never see the face because the shuffle isn&#39;t perfect and I release both the 3 of clubs and the 4 of spades at the same time. </p> <p>This doesn&#39;t happen in every shuffle, but it does happen occasionally. We might argue that we can just throw out shuffles where we don&#39;t process 52 different cards to avoid the missed card measurement error. However, that would introduce a systematic bias into the measurement - we would be removing all the worst shuffles from the dataset and our resulting impression of our shuffling performance would be better than it should be.</p> <h4 id=post_shuffle_riffle ><a href="#post_shuffle_riffle" class=header-anchor >Post Shuffle Riffle</a></h4> <p>One way to address the systematic bias mentioned above is to decouple the event of the shuffle from the recording of it. That way, if we were to make an error that invalidates the recording, we have no reason to expect the error would alter the perceived distribution. One way to do this is to record the order of the cards after the shuffle. If we record the order before and after each shuffle we can back out the 1s and 2s that make up our riffle model.</p> <p>If we take the cards and riffle them in front of the camera we can then look for cards in each frame and record the order. </p> <div class=vid-100 ><video controls mute autoplay loop> <source src="/posts/005_shuffle/post_riffle_slow.webm" type="video/webm"> </video></div> <p>This strategy is also prone to missing a card, but we can address the problem this time. We can record two different riffles and compare the resulting orders, using the knowledge from the second recording to fill in gaps or resolve discrepancies. If we are unable to order the cards with sufficient confidence we can drop that shuffle from the dataset without introducing bias.</p> <h5 id=transfer_learning_post_processing ><a href="#transfer_learning_post_processing" class=header-anchor >Transfer Learning Post Processing</a></h5> <p>Of course, we won&#39;t be processing the video by hand. I was hoping to use this project to do some in-the-wild machine learning so we will leverage that here. There are a <a href="https://github.com/search?q&#61;playing&#43;card&#43;detection">few projects</a> on Github doing playing card detection but they are generally looking for whole cards on specific backdrops. We will train a new model and make use of the controlled environment it is being deployed in.</p> <h6 id=data_labelling ><a href="#data_labelling" class=header-anchor >Data Labelling</a></h6> <p>We&#39;ll start off by labelling a bit of the data we collected to train on. We&#39;ll use Python and OpenCV to flip through the video files and write frames:</p> <pre><code class="Python hljs"><span class=hljs-keyword >import</span> cv2</code></pre>
+<p>Most of the models we will be considering want small and square images as input. Fortunately, we riffled in a very consistent fashion so we can crop all the video frames in the same small square. We&#39;ll use 224x224 as our image size for now.</p>
+<div class=im-60 ><img src="/posts/005_shuffle/sample_full_frame_rect.jpg" alt=""></div>
+<pre><code class="Python hljs"><span class=hljs-keyword >def</span> <span class="hljs-title function_">prep_frame</span>(<span class=hljs-params >f</span>):
+    <span class=hljs-keyword >return</span> cv2.resize(f[<span class=hljs-number >0</span>:<span class=hljs-number >800</span>, <span class=hljs-number >700</span>:<span class=hljs-number >1500</span>], (<span class=hljs-number >224</span>,<span class=hljs-number >224</span>))</code></pre>
+<p>We can then run through the video frame by frame and label each image. To make things easier we will consider two different classification problems for each frame independently - suit and rank. </p>
+<p>To start with the suits we need to:</p>
+<ol>
+<li><p>Read a new frame from a video</p>
+
+<li><p>Crop the frame as dictated above</p>
+
+<li><p>Show the frame and wait for a keypress</p>
+
+<li><p>Upon keypress:</p>
+
+</ol>
+<ul>
+<li><p>If &quot;c&quot;, &quot;s&quot;, &quot;h&quot;, &quot;d&quot;, or &quot;0&quot; &#40;for clubs, spades, hearts, diamonds, none&#41; save to that directory with unique ID generated from frame counter</p>
+
+<li><p>If &quot;q&quot; then quit the program</p>
+
+<li><p>If other key then skip the frame and go to the next</p>
+
+</ul>
+<ol start=5 >
+<li><p>Repeat until the end of the video is reached </p>
+
+</ol>
+<pre><code class="Python hljs">cap = cv2.VideoCapture(<span class=hljs-string >&quot;INPUT.MOV&quot;</span>)
+
+i = <span class=hljs-number >0</span>
+
+<span class=hljs-keyword >while</span> <span class=hljs-literal >True</span>:
+    
+    i+=<span class=hljs-number >1</span>
+
+    ret, f = cap.read()
+    <span class=hljs-keyword >if</span> <span class=hljs-keyword >not</span> ret:
+        <span class=hljs-built_in >print</span>(<span class=hljs-string >&quot;End of video&quot;</span>)
+        <span class=hljs-keyword >break</span>
+
+    f = prep_frame(f)
+    
+    cv2.imshow(<span class=hljs-string >&#x27;frame&#x27;</span>, f)
+    key = cv2.waitKey(<span class=hljs-number >0</span>)
+    
+    <span class=hljs-keyword >if</span> <span class=hljs-built_in >chr</span>(key) <span class=hljs-keyword >in</span> <span class=hljs-string >&#x27;cshd0&#x27;</span>:
+        cv2.imwrite(<span class=hljs-string >&quot;suit_data/&quot;</span> + <span class=hljs-built_in >chr</span>(key) + <span class=hljs-string >&quot;/&quot;</span> + <span class=hljs-built_in >str</span>(i) + <span class=hljs-string >&quot;.jpg&quot;</span>, f)
+    <span class=hljs-keyword >elif</span> <span class=hljs-built_in >chr</span>(key) <span class=hljs-keyword >in</span> <span class=hljs-string >&#x27;q&#x27;</span>:
+        <span class=hljs-keyword >break</span>
+
+cap.release()
+cv2.destroyAllWindows()</code></pre>
+<p>After running through all the video frames we should have generated a bit of training data for each suit.</p>
+<div class=im-60 ><img src="/posts/005_shuffle/post_suit_class.png" alt=""></div>
+<p>And we can verify the classifications look decent:</p>
+<pre><code class="Python hljs"><span class=hljs-keyword >import</span> matplotlib.pyplot <span class=hljs-keyword >as</span> plt
+<span class=hljs-keyword >from</span> mpl_toolkits.axes_grid1 <span class=hljs-keyword >import</span> ImageGrid
+<span class=hljs-keyword >import</span> numpy <span class=hljs-keyword >as</span> np
+
+fig = plt.figure(figsize=(<span class=hljs-number >10.</span>, <span class=hljs-number >6.</span>))
+grid = ImageGrid(fig, <span class=hljs-number >111</span>, nrows_ncols=(<span class=hljs-number >3</span>, <span class=hljs-number >5</span>), axes_pad=<span class=hljs-number >0.1</span>, share_all=<span class=hljs-literal >True</span>)
+
+grid[<span class=hljs-number >0</span>].get_yaxis().set_ticks([])
+grid[<span class=hljs-number >0</span>].get_xaxis().set_ticks([])
+
+grid[<span class=hljs-number >0</span>].set_title(<span class=hljs-string >&quot;C&quot;</span>)
+grid[<span class=hljs-number >1</span>].set_title(<span class=hljs-string >&quot;D&quot;</span>)
+grid[<span class=hljs-number >2</span>].set_title(<span class=hljs-string >&quot;H&quot;</span>)
+grid[<span class=hljs-number >3</span>].set_title(<span class=hljs-string >&quot;S&quot;</span>)
+grid[<span class=hljs-number >4</span>].set_title(<span class=hljs-string >&quot;0&quot;</span>)
+
+ims = []
+<span class=hljs-keyword >for</span> _ <span class=hljs-keyword >in</span> <span class=hljs-built_in >range</span>(<span class=hljs-number >3</span>):
+    <span class=hljs-keyword >for</span> s <span class=hljs-keyword >in</span> <span class=hljs-string >&quot;cdhs0&quot;</span>:
+        im_file = random.choice(os.listdir(<span class=hljs-string >&quot;post_riffle/suit_data/&quot;</span>+s))
+        im = cv2.imread(<span class=hljs-string >&quot;post_riffle/suit_data/&quot;</span>+s+<span class=hljs-string >&quot;/&quot;</span>+im_file)
+        ims.append(im[...,::-<span class=hljs-number >1</span>])
+
+<span class=hljs-keyword >for</span> ax, im <span class=hljs-keyword >in</span> <span class=hljs-built_in >zip</span>(grid, ims):
+    ax.imshow(im)
+
+plt.show()</code></pre>
+<div class=im-100 ><img src="/posts/005_shuffle/suit_verify.png" alt=""></div>
+<p>Rinse and repeat for the ranks of each card.</p>
+<h6 id=model_training ><a href="#model_training" class=header-anchor >Model Training</a></h6>
+<p>Now that we have a subset of our data labelled we can train an algorithm to label the rest of the videos we will take. </p>
+<p>There are plenty of models out there that do a great job of parsing images and learning their requisite features. We would like to take a model that is good at understanding images and have it learn to classify our specific images. This is the definition of <a href="https://en.wikipedia.org/wiki/Transfer_learning">transfer learning</a>. </p>
+<p>We&#39;ll follow along with the TensorFlow example detailed <a href="https://www.tensorflow.org/hub/tutorials/tf2_image_retraining">here</a> for the most part.</p>
+<p>First bring in a few packages we will need:</p>
+<pre><code class="Python hljs"><span class=hljs-keyword >import</span> os
+
+<span class=hljs-keyword >import</span> matplotlib.pylab <span class=hljs-keyword >as</span> plt
+<span class=hljs-keyword >import</span> numpy <span class=hljs-keyword >as</span> np
+
+<span class=hljs-keyword >import</span> tensorflow <span class=hljs-keyword >as</span> tf
+<span class=hljs-keyword >import</span> tensorflow_hub <span class=hljs-keyword >as</span> hub</code></pre>
+<p>The we can browse through the <a href="https://tfhub.dev/s?module-type&#61;image-classification">available models on TensorFlow Hub</a> for a suitable classification model. Our problem is pretty easy, and we will have no trouble using a small <a href="https://tfhub.dev/google/imagenet/mobilenet_v2_100_224/feature_vector/5">MobileNet model</a>. This model takes in 224x224 images &#40;which is what we saved our training data at, so no need to resize&#41;.</p>
+<pre><code class="Python hljs">model_name = <span class=hljs-string >&quot;mobilenet_v2_100_224&quot;</span>
+model_handle = <span class=hljs-string >&quot;https://tfhub.dev/google/imagenet/mobilenet_v2_100_224/feature_vector/5&quot;</span>
+image_size = (<span class=hljs-number >224</span>,<span class=hljs-number >224</span>)
+batch_size = <span class=hljs-number >16</span>
+data_dir = <span class=hljs-string >&quot;suit_data&quot;</span></code></pre>
+<p>We&#39;ll use <a href="https://keras.io/">Keras</a> as our framework. Keras provide a convenient API to split up our dataset:</p>
+<pre><code class="Python hljs"><span class=hljs-keyword >def</span> <span class="hljs-title function_">build_dataset</span>(<span class=hljs-params >subset</span>):
+      <span class=hljs-keyword >return</span> tf.keras.preprocessing.image_dataset_from_directory(
+        data_dir,
+        validation_split=<span class=hljs-number >.20</span>,
+        subset=subset,
+        label_mode=<span class=hljs-string >&quot;categorical&quot;</span>,
+        seed=<span class=hljs-number >123</span>,
+        image_size=image_size,
+        batch_size=<span class=hljs-number >1</span>)</code></pre>
+<p>Which we can use to generate a training and a validation dataset:</p>
+<pre><code class="Python hljs">train_ds    = build_dataset(<span class=hljs-string >&quot;training&quot;</span>)
+val_ds      = build_dataset(<span class=hljs-string >&quot;validation&quot;</span>)</code></pre>
+<p>And record a few pieces of information before we change the datasets:</p>
+<pre><code class="Python hljs">train_size  = train_ds.cardinality().numpy()
+val_size    =   val_ds.cardinality().numpy()
+class_names = <span class=hljs-built_in >tuple</span>(train_ds.class_names)</code></pre>
+<p>We will want to pre-process our image inputs and introduce some artificial warping to flesh out the data set. </p>
+<p>First, the MobileNet model expects inputs from 0 to 1 and our current images contain pixel values from 0 to 255. We can fix that with a normalization layer that scales the data by 1/255. We&#39;ll want to do this to both the training and the validation data.</p>
+<p>Next, we can move the images around a bit to resemble changes we might see in new data. These changes could consist of:</p>
+<ul>
+<li><p>rotation</p>
+
+<li><p>vertical translation</p>
+
+<li><p>horizontal translation </p>
+
+<li><p>zoom</p>
+
+<li><p>contrast </p>
+
+</ul>
+<p>We will only want to apply these mutations to the training data.</p>
+<pre><code class="Python hljs">normalization_layer = tf.keras.layers.Rescaling(<span class=hljs-number >1.</span> / <span class=hljs-number >255</span>)
+
+preprocessing_train = tf.keras.Sequential([
+    normalization_layer,
+    tf.keras.layers.RandomRotation(<span class=hljs-number >0.1</span>),
+    tf.keras.layers.RandomTranslation(<span class=hljs-number >0</span>, <span class=hljs-number >0.2</span>),
+    tf.keras.layers.RandomTranslation(<span class=hljs-number >0.2</span>, <span class=hljs-number >0</span>),
+    tf.keras.layers.RandomZoom(<span class=hljs-number >0.2</span>, <span class=hljs-number >0.2</span>),
+    tf.keras.layers.RandomContrast(<span class=hljs-number >0.1</span>),
+])
+
+preprocessing_val = tf.keras.Sequential([
+    normalization_layer
+])</code></pre>
+<p>Then we can take our data, stick it into batches, and apply the preprocessing described above to get it all ready to go. Note - we need to add a repeat&#40;&#41; call to our training data to ensure we can make enough data during the training runs &#40;this seems weird to me?&#41;. </p>
+<pre><code class="Python hljs">train_ds = train_ds.unbatch().batch(batch_size)
+train_ds = train_ds.repeat()
+train_ds = train_ds.<span class=hljs-built_in >map</span>(<span class=hljs-keyword >lambda</span> images, labels:(preprocessing_train(images), labels))
+
+val_ds = val_ds.unbatch().batch(batch_size)
+val_ds = val_ds.<span class=hljs-built_in >map</span>(<span class=hljs-keyword >lambda</span> images, labels:(preprocessing_val(images), labels))</code></pre>
+<p>With the data ready to go we can prepare the model we are going to train. We need to add a few things to the main MobileNet model specified earlier to link everything together.</p>
+<p>First, we need to add an input layer that is compatible with our RGB image size &#40;224x224x3&#41;. </p>
+<p>That can feed into the MobileNet model which gets downloaded from TensorFlow Hub. </p>
+<p>We probably also want to include some dropout to prevent overtraining. 20&#37; is a standard value to start with.</p>
+<p>Finally, we need a Dense layer that will act as the classifier for the 5 different classes we have: none, clubs, diamonds, hearts, and spades. We will include some <a href="https://developers.google.com/machine-learning/glossary/#L2_regularization">L2 regularization</a> in this Dense layer to keep the kernel weights in check.</p>
+<pre><code class="Python hljs">model = tf.keras.Sequential([
+    tf.keras.layers.InputLayer(input_shape=image_size + (<span class=hljs-number >3</span>,)),
+    hub.KerasLayer(model_handle, trainable=<span class=hljs-literal >True</span>),
+    tf.keras.layers.Dropout(rate=<span class=hljs-number >0.2</span>),
+    tf.keras.layers.Dense(<span class=hljs-built_in >len</span>(class_names),
+                          kernel_regularizer=tf.keras.regularizers.l2(<span class=hljs-number >0.0001</span>))
+])</code></pre>
+<p>Next we need to define how we want to train the model. This is done with model.compile&#40;&#41; and some definitions. </p>
+<ul>
+<li><p>Optimizer: <a href="https://keras.io/api/optimizers/sgd/">Stochastic Gradient Descent</a> with a small learning rate should work just fine, but feel free to poke around</p>
+
+<li><p>Loss Function: <a href="https://keras.io/api/losses/probabilistic_losses/#categoricalcrossentropy-class">Categorical Crossentropy</a> is recommended when there are two or more labels that are one-hot encoded</p>
+<ul>
+<li><p>from_logits &#61; True <a href="https://datascience.stackexchange.com/questions/73093/what-does-from-logits-true-do-in-sparsecategoricalcrossentropy-loss-function">must be used</a> when the outputs are not normalized &#40;as is the case when we have not soft-maxed the outputs&#41;</p>
+
+<li><p>label_smoothing takes our one-hot encoded outputs and smooths out the confidence a bit. Instead of encoding a club as &#91;0,1,0,0,0&#93; we encode it as, say, &#91;0.01,0.96,0.01,0.01,0.01&#93;. This can help regularization a bit.</p>
+
+</ul>
+
+<li><p>Metrics: We will just monitor accuracy here</p>
+
+</ul>
+<pre><code class="Python hljs">model.<span class=hljs-built_in >compile</span>(
+    optimizer=tf.keras.optimizers.SGD(learning_rate=<span class=hljs-number >0.005</span>), 
+    loss=tf.keras.losses.CategoricalCrossentropy(from_logits=<span class=hljs-literal >True</span>, label_smoothing=<span class=hljs-number >0.1</span>),
+    metrics=[<span class=hljs-string >&#x27;accuracy&#x27;</span>])</code></pre>
+<p>Now we are ready to hit go on the training. We will train the model for 10 standard epochs and see how we&#39;re doing. This might take a few minutes.</p>
+<pre><code class="Python hljs">steps_per_epoch = train_size // batch_size
+validation_steps = val_size // batch_size
+hist = model.fit(
+    train_ds,
+    epochs=<span class=hljs-number >10</span>, 
+    steps_per_epoch=steps_per_epoch,
+    validation_data=val_ds,
+    validation_steps=validation_steps).history</code></pre>
+<pre><code class="Plaintext hljs">Epoch 1/10
+45/45 [==============================] - 44s 908ms/step - loss: 1.1458 - accuracy: 0.5792 - val_loss: 0.9850 - val_accuracy: 0.6420
+Epoch 2/10
+45/45 [==============================] - 39s 884ms/step - loss: 0.7227 - accuracy: 0.8610 - val_loss: 0.6280 - val_accuracy: 0.9205
+Epoch 3/10
+45/45 [==============================] - 40s 879ms/step - loss: 0.5971 - accuracy: 0.9368 - val_loss: 0.4976 - val_accuracy: 0.9886
+Epoch 4/10
+45/45 [==============================] - 40s 878ms/step - loss: 0.5762 - accuracy: 0.9579 - val_loss: 0.5069 - val_accuracy: 0.9943
+Epoch 5/10
+45/45 [==============================] - 39s 875ms/step - loss: 0.5431 - accuracy: 0.9691 - val_loss: 0.4847 - val_accuracy: 0.9943
+Epoch 6/10
+45/45 [==============================] - 39s 877ms/step - loss: 0.5381 - accuracy: 0.9705 - val_loss: 0.4756 - val_accuracy: 1.0000
+Epoch 7/10
+45/45 [==============================] - 40s 878ms/step - loss: 0.5272 - accuracy: 0.9803 - val_loss: 0.4778 - val_accuracy: 0.9886
+Epoch 8/10
+45/45 [==============================] - 40s 879ms/step - loss: 0.5193 - accuracy: 0.9803 - val_loss: 0.4799 - val_accuracy: 0.9886
+Epoch 9/10
+45/45 [==============================] - 39s 878ms/step - loss: 0.5227 - accuracy: 0.9789 - val_loss: 0.4841 - val_accuracy: 0.9830
+Epoch 10/10
+45/45 [==============================] - 39s 873ms/step - loss: 0.5221 - accuracy: 0.9733 - val_loss: 0.4808 - val_accuracy: 0.9943</code></pre>
+<p>Tough to beat that. We probably could have gotten away with only 5 epochs, but oh well.</p>
+<div class=im-100 ><img src="/posts/005_shuffle/train_loss.png" alt=""></div>
+<p>Finally, we can save the trained model:</p>
+<pre><code class="Python hljs">model.save(<span class=hljs-string >&quot;/home/woojac/proj/031_shuffle/suit_predictor02&quot;</span>)</code></pre>
+<h4 id=post_shuffle_conveyor_belt ><a href="#post_shuffle_conveyor_belt" class=header-anchor >Post Shuffle Conveyor Belt</a></h4>
+<p>Because we had a lot of cardboard to spare I had to try getting the power tools involved. The gravity-fed rubber band and drill feeder worked, but was more trouble than it was worth.</p>
+<div class=vid-100 ><video controls mute autoplay loop>
+  <source src="/posts/005_shuffle/bottom_belt.webm" type="video/webm">
+</video></div>
+<h2 id=building_a_shuffling_model ><a href="#building_a_shuffling_model" class=header-anchor >Building a Shuffling Model</a></h2>
+<h2 id=investigating_performance ><a href="#investigating_performance" class=header-anchor >Investigating Performance</a></h2>
+<h2 id=ingredients ><a href="#ingredients" class=header-anchor >Ingredients</a></h2>
+<ul>
+<li><p>pngquant</p>
+
+<li><p>Gimp</p>
+
+<li><p>ffmpeg</p>
+
+<li><p>jpegoptim</p>
+
+<li><p>iPhone 11</p>
+
+<li><p>cardboard</p>
+
+<li><p>Bicycle playing cards</p>
+
+<li><p>Python 3.9.7</p>
+
+<li><p>OpenCV 4.5.4</p>
+
+<li><p>Matplotlib 3.3.4</p>
+
+<li><p>Numpy 1.19.5</p>
+
+<li><p>Tensorflow 2.7.0</p>
+
+<li><p>Tensorflow_hub 0.12.0</p>
+
+</ul>
+<div class=page-foot >
+  <div class=copyright >
+    <a href="mailto:mail@jacobw.xyz" class="fa fa-envelope"></a> <a href="https://github.com/jacobwood27" class="fa fa-github"></a>
+     <br>
+     <br>
+    Last modified: January 05, 2022. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+  </div>
+</div>
+</div>
