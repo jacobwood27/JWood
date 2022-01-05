@@ -1,5 +1,5 @@
 @def title = "Jacob Wood"
 
 @@im-100
-\fig{/me_island3.jpg}
+\fig{/me_island2.png}
 @@
