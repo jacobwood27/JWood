@@ -28,10 +28,25 @@ The new format went over well! All the participants appreciated the chance to ev
 
 Next year I think I want to give each person two charities in the same cause area if that works out. I also want to spend more time on the handouts as that ends up being the major source of information discussed. I would like to add more numbers/charts to these handouts.
 
-The fan favorite this year was by far the [Modern Agriculture Foundation](https://www.modern-agriculture.org/). Interestingly (well, likely due to the emphasis in the 1-page handout) the pitches revolved more around the environmental impacts than the ethical treatment of farm animals. The charity seemed to come across as one that might drive systemic change and uproot whole systems instead of incrementally addressing a problem which came across well. It also did not seem to be too far off into the future.
+Results from first game:
+@@im-100
+\fig{/posts/004_2021_xmas_giving/wood_res.svg}
+@@
 
-The runner-up was [New Incentives](https://www.newincentives.org/). NI was recieved well in large margin due to the vaccine politics of the moment. It also was able to convey a powerful single metric (47 USD gets one additional child vaccinated) backed by RCT analysis. 
+And second game:
+@@im-100
+\fig{/posts/004_2021_xmas_giving/men_res.svg}
+@@
 
-[D-Prize](https://d-prize.org/) performed well due to a perceived agility - participants liked the structure of the organization and the ability to send many small prizes to organizations with largely <5k USD in current funding.
+The three charities that were selected in both games (with my family and my wife's family):
+- The fan favorite this year was by far the [Modern Agriculture Foundation](https://www.modern-agriculture.org/). Interestingly (well, likely due to the emphasis in the 1-page handout) the pitches revolved more around the environmental impacts than the ethical treatment of farm animals. The charity seemed to come across as one that might drive systemic change and uproot whole systems instead of incrementally addressing a problem which came across well. It also did not seem to be too far off into the future.
+- The runner-up was [New Incentives](https://www.newincentives.org/). NI was recieved well in large margin due to the vaccine politics of the moment. It also was able to convey a powerful single metric (47 USD gets one additional child vaccinated) backed by RCT analysis. 
+- [D-Prize](https://d-prize.org/) performed well due to a perceived agility - participants liked the structure of the organization and the ability to send many small prizes to organizations with largely <5k USD in current funding.
 
-[Strong Minds](https://strongminds.org/) was my expected top pick and I was a bit surprised it didn't come out in the lead. It 
+The following three were selected in only one game:
+- [Strong Minds](https://strongminds.org/) was my expected top pick and I was a bit surprised it didn't come out in the lead. It was selected over the Center for Alcohol Policy Solutions in one group but not over the Humane League in another. I think it is hard to put an appropriate value on the mental health benefits here and participants were a bit skeptical of the big numbers presented with limited time to conduct studies. 
+- [The Humane League](https://thehumaneleague.org/) was selected over StrongMinds. It was received well because of the history of success working with big companies. It was likely substituted a bit for MAF, which gave the impression of addressing the animal ethics problem closer to the root.
+- [CHAI](https://humancompatible.ai/) was selected over the Clean Air Task Force but not over D-Prize. It wasn't selected over D-Prize because of a lack of a tangible plan which makes it tough to visualize what the money will accomplish. It is also tough to try to encompass the scope of the issue space in a two minute pitch, which likely lead to a less than stellar performance in the game.
+
+The last five were not selected:
+- 
