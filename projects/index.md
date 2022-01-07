@@ -2,6 +2,7 @@
 
 Here are some things I have made. 
 
+- [FastCasts](/projects/fastcasts)
 - [Disc Golf Tracking](/projects/disc_golf)
 - [Superbowl Squares](/projects/superbowl_squares)
 - [Crossword](/projects/crossword)
