@@ -44,9 +44,13 @@ The three charities that were selected in both games (with my family and my wife
 - [D-Prize](https://d-prize.org/) performed well due to a perceived agility - participants liked the structure of the organization and the ability to send many small prizes to organizations with largely <5k USD in current funding.
 
 The following three were selected in only one game:
-- [Strong Minds](https://strongminds.org/) was my expected top pick and I was a bit surprised it didn't come out in the lead. It was selected over the Center for Alcohol Policy Solutions in one group but not over the Humane League in another. I think it is hard to put an appropriate value on the mental health benefits here and participants were a bit skeptical of the big numbers presented with limited time to conduct studies. 
+- [StrongMinds](https://strongminds.org/) was my expected top pick and I was a bit surprised it didn't come out in the lead. It was selected over the Center for Alcohol Policy Solutions in one group but not over the Humane League in another. I think it is hard to put an appropriate value on the mental health benefits here and participants were a bit skeptical of the big numbers presented with limited time to conduct studies. 
 - [The Humane League](https://thehumaneleague.org/) was selected over StrongMinds. It was received well because of the history of success working with big companies. It was likely substituted a bit for MAF, which gave the impression of addressing the animal ethics problem closer to the root.
 - [CHAI](https://humancompatible.ai/) was selected over the Clean Air Task Force but not over D-Prize. It wasn't selected over D-Prize because of a lack of a tangible plan which makes it tough to visualize what the money will accomplish. It is also tough to try to encompass the scope of the issue space in a two minute pitch, which likely lead to a less than stellar performance in the game.
 
 The last five were not selected:
-- 
+- The [Carnegie–Tsinghua Center for Global Policy](https://carnegietsinghua.org/about/?fa=contact?lang=en) did not beat out D-Prize or the MAF. The scope come across a bit vague and too large to conceptualize. The organization's website is also almost 5 years out of date which was a big detractor.
+- [Center for Alcohol Policy Solutions](https://www.alcoholpolicysolutions.center/) sparked some interesting discussion but was not selected over StrongMinds. The size of the costs introduced by overconsumptrion of alcohol is striking and we will likely be looking at additional charities in this space next year.
+- The [Clean Air Task Force](https://www.catf.us/) showed impressive scores but didn't seem to be addressing a tractable or well-defined problem, which made it a tough sell for the marginal dollar.
+- [Fridays for Future](https://fridaysforfuture.org/) appeared to be a very large (large support base, not dollar amount) organization and did not have an apparent direct need for the funding.
+- [California YIMBY](https://cayimby.org/) seemed too close to home for those of us in the California home buying market which resulted in potentially seeming less charitable.
