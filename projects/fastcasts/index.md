@@ -52,7 +52,7 @@ ep_title = ep.find('title').text
 ep_audio = ep.find('enclosure').attrib['url']
 ep_date  = ep.find('pubDate').text
 ```
-We'll make a name for the file out of the title (minus and funny characters) and specify its target directory as `./audio/podcastname/episodename.mp3`:
+We'll make a name for the file out of the title (minus any funny characters) and specify its target directory as `./audio/podcastname/episodename.mp3`:
 ```Python
 file_name = "".join([c for c in ep_title if c.isalpha() or c.isdigit()]).rstrip() + ".mp3"
 full_file = os.path.join("audio", pod[0], file_name)
