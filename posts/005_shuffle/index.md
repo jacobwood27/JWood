@@ -656,6 +656,7 @@ using Plots, StatsPlots
 using Random
 using Distributions
 using StatsBase
+using KernelDensity
 ```
 
 And read in the data from the recorded file into a vector of vectors of `Int`.
@@ -683,9 +684,51 @@ plot(scores, st=:scatter, legend=false, smooth=true,
 @@im-100
 \fig{/posts/005_shuffle/shuffle_scores_over_time.svg}
 @@
-Ooph. A large range of performance and definitely got tired over time.
+Ooph. A large range of performance and definitely got tired over time. But is this any good? It is tough to evaluate without context. The [Gilbert-Shannon-Reeds (GSR) model](https://en.wikipedia.org/wiki/Gilbert%E2%80%93Shannon%E2%80%93Reeds_model) dates back to 1955 and is the de-facto distribution used to model a riffle shuffle. The model has two steps: 
+ 1. Split the deck into left and right piles ($A$ and $B$) according to a binomial distribution
+ 1. Drop the cards one at a time with probability $P(A) = A/(A+B)$
 
-The first action in shuffling is splitting the deck into two halves. Ideally you end up with two stacks of 26 cards. The standard approach to modeling this action is to fit the card split into a binomial distribution.
+This can be implemented in Julia:
+```
+function gsr_shuffle()
+    cut = rand(Binomial(52),1)[1]
+    nl = cut
+    nr = 52 - cut
+
+    out = zeros(Int,52)
+    for i in 1:52
+        pl = nl / (nl + nr)
+        if rand() < pl
+            out[i] = 1
+            nl -= 1
+        else
+            out[1] = 2
+            nr -= 1
+        end
+    end
+
+    out
+end
+```
+Now we can make a bunch of GSR-shuffled decks and see how our scores compare.
+```
+S_scores = score_shuffle.(S_vec)
+
+GSR_vec = [gsr_shuffle() for _ in 1:10000]
+GSR_scores = score_shuffle.(GSR_vec)
+
+histogram(scores,      label="Me",  bins=15:2:52, lw=2, alpha=0.5, norm=:probability)
+histogram!(GSR_scores, label="GSR", bins=15:2:52, lw=2, alpha=0.5, norm=:probability,
+    xlabel="Score", ylabel="Fraction")
+```
+@@im-100
+\fig{/posts/005_shuffle/score_comp_hist.svg}
+@@
+Looks like we outperform the shuffling model by quite a bit on this metric! Our mean score turns out to be 33 vs 27 for the GSR shuffle.
+
+## Building a Model
+### Deck Split
+The first action in shuffling is splitting the deck into two halves. Ideally you end up with two stacks of 26 cards. The standard approach to modeling this action (the approach taken in the GSR model) is to draw the card split from a binomial distribution. Let's see if that looks decent for us.
 ```
 split_vec = [count(s.==1) for s in S_vec]
 histogram(split_vec, bins=16.5:1:35.5, xticks=17:35, normalize=:pdf, label="observed")
@@ -695,7 +738,69 @@ plot!(Binomial(52), st=:line, xlims=(17,35), label = "expected (binomial)",
 @@im-100
 \fig{/posts/005_shuffle/split_hist.svg}
 @@
-The binomial distribution is not a great fit here. 84/100 cases I ended up with <26 cards in my left hand and the distribution is much sharper (centered around 24) than the binomial would indicate. 
+The binomial distribution is not a great fit here. 84/100 cases I ended up with <26 cards in my left hand and the distribution is much sharper (centered around 24) than the binomial would indicate. We should fit a different distribution to this action. 
+
+We can go in two different directions to fit our data. If we suspect that there is a simple underlying mechanism governing the behavior we should use a well known univariate distribution that captures that mechanism. If we do not have an understanding about the underlying mechanism we may be better off with a (potentially smoothed version) of the experimental data. Let's look at both options. 
+
+Note - our distribution is not continuous, but rather exists on the integers only. We'll be rounding any solution to the nearest integer. We should be using a discrete distribution, but this seems more fun.
+
+The [Distributions.jl](https://juliastats.org/Distributions.jl/stable/) package provides a collection of distributions and the ability to fit them to experimental data using (usually) maximum likelihood estimation.
+```
+distributions = [   
+    (Categorical,       "Categorical")
+    (DiscreteUniform,   "DiscreteUniform")
+    (Exponential,       "Exponential")
+    (LogNormal,         "LogNormal")
+    (Normal,            "Normal")
+    (Gamma,             "Gamma")
+    (Geometric,         "Geometric")
+    (Laplace,           "Laplace")
+    (Pareto,            "Pareto")
+    (Poisson,           "Poisson")
+    (Rayleigh,          "Rayleigh")
+    (InverseGaussian,   "InverseGaussian")
+    (Uniform,           "Uniform")
+    (Weibull,           "Weibull")
+]
+
+split_vec = [count(s.==1) for s in S_vec]
+histogram(split_vec, bins=17.5:34.5, norm=:pdf, label="Measured")
+for d in distributions
+    f = fit_mle(d[1], split_vec)
+    plot!(f, st=:line, label = d[2], lw=2)
+end
+plot!(xlabel="Cards in Left Hand", ylabel="pdf", xlims=(17,35))
+```
+
+@@im-100
+\fig{/posts/005_shuffle/fit_all.svg}
+@@
+
+And after eliminating distributions that are clearly improper we are left with the LogNormal, Normal, Gamma, and InverseGaussian distributions.
+ - [LogNormal](https://en.wikipedia.org/wiki/Log-normal_distribution) - usually the result of an event which is the product of multiple independent random variables
+ - [Normal](https://en.wikipedia.org/wiki/Normal_distribution) - usually the result of an event which is the sum of multiple independent random variables
+ - [Gamma](https://en.wikipedia.org/wiki/Gamma_distribution) - can be used to model wait times - such as when will the nth event occur?
+ - [InverseGaussian](https://en.wikipedia.org/wiki/Inverse_Gaussian_distribution) - if a normal distribution describes possible values of a brownian process at a fixed time, the inverse gaussian describes the possible times at which we might see a specific value of a brownian process. 
+
+@@im-100
+\fig{/posts/005_shuffle/fit_few.svg}
+@@
+
+You might be able to make a case for any of these. They all can fit the data we have pretty well. If pressed I might argue the normal distribution makes the most sense here so that's what I'll assume going forward.
+
+One thing we might (definitely) want to do is truncate the distribution - we certainly don't ever want our split to be <0 or >52, and we probably wouldn't shuffle the cards if we had <16 or >36 cards in one hand, it just doesn't feel right. Julia can easily model a truncated distribution:
+```
+d_full  = fit_mle(Normal, split_vec)
+d_trunc = truncated(d_full, 26-10, 26+10)
+```
+
+The other option we have when generating a distribution here is smooth something out over the measured histogram. This is a great choice if we ever just want to make sure we are drawing from something very close to the measured data. That might be nice if the underlying mechanisms are poorly understood or complex.
+
+The Julia package [KernelDensity.jl](https://github.com/JuliaStats/KernelDensity.jl) makes this process easy.
+
+
+
+
 
 
 
@@ -725,3 +830,4 @@ The binomial distribution is not a great fit here. 84/100 cases I ended up with 
  - Tensorflow 2.7.0
  - Tensorflow_hub 0.12.0
  - Julia 1.7.1
+ - [Distributions.jl](https://juliastats.org/Distributions.jl/stable/)
