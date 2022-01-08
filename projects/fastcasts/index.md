@@ -2,6 +2,8 @@
 
 The [Garmin 645 Music](https://www.garmin.com/en-US/p/612476) watch is a running watch with 3.5 GB of on board media storage and Bluetooth capability. An impressive but limited set of apps is available to manage and play podcasts on the watch, most notably [playrun.app](https://www.playrun.app/). Unfortunately, there is no playback speed functionality built in to the watches audio player and it is really hard to go back to listening to podcasts at 1x speed. In this project we'll set up a podcast RSS mirror that sends out a sped-up version of all your favorite podcasts as they are released.
 
+Note - the result here is meant for personal use. Altering the audio content and re-distributing may be infringement of copyright.
+
 The results of this project can be found [here](https://github.com/jacobwood27/032_fastaudiocasts).
 
 # Project
