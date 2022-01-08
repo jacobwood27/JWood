@@ -17,7 +17,7 @@ Our Python script is pretty simple. We'll start off by pulling in some libraries
 import os
 import xml.etree.ElementTree as ET
 ```
-Then  we'll define what podcasts we want to mirror and the speedup factor we want to use for each. We need to locate the RSS feed for each podcast to know where to download from. The best way I found to locate the RSS feed is to look up the Podcast on [PodBean], it shows the RSS feed just below the title:
+Then  we'll define what podcasts we want to mirror and the speedup factor we want to use for each. We need to locate the RSS feed for each podcast to know where to download from. The best way I found to locate the RSS feed is to look up the Podcast on [PodBean](https://www.podbean.com/), it shows the RSS feed just below the title:
 @@im-60
 \fig{/projects/fastcasts/ctyler.png}
 @@
