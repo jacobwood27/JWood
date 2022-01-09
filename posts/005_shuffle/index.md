@@ -740,7 +740,25 @@ plot!(Binomial(52), st=:line, xlims=(17,35), label = "expected (binomial)",
 @@
 The binomial distribution is not a great fit here. 84/100 cases I ended up with <26 cards in my left hand and the distribution is much sharper (centered around 24) than the binomial would indicate. We should fit a different distribution to this action. 
 
-We can go in two different directions to fit our data. If we suspect that there is a simple underlying mechanism governing the behavior we should use a well known univariate distribution that captures that mechanism. If we do not have an understanding about the underlying mechanism we may be better off with a (potentially smoothed version) of the experimental data. Let's look at both options. 
+Our distribution is discrete and univariate over the integers from (let's say) 16 to 36. We can come up with a few ways of generating the underlying distribution:
+ - Use the measured histogram
+ - Fit a known discrete distribution to the data
+ - Fit a known continuous distribution to the data and round
+ - Use the data to generate a kernel density estimator
+
+#### Measured Histogram
+The most straightforward way to translate our measurements into a discrete probability distribution is to assume the data directly describes the underlying distribution. This assumption is most likely to hold true when you have a lot of measured data that has borne out the entirety of the underlying distribution. This assumption may appear to be true when the measured histogram is smooth and well-shaped. 
+
+The data we have shows a 1% chance of drawing a 30, and a 0% chance of drawing a 29. This is a small discrepancy but seems unlikely to me to be true.
+
+#### Known Discrete Distribution
+
+
+#### Known Continuous Distribution
+
+#### Kernel Density Estimate
+
+<!-- We can go in two different directions to fit our data. If we suspect that there is a simple underlying mechanism governing the behavior we should use a well known univariate distribution that captures that mechanism. If we do not have an understanding about the underlying mechanism we may be better off with a (potentially smoothed version) of the experimental data. Let's look at both options. 
 
 Note - our distribution is not continuous, but rather exists on the integers only. We'll be rounding any solution to the nearest integer. We should be using a discrete distribution, but this seems more fun.
 
@@ -797,7 +815,7 @@ d_trunc = truncated(d_full, 26-10, 26+10)
 The other option we have when generating a distribution here is smooth something out over the measured histogram. This is a great choice if we ever just want to make sure we are drawing from something very close to the measured data. That might be nice if the underlying mechanisms are poorly understood or complex.
 
 The Julia package [KernelDensity.jl](https://github.com/JuliaStats/KernelDensity.jl) makes this process easy.
-
+ -->
 
 
 

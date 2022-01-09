@@ -97,7 +97,7 @@ new_item.append(new_enclosure)
 new_item.append(new_guid)
 new_item.append(new_pubdate)
 
-feed_chan.insert(4, new_item) #after title, language, and description
+feed_chan.insert(3, new_item) #after title, language, and description
 feed.write('feed.xml')
 ```
 Run the Python script once, commit it all to Github (or fork [mine](https://github.com/jacobwood27/032_fastaudiocasts)) and [enable Github Pages](https://docs.github.com/en/pages/quickstart) for that directory and your RSS feed should be up and running! You can test it easily by opening the feed in [VLC](https://www.videolan.org/).
