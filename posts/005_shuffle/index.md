@@ -657,6 +657,7 @@ using Random
 using Distributions
 using StatsBase
 using KernelDensity
+using Trapz
 ```
 
 And read in the data from the recorded file into a vector of vectors of `Int`.
@@ -702,7 +703,7 @@ function gsr_shuffle()
             out[i] = 1
             nl -= 1
         else
-            out[1] = 2
+            out[i] = 2
             nr -= 1
         end
     end
@@ -724,7 +725,7 @@ histogram!(GSR_scores, label="GSR", bins=15:2:52, lw=2, alpha=0.5, norm=:probabi
 @@im-100
 \fig{/posts/005_shuffle/score_comp_hist.svg}
 @@
-Looks like we outperform the shuffling model by quite a bit on this metric! Our mean score turns out to be 33 vs 27 for the GSR shuffle.
+Looks like we outperform the shuffling model by quite a bit on this metric! Our mean score turns out to be 33 vs 27 for the GSR shuffle. This indicates we should probably build our own model instead of assuming the GSR.
 
 ## Building a Model
 ### Deck Split
@@ -751,27 +752,62 @@ The most straightforward way to translate our measurements into a discrete proba
 
 The data we have shows a 1% chance of drawing a 30, and a 0% chance of drawing a 29. This is a small discrepancy but seems unlikely to me to be true.
 
-#### Known Discrete Distribution
+The resultant PMF would be identical to the histogram of measurements:
+@@im-100
+\fig{/posts/005_shuffle/hist_model.svg}
+@@
 
+#### Known Discrete Distribution
+The [Distributions.jl](https://juliastats.org/Distributions.jl/stable/) package provides a collection of distributions and the ability to fit them to experimental data using (usually) maximum likelihood estimation. The distributions available for this functionality are shown below. 
+
+ - [Binomial(52)](https://en.wikipedia.org/wiki/Binomial_distribution) - would result from drawing each card as either right or left with a fixed probability
+ - [Binomial(20)](https://en.wikipedia.org/wiki/Binomial_distribution) - would result from only randomly drawing the 20 middle cards with a fixed probability (and assuming the other 32 are split 16 left, 16 right)
+ - [Discrete Uniform](https://en.wikipedia.org/wiki/Discrete_uniform_distribution) - would result if every outcome in the possible solution space has the same probability
+ - [Geometric](https://en.wikipedia.org/wiki/Geometric_distribution) - usually interpreted as the number of trials needed for a single outcome to materialize. Tough to apply in this case.
+ - [Poisson](https://en.wikipedia.org/wiki/Poisson_distribution) - the probability of a given number of *independent* events occurring in a specific period of time. We don't expect card dropping events to be independent. 
+
+Among these distributions we expect the binomial (especially the binomial with a smaller number of chance draws) to perform the best. And indeed that is true, the Binomial(20) distribution (which resulted in a 39% chance that each of the 20 randomly drawn card ends up in my left hand) fits the data decently well as seen in the chart below. 
+
+One thing we might (definitely) want to do is truncate the distribution - we certainly don't ever want our split to be <0 or >52, and we probably wouldn't shuffle the cards if we had <16 or >36 cards in one hand, it just doesn't feel right. We'll apply 16-36 truncation in all the results going forward.
+
+```
+split_vec = [count(s.==1) for s in S_vec]
+histogram(split_vec, bins=15.5:36.5, norm=:pdf, label="Measured", alpha=0.5)
+
+f = fit_mle(Binomial, 52, split_vec)
+f = truncated(f,16,36)
+plot!(f, st=:line, label = "Binomial(52)", lw=2)
+
+x = 16:36
+f = fit_mle(Binomial, x[end]-x[1], split_vec.-x[1])
+plot!(x, st=:line, pdf.(f, x.-x[1]), label = "Binomial(20)", lw=2)
+
+distributions = [   
+    (DiscreteUniform,   "DiscreteUniform")
+    (Geometric,         "Geometric")
+    (Poisson,           "Poisson")
+]
+for d in distributions
+    f = fit_mle(d[1], split_vec)
+    f = truncated(f,16,36)
+    plot!(f, st=:line, marker=false, label = d[2], lw=2)
+end
+plot!(xlabel="Number of Cards in Left Hand", ylabel="Fraction of Cases", xlims=(16,36), xticks=16:36)
+```
+
+Note - discrete distributions are plotted here as continuous for ease of viewing. 
+@@im-100
+\fig{/posts/005_shuffle/discrete_fits.svg}
+@@
 
 #### Known Continuous Distribution
-
-#### Kernel Density Estimate
-
-<!-- We can go in two different directions to fit our data. If we suspect that there is a simple underlying mechanism governing the behavior we should use a well known univariate distribution that captures that mechanism. If we do not have an understanding about the underlying mechanism we may be better off with a (potentially smoothed version) of the experimental data. Let's look at both options. 
-
-Note - our distribution is not continuous, but rather exists on the integers only. We'll be rounding any solution to the nearest integer. We should be using a discrete distribution, but this seems more fun.
-
-The [Distributions.jl](https://juliastats.org/Distributions.jl/stable/) package provides a collection of distributions and the ability to fit them to experimental data using (usually) maximum likelihood estimation.
+Similarly to the discrete options, Distributions.jl provides a host of continuous distributions that can be easily fit to our experimental data. 
 ```
 distributions = [   
-    (Categorical,       "Categorical")
-    (DiscreteUniform,   "DiscreteUniform")
     (Exponential,       "Exponential")
     (LogNormal,         "LogNormal")
     (Normal,            "Normal")
     (Gamma,             "Gamma")
-    (Geometric,         "Geometric")
     (Laplace,           "Laplace")
     (Pareto,            "Pareto")
     (Poisson,           "Poisson")
@@ -781,53 +817,161 @@ distributions = [
     (Weibull,           "Weibull")
 ]
 
-split_vec = [count(s.==1) for s in S_vec]
-histogram(split_vec, bins=17.5:34.5, norm=:pdf, label="Measured")
+histogram(split_vec, bins=15.5:36.5, norm=:pdf, label="observed", alpha=0.5)
+
 for d in distributions
     f = fit_mle(d[1], split_vec)
+    f = truncated(f,16,36)
     plot!(f, st=:line, label = d[2], lw=2)
 end
-plot!(xlabel="Cards in Left Hand", ylabel="pdf", xlims=(17,35))
+plot!(xlabel="Number of Cards in Left Hand", ylabel="Fraction of Cases", xlims=(16,36), xticks=16:36)
 ```
-
 @@im-100
-\fig{/posts/005_shuffle/fit_all.svg}
+\fig{/posts/005_shuffle/all_continuous.svg}
 @@
 
-And after eliminating distributions that are clearly improper we are left with the LogNormal, Normal, Gamma, and InverseGaussian distributions.
- - [LogNormal](https://en.wikipedia.org/wiki/Log-normal_distribution) - usually the result of an event which is the product of multiple independent random variables
+We can discount quite a few of these right off the bat and then we are left with the LogNormal, Normal, Gamma, and InverseGaussian distributions.
+ - [Log Normal](https://en.wikipedia.org/wiki/Log-normal_distribution) - usually the result of an event which is the product of multiple independent random variables
  - [Normal](https://en.wikipedia.org/wiki/Normal_distribution) - usually the result of an event which is the sum of multiple independent random variables
  - [Gamma](https://en.wikipedia.org/wiki/Gamma_distribution) - can be used to model wait times - such as when will the nth event occur?
- - [InverseGaussian](https://en.wikipedia.org/wiki/Inverse_Gaussian_distribution) - if a normal distribution describes possible values of a brownian process at a fixed time, the inverse gaussian describes the possible times at which we might see a specific value of a brownian process. 
+ - [Inverse Gaussian](https://en.wikipedia.org/wiki/Inverse_Gaussian_distribution) - if a normal distribution describes possible values of a random walk process at a fixed time, the inverse gaussian describes the possible times at which we might see a specific value of a random walk process. 
+
+In order to round these to the proper domain we can integrate them over the rounding range of each integer. In the end these all look practically identical:
+
+```
+distributions = [   
+    (LogNormal,         "LogNormal")
+    (Normal,            "Normal")
+    (Gamma,             "Gamma")
+    (InverseGaussian,   "InverseGaussian")
+]
+
+histogram(split_vec, bins=15.5:36.5, norm=:pdf, label="observed", alpha=0.5)
+
+
+for d in distributions
+    f = fit_mle(d[1], split_vec)
+    f = truncated(f,16,36)
+
+    #Integrate
+    x_ep = 15.5:36.5
+    x_cp = 16:36
+    y_cp = [cdf(f, x_ep[i+1]) - cdf(f, x_ep[i]) for i in 1:length(x_ep)-1]
+
+    plot!(x_cp, y_cp, st=:line, label = d[2], lw=2)
+end
+plot!(xlabel="Number of Cards in Left Hand", ylabel="Fraction of Cases", xlims=(16,36), xticks=16:36)
+```
+
 
 @@im-100
-\fig{/posts/005_shuffle/fit_few.svg}
+\fig{/posts/005_shuffle/few_continuous.svg}
 @@
 
 You might be able to make a case for any of these. They all can fit the data we have pretty well. If pressed I might argue the normal distribution makes the most sense here so that's what I'll assume going forward.
 
-One thing we might (definitely) want to do is truncate the distribution - we certainly don't ever want our split to be <0 or >52, and we probably wouldn't shuffle the cards if we had <16 or >36 cards in one hand, it just doesn't feel right. Julia can easily model a truncated distribution:
+
+#### Kernel Density Estimate
+The other option we have when generating a distribution here is to take the measured histogram and apply some smoothing via [kernel density estimation](https://en.wikipedia.org/wiki/Kernel_density_estimation). This is a great choice if we ever just want to make sure we are drawing from something very close to the measured data. That might be nice if the underlying mechanisms are poorly understood or too complex to attempt to model.
+
+The Julia package [KernelDensity.jl](https://github.com/JuliaStats/KernelDensity.jl) makes this process easy. The main parameter of interest is the kernel bandwidth we use to smooth with - larger values will smooth over spurious measurements at the expense of pulling down peaks. Smaller measurements won't do much smoothing work and may capture more fine structure than you would hope. 
+
+This is also a continuous estimator - so we need to integrate over the relevant region to get a probability mass function over the integers.
 ```
-d_full  = fit_mle(Normal, split_vec)
-d_trunc = truncated(d_full, 26-10, 26+10)
+histogram(split_vec, bins=15.5:36.5, norm=:pdf, label="observed", alpha=0.5)
+
+for bw = [0.2, 0.5, 1.0, 2.0]
+    k = kde(split_vec, boundary=(26-10, 26+10), bandwidth=bw)
+    
+    x = 16:0.01:36
+    y = pdf(k, x)
+
+    x_ep = 15.5:36.5
+    x_cp = 16:36
+    y_cp = [trapz(x[(x.>x_ep[i]) .& (x.<x_ep[i+1])], y[(x.>x_ep[i]) .& (x.<x_ep[i+1])]) for i in 1:length(x_ep)-1]
+    
+    plot!(x_cp, y_cp, lw=2, label="BW = " * string(bw))
+end
+
+plot!(xlabel="Number of Cards in Left Hand", ylabel="Fraction of Cases", xlims=(16,36), xticks=16:36)
+
+savefig("kernel_fit.svg")
 ```
 
-The other option we have when generating a distribution here is smooth something out over the measured histogram. This is a great choice if we ever just want to make sure we are drawing from something very close to the measured data. That might be nice if the underlying mechanisms are poorly understood or complex.
+@@im-100
+\fig{/posts/005_shuffle/kernel_fit.svg}
+@@
 
-The Julia package [KernelDensity.jl](https://github.com/JuliaStats/KernelDensity.jl) makes this process easy.
- -->
+A bandwidth of 0.5 smooths over the spurious 29-30 bump while retaining most of the rest of the structure, it probably wins the eye test here. 
+
+#### Winning Distribution
+We can compare the leading solutions from each of the previous 4 sections:
+@@im-100
+\fig{/posts/005_shuffle/4best.svg}
+@@
+
+At this point it comes down to either our understanding of the underlying mechanism that is driving the distribution or aesthetic preference. Let me know if you come up with a good causal model. In the meantime, I'll use the normal distribution with a mean of 23.8 and a standard deviation of 1.8.
+
+### Dropping Cards
+After splitting the deck in two we start to drop cards from either our left or right hand. The GSJ model predicts that this will happen probabilistically, with the probability of dropping from either the left or the right according solely to the fraction of remaining total cards that are currently in that hand. Is this a good model for us?
+
+#### Comparison to GSR
+We can view GSR as making a prediction each time we are about to drop a card. We can then look at what actually happened, and see if things that were supposed to happen 25% of the time actually happened 25% of the time. This kind of analysis is commonly referred to as [model calibration](https://en.wikipedia.org/wiki/Calibration_(statistics)). 
+
+```
+probs = Float64[]
+outcs = Bool[]
+cards = Int[]
+for S in S_vec
+    for (i,s) in enumerate(S)
+        nl = count(S[i:end].==1)
+        nr = count(S[i:end].==2)
+        prob = nl/(nl+nr)
+        outc = (s == 1)
+        push!(probs, prob)
+        push!(outcs, outc)
+        push!(cards, nl+nr)
+    end
+end
+
+edges = 0:0.1:1.0
+binC  = 0.05:0.1:0.95
+
+h  = fit(Histogram, probs, edges)
+binindices = StatsBase.binindex.(Ref(h), probs)
+
+outF = Float64[]
+dps  = Int[]
+for i in 1:length(binC)
+    idx = binindices .== i
+    push!(outF, count(outcs[idx]) / count(idx))
+    push!(dps, count(idx))
+end
+
+X = vcat([[x-0.05,x-0.05,x+0.05,x+0.05,x-0.05,NaN] for x in binC]...)
+Y = vcat([[x-0.05,x+0.05,x+0.05,x-0.05,x-0.05,NaN] for x in binC]...)
+plot(X, Y, fill=true, label="Perfectly Calibrated", aspect_ratio=1, size=(500,500),
+    xlabel = "Predicted Probability",
+    ylabel = "Observed Probability",
+    xticks = edges, yticks=edges)
+
+outF[dps.<10] .= 0
+dps[dps.<10]  .= 0
+scatter!(binC, outF, markersize=log.(dps/maximum(dps)).+9, label="Actual", legend=:topleft, xlims=(-0.05,1.05), ylims=(-0.05,1.05))
+```
+We don't have perfect point estimates here - so we need to bucket the probabalities. Anything within the blue squares below is considered likely "calibrated". For example, the bottom left point says that whenever the model predicted an event to happen between 0-10% of the time, it actually happened 0% of the time. 
+
+The points are sized roughly corresponding to how many predictions they represent. We notice that the model does a pretty good job overall - the only time it is off by more than 10% is the 10-20% bucket which is only comprised of 50 observations. Not bad.
+@@im-100
+\fig{/posts/005_shuffle/my_calibration.svg}
+@@
 
 
 
 
-
-
-
-
-
-
-
-
+@@im-100
+\fig{/posts/005_shuffle/side_expected.svg}
+@@
 
 # Investigating Performance
 
