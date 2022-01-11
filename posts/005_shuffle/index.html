@@ -1,4 +1,4 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/katex/katex.min.css"> <link rel=stylesheet  href="/libs/highlight/github.min.css"> <link rel=stylesheet  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=stylesheet  href="/css/basic.css"> <link rel=icon  href="/assets/favicon.png"> <title>Shuffle</title> <header> <div class=blog-name ><a href="/">Jacob Wood</a></div> <nav> <ul> <li><a href="/projects/">Projects</a> <li><a href="/posts/">Posts</a> <li><a href="/projects/books/">Books</a> <li><a href="/projects/podcasts/">Podcasts</a> <li><a href="/now">Now</a> </ul> <img src="/assets/hamburger.svg" id=menu-icon > </nav> </header> <div class=franklin-content ><p>Folk wisdom claims 7 shuffles is sufficient to thoroughly mix up a deck of cards. This claim originates from a <a href="https://escholarship.org/content/qt0k4654kx/qt0k4654kx.pdf?t&#61;p3z6d7">paper</a> published in 1986 by David Aldous and Persi Diaconis and summarized <a href="https://www.nytimes.com/1990/01/09/science/in-shuffling-cards-7-is-winning-number.html">in the New York Times</a> in 1990. </p> <p>Does my mediocre shuffling reflect this common wisdom? This post is an attempt to investigate that question.</p> <hr /> <p><strong>Table of Contents</strong> <div class=franklin-toc ><ol><li><a href="#collecting_data">Collecting Data</a><ol><li><a href="#shuffling_-_head_on">Shuffling - Head On </a><li><a href="#shuffling_-_angled_down">Shuffling - Angled Down</a><li><a href="#post_shuffle_conveyor_belt">Post Shuffle Conveyor Belt</a><li><a href="#post_shuffle_riffle">Post Shuffle Riffle</a><ol><li><a href="#transfer_learning_post_processing">Transfer Learning Post Processing</a><ol><li><a href="#data_labelling">Data Labelling</a><li><a href="#model_training">Model Training</a><li><a href="#deploying_the_model">Deploying the Model </a></ol></ol></ol><li><a href="#building_a_shuffling_model">Building a Shuffling Model</a><ol><li><a href="#data_exploration">Data Exploration</a><li><a href="#building_a_model">Building a Model</a><ol><li><a href="#deck_split">Deck Split</a><ol><li><a href="#measured_histogram">Measured Histogram</a><li><a href="#known_discrete_distribution">Known Discrete Distribution</a><li><a href="#known_continuous_distribution">Known Continuous Distribution</a><li><a href="#kernel_density_estimate">Kernel Density Estimate</a></ol></ol></ol><li><a href="#investigating_performance">Investigating Performance</a><li><a href="#ingredients">Ingredients</a></ol></div></p> <hr /> <h1 id=collecting_data ><a href="#collecting_data" class=header-anchor >Collecting Data</a></h1> <p>The first step to assessing my shuffling performance is to investigate a few real world shuffles. To start I recorded 5 the results of 5 shuffles by hand to get a sense of the variation in the distribution. Each run involved shuffling the deck with a riffle shuffle but not aligning the left and right hand piles:</p> <div class=im-100 ><img src="/posts/005_shuffle/card_shuffle1.png" alt=""></div> <p>The resulting order was then recorded as a string of 1s &#40;card from left hand&#41; and 2s &#40;card from right hand&#41;. The 5 initial shuffles were:</p> <pre><code class="plaintext hljs">1112212122121212121212121212121212121212121212111221
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/katex/katex.min.css"> <link rel=stylesheet  href="/libs/highlight/github.min.css"> <link rel=stylesheet  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=stylesheet  href="/css/basic.css"> <link rel=icon  href="/assets/favicon.png"> <title>Shuffle</title> <header> <div class=blog-name ><a href="/">Jacob Wood</a></div> <nav> <ul> <li><a href="/projects/">Projects</a> <li><a href="/posts/">Posts</a> <li><a href="/projects/books/">Books</a> <li><a href="/projects/podcasts/">Podcasts</a> <li><a href="/now">Now</a> </ul> <img src="/assets/hamburger.svg" id=menu-icon > </nav> </header> <div class=franklin-content ><p>Folk wisdom claims 7 shuffles is sufficient to thoroughly mix up a deck of cards. This claim originates from a <a href="https://escholarship.org/content/qt0k4654kx/qt0k4654kx.pdf?t&#61;p3z6d7">paper</a> published in 1986 by David Aldous and Persi Diaconis and summarized <a href="https://www.nytimes.com/1990/01/09/science/in-shuffling-cards-7-is-winning-number.html">in the New York Times</a> in 1990. </p> <p>Does my mediocre shuffling reflect this common wisdom? This post is an attempt to investigate that question.</p> <hr /> <p><strong>Table of Contents</strong> <div class=franklin-toc ><ol><li><a href="#collecting_data">Collecting Data</a><ol><li><a href="#shuffling_-_head_on">Shuffling - Head On </a><li><a href="#shuffling_-_angled_down">Shuffling - Angled Down</a><li><a href="#post_shuffle_conveyor_belt">Post Shuffle Conveyor Belt</a><li><a href="#post_shuffle_riffle">Post Shuffle Riffle</a><ol><li><a href="#transfer_learning_post_processing">Transfer Learning Post Processing</a><ol><li><a href="#data_labelling">Data Labelling</a><li><a href="#model_training">Model Training</a><li><a href="#deploying_the_model">Deploying the Model </a></ol></ol></ol><li><a href="#building_a_shuffling_model">Building a Shuffling Model</a><ol><li><a href="#data_exploration">Data Exploration</a><li><a href="#building_a_model">Building a Model</a><ol><li><a href="#deck_split">Deck Split</a><ol><li><a href="#measured_histogram">Measured Histogram</a><li><a href="#known_discrete_distribution">Known Discrete Distribution</a><li><a href="#known_continuous_distribution">Known Continuous Distribution</a><li><a href="#kernel_density_estimate">Kernel Density Estimate</a><li><a href="#winning_distribution">Winning Distribution</a></ol><li><a href="#dropping_cards">Dropping Cards</a><ol><li><a href="#comparison_to_gsr">Comparison to GSR</a></ol></ol></ol><li><a href="#investigating_performance">Investigating Performance</a><li><a href="#ingredients">Ingredients</a></ol></div></p> <hr /> <h1 id=collecting_data ><a href="#collecting_data" class=header-anchor >Collecting Data</a></h1> <p>The first step to assessing my shuffling performance is to investigate a few real world shuffles. To start I recorded 5 the results of 5 shuffles by hand to get a sense of the variation in the distribution. Each run involved shuffling the deck with a riffle shuffle but not aligning the left and right hand piles:</p> <div class=im-100 ><img src="/posts/005_shuffle/card_shuffle1.png" alt=""></div> <p>The resulting order was then recorded as a string of 1s &#40;card from left hand&#41; and 2s &#40;card from right hand&#41;. The 5 initial shuffles were:</p> <pre><code class="plaintext hljs">1112212122121212121212121212121212121212121212111221
 1222212212212121221212121212121212222112112211221122
 2221121212211212112121221211221212121122222112212122
 2222122121221121212121122112211222121222211222112211
@@ -460,7 +460,8 @@ get_shuffle(o1,o2)</code></pre>
 <span class=hljs-keyword >using</span> Random
 <span class=hljs-keyword >using</span> Distributions
 <span class=hljs-keyword >using</span> StatsBase
-<span class=hljs-keyword >using</span> KernelDensity</code></pre>
+<span class=hljs-keyword >using</span> KernelDensity
+<span class=hljs-keyword >using</span> Trapz</code></pre>
 <p>And read in the data from the recorded file into a vector of vectors of <code>Int</code>.</p>
 <pre><code class="julia hljs">S_rec = [[parse(<span class=hljs-built_in >Int</span>,c) <span class=hljs-keyword >for</span> c <span class=hljs-keyword >in</span> l] <span class=hljs-keyword >for</span> l <span class=hljs-keyword >in</span> readlines(<span class=hljs-string >&quot;rec.txt&quot;</span>)]</code></pre>
 <p>One way we can &quot;score&quot; a shuffle is by counting the number of card runs there were. A perfect shuffle, with two piles of 26 cards interwoven one at a time, would score 52 on this metric.</p>
@@ -497,7 +498,7 @@ plot(scores, st=:scatter, legend=<span class=hljs-literal >false</span>, smooth=
             out[i] = <span class=hljs-number >1</span>
             nl -= <span class=hljs-number >1</span>
         <span class=hljs-keyword >else</span>
-            out[<span class=hljs-number >1</span>] = <span class=hljs-number >2</span>
+            out[i] = <span class=hljs-number >2</span>
             nr -= <span class=hljs-number >1</span>
         <span class=hljs-keyword >end</span>
     <span class=hljs-keyword >end</span>
@@ -514,7 +515,7 @@ histogram(scores,      label=<span class=hljs-string >&quot;Me&quot;</span>,  bi
 histogram!(GSR_scores, label=<span class=hljs-string >&quot;GSR&quot;</span>, bins=<span class=hljs-number >15</span>:<span class=hljs-number >2</span>:<span class=hljs-number >52</span>, lw=<span class=hljs-number >2</span>, alpha=<span class=hljs-number >0.5</span>, norm=:probability,
     xlabel=<span class=hljs-string >&quot;Score&quot;</span>, ylabel=<span class=hljs-string >&quot;Fraction&quot;</span>)</code></pre>
 <div class=im-100 ><img src="/posts/005_shuffle/score_comp_hist.svg" alt=""></div>
-<p>Looks like we outperform the shuffling model by quite a bit on this metric&#33; Our mean score turns out to be 33 vs 27 for the GSR shuffle.</p>
+<p>Looks like we outperform the shuffling model by quite a bit on this metric&#33; Our mean score turns out to be 33 vs 27 for the GSR shuffle. This indicates we should probably build our own model instead of assuming the GSR.</p>
 <h2 id=building_a_model ><a href="#building_a_model" class=header-anchor >Building a Model</a></h2>
 <h3 id=deck_split ><a href="#deck_split" class=header-anchor >Deck Split</a></h3>
 <p>The first action in shuffling is splitting the deck into two halves. Ideally you end up with two stacks of 26 cards. The standard approach to modeling this action &#40;the approach taken in the GSR model&#41; is to draw the card split from a binomial distribution. Let&#39;s see if that looks decent for us.</p>
@@ -538,9 +539,184 @@ plot!(Binomial(<span class=hljs-number >52</span>), st=:line, xlims=(<span class
 <h4 id=measured_histogram ><a href="#measured_histogram" class=header-anchor >Measured Histogram</a></h4>
 <p>The most straightforward way to translate our measurements into a discrete probability distribution is to assume the data directly describes the underlying distribution. This assumption is most likely to hold true when you have a lot of measured data that has borne out the entirety of the underlying distribution. This assumption may appear to be true when the measured histogram is smooth and well-shaped. </p>
 <p>The data we have shows a 1&#37; chance of drawing a 30, and a 0&#37; chance of drawing a 29. This is a small discrepancy but seems unlikely to me to be true.</p>
+<p>The resultant PMF would be identical to the histogram of measurements:</p>
+<div class=im-100 ><img src="/posts/005_shuffle/hist_model.svg" alt=""></div>
 <h4 id=known_discrete_distribution ><a href="#known_discrete_distribution" class=header-anchor >Known Discrete Distribution</a></h4>
+<p>The <a href="https://juliastats.org/Distributions.jl/stable/">Distributions.jl</a> package provides a collection of distributions and the ability to fit them to experimental data using &#40;usually&#41; maximum likelihood estimation. The distributions available for this functionality are shown below. </p>
+<ul>
+<li><p><a href="https://en.wikipedia.org/wiki/Binomial_distribution">Binomial&#40;52&#41;</a> - would result from drawing each card as either right or left with a fixed probability</p>
+
+<li><p><a href="https://en.wikipedia.org/wiki/Binomial_distribution">Binomial&#40;20&#41;</a> - would result from only randomly drawing the 20 middle cards with a fixed probability &#40;and assuming the other 32 are split 16 left, 16 right&#41;</p>
+
+<li><p><a href="https://en.wikipedia.org/wiki/Discrete_uniform_distribution">Discrete Uniform</a> - would result if every outcome in the possible solution space has the same probability</p>
+
+<li><p><a href="https://en.wikipedia.org/wiki/Geometric_distribution">Geometric</a> - usually interpreted as the number of trials needed for a single outcome to materialize. Tough to apply in this case.</p>
+
+<li><p><a href="https://en.wikipedia.org/wiki/Poisson_distribution">Poisson</a> - the probability of a given number of <em>independent</em> events occurring in a specific period of time. We don&#39;t expect card dropping events to be independent. </p>
+
+</ul>
+<p>Among these distributions we expect the binomial &#40;especially the binomial with a smaller number of chance draws&#41; to perform the best. And indeed that is true, the Binomial&#40;20&#41; distribution &#40;which resulted in a 39&#37; chance that each of the 20 randomly drawn card ends up in my left hand&#41; fits the data decently well as seen in the chart below. </p>
+<p>One thing we might &#40;definitely&#41; want to do is truncate the distribution - we certainly don&#39;t ever want our split to be &lt;0 or &gt;52, and we probably wouldn&#39;t shuffle the cards if we had &lt;16 or &gt;36 cards in one hand, it just doesn&#39;t feel right. We&#39;ll apply 16-36 truncation in all the results going forward.</p>
+<pre><code class="julia hljs">split_vec = [count(s.==<span class=hljs-number >1</span>) <span class=hljs-keyword >for</span> s <span class=hljs-keyword >in</span> S_vec]
+histogram(split_vec, bins=<span class=hljs-number >15.5</span>:<span class=hljs-number >36.5</span>, norm=:pdf, label=<span class=hljs-string >&quot;Measured&quot;</span>, alpha=<span class=hljs-number >0.5</span>)
+
+f = fit_mle(Binomial, <span class=hljs-number >52</span>, split_vec)
+f = truncated(f,<span class=hljs-number >16</span>,<span class=hljs-number >36</span>)
+plot!(f, st=:line, label = <span class=hljs-string >&quot;Binomial(52)&quot;</span>, lw=<span class=hljs-number >2</span>)
+
+x = <span class=hljs-number >16</span>:<span class=hljs-number >36</span>
+f = fit_mle(Binomial, x[<span class=hljs-keyword >end</span>]-x[<span class=hljs-number >1</span>], split_vec.-x[<span class=hljs-number >1</span>])
+plot!(x, st=:line, pdf.(f, x.-x[<span class=hljs-number >1</span>]), label = <span class=hljs-string >&quot;Binomial(20)&quot;</span>, lw=<span class=hljs-number >2</span>)
+
+distributions = [   
+    (DiscreteUniform,   <span class=hljs-string >&quot;DiscreteUniform&quot;</span>)
+    (Geometric,         <span class=hljs-string >&quot;Geometric&quot;</span>)
+    (Poisson,           <span class=hljs-string >&quot;Poisson&quot;</span>)
+]
+<span class=hljs-keyword >for</span> d <span class=hljs-keyword >in</span> distributions
+    f = fit_mle(d[<span class=hljs-number >1</span>], split_vec)
+    f = truncated(f,<span class=hljs-number >16</span>,<span class=hljs-number >36</span>)
+    plot!(f, st=:line, marker=<span class=hljs-literal >false</span>, label = d[<span class=hljs-number >2</span>], lw=<span class=hljs-number >2</span>)
+<span class=hljs-keyword >end</span>
+plot!(xlabel=<span class=hljs-string >&quot;Number of Cards in Left Hand&quot;</span>, ylabel=<span class=hljs-string >&quot;Fraction of Cases&quot;</span>, xlims=(<span class=hljs-number >16</span>,<span class=hljs-number >36</span>), xticks=<span class=hljs-number >16</span>:<span class=hljs-number >36</span>)</code></pre>
+<p>Note - discrete distributions are plotted here as continuous for ease of viewing. </p>
+<div class=im-100 ><img src="/posts/005_shuffle/discrete_fits.svg" alt=""></div>
 <h4 id=known_continuous_distribution ><a href="#known_continuous_distribution" class=header-anchor >Known Continuous Distribution</a></h4>
+<p>Similarly to the discrete options, Distributions.jl provides a host of continuous distributions that can be easily fit to our experimental data. </p>
+<pre><code class="julia hljs">distributions = [   
+    (Exponential,       <span class=hljs-string >&quot;Exponential&quot;</span>)
+    (LogNormal,         <span class=hljs-string >&quot;LogNormal&quot;</span>)
+    (Normal,            <span class=hljs-string >&quot;Normal&quot;</span>)
+    (Gamma,             <span class=hljs-string >&quot;Gamma&quot;</span>)
+    (Laplace,           <span class=hljs-string >&quot;Laplace&quot;</span>)
+    (Pareto,            <span class=hljs-string >&quot;Pareto&quot;</span>)
+    (Poisson,           <span class=hljs-string >&quot;Poisson&quot;</span>)
+    (Rayleigh,          <span class=hljs-string >&quot;Rayleigh&quot;</span>)
+    (InverseGaussian,   <span class=hljs-string >&quot;InverseGaussian&quot;</span>)
+    (Uniform,           <span class=hljs-string >&quot;Uniform&quot;</span>)
+    (Weibull,           <span class=hljs-string >&quot;Weibull&quot;</span>)
+]
+
+histogram(split_vec, bins=<span class=hljs-number >15.5</span>:<span class=hljs-number >36.5</span>, norm=:pdf, label=<span class=hljs-string >&quot;observed&quot;</span>, alpha=<span class=hljs-number >0.5</span>)
+
+<span class=hljs-keyword >for</span> d <span class=hljs-keyword >in</span> distributions
+    f = fit_mle(d[<span class=hljs-number >1</span>], split_vec)
+    f = truncated(f,<span class=hljs-number >16</span>,<span class=hljs-number >36</span>)
+    plot!(f, st=:line, label = d[<span class=hljs-number >2</span>], lw=<span class=hljs-number >2</span>)
+<span class=hljs-keyword >end</span>
+plot!(xlabel=<span class=hljs-string >&quot;Number of Cards in Left Hand&quot;</span>, ylabel=<span class=hljs-string >&quot;Fraction of Cases&quot;</span>, xlims=(<span class=hljs-number >16</span>,<span class=hljs-number >36</span>), xticks=<span class=hljs-number >16</span>:<span class=hljs-number >36</span>)</code></pre>
+<div class=im-100 ><img src="/posts/005_shuffle/all_continuous.svg" alt=""></div>
+<p>We can discount quite a few of these right off the bat and then we are left with the LogNormal, Normal, Gamma, and InverseGaussian distributions.</p>
+<ul>
+<li><p><a href="https://en.wikipedia.org/wiki/Log-normal_distribution">Log Normal</a> - usually the result of an event which is the product of multiple independent random variables</p>
+
+<li><p><a href="https://en.wikipedia.org/wiki/Normal_distribution">Normal</a> - usually the result of an event which is the sum of multiple independent random variables</p>
+
+<li><p><a href="https://en.wikipedia.org/wiki/Gamma_distribution">Gamma</a> - can be used to model wait times - such as when will the nth event occur?</p>
+
+<li><p><a href="https://en.wikipedia.org/wiki/Inverse_Gaussian_distribution">Inverse Gaussian</a> - if a normal distribution describes possible values of a random walk process at a fixed time, the inverse gaussian describes the possible times at which we might see a specific value of a random walk process. </p>
+
+</ul>
+<p>In order to round these to the proper domain we can integrate them over the rounding range of each integer. In the end these all look practically identical:</p>
+<pre><code class="julia hljs">distributions = [   
+    (LogNormal,         <span class=hljs-string >&quot;LogNormal&quot;</span>)
+    (Normal,            <span class=hljs-string >&quot;Normal&quot;</span>)
+    (Gamma,             <span class=hljs-string >&quot;Gamma&quot;</span>)
+    (InverseGaussian,   <span class=hljs-string >&quot;InverseGaussian&quot;</span>)
+]
+
+histogram(split_vec, bins=<span class=hljs-number >15.5</span>:<span class=hljs-number >36.5</span>, norm=:pdf, label=<span class=hljs-string >&quot;observed&quot;</span>, alpha=<span class=hljs-number >0.5</span>)
+
+
+<span class=hljs-keyword >for</span> d <span class=hljs-keyword >in</span> distributions
+    f = fit_mle(d[<span class=hljs-number >1</span>], split_vec)
+    f = truncated(f,<span class=hljs-number >16</span>,<span class=hljs-number >36</span>)
+
+    <span class=hljs-comment >#Integrate</span>
+    x_ep = <span class=hljs-number >15.5</span>:<span class=hljs-number >36.5</span>
+    x_cp = <span class=hljs-number >16</span>:<span class=hljs-number >36</span>
+    y_cp = [cdf(f, x_ep[i+<span class=hljs-number >1</span>]) - cdf(f, x_ep[i]) <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:length(x_ep)-<span class=hljs-number >1</span>]
+
+    plot!(x_cp, y_cp, st=:line, label = d[<span class=hljs-number >2</span>], lw=<span class=hljs-number >2</span>)
+<span class=hljs-keyword >end</span>
+plot!(xlabel=<span class=hljs-string >&quot;Number of Cards in Left Hand&quot;</span>, ylabel=<span class=hljs-string >&quot;Fraction of Cases&quot;</span>, xlims=(<span class=hljs-number >16</span>,<span class=hljs-number >36</span>), xticks=<span class=hljs-number >16</span>:<span class=hljs-number >36</span>)</code></pre>
+<div class=im-100 ><img src="/posts/005_shuffle/few_continuous.svg" alt=""></div>
+<p>You might be able to make a case for any of these. They all can fit the data we have pretty well. If pressed I might argue the normal distribution makes the most sense here so that&#39;s what I&#39;ll assume going forward.</p>
 <h4 id=kernel_density_estimate ><a href="#kernel_density_estimate" class=header-anchor >Kernel Density Estimate</a></h4>
+<p>The other option we have when generating a distribution here is to take the measured histogram and apply some smoothing via <a href="https://en.wikipedia.org/wiki/Kernel_density_estimation">kernel density estimation</a>. This is a great choice if we ever just want to make sure we are drawing from something very close to the measured data. That might be nice if the underlying mechanisms are poorly understood or too complex to attempt to model.</p>
+<p>The Julia package <a href="https://github.com/JuliaStats/KernelDensity.jl">KernelDensity.jl</a> makes this process easy. The main parameter of interest is the kernel bandwidth we use to smooth with - larger values will smooth over spurious measurements at the expense of pulling down peaks. Smaller measurements won&#39;t do much smoothing work and may capture more fine structure than you would hope. </p>
+<p>This is also a continuous estimator - so we need to integrate over the relevant region to get a probability mass function over the integers.</p>
+<pre><code class="julia hljs">histogram(split_vec, bins=<span class=hljs-number >15.5</span>:<span class=hljs-number >36.5</span>, norm=:pdf, label=<span class=hljs-string >&quot;observed&quot;</span>, alpha=<span class=hljs-number >0.5</span>)
+
+<span class=hljs-keyword >for</span> bw = [<span class=hljs-number >0.2</span>, <span class=hljs-number >0.5</span>, <span class=hljs-number >1.0</span>, <span class=hljs-number >2.0</span>]
+    k = kde(split_vec, boundary=(<span class=hljs-number >26</span>-<span class=hljs-number >10</span>, <span class=hljs-number >26</span>+<span class=hljs-number >10</span>), bandwidth=bw)
+    
+    x = <span class=hljs-number >16</span>:<span class=hljs-number >0.01</span>:<span class=hljs-number >36</span>
+    y = pdf(k, x)
+
+    x_ep = <span class=hljs-number >15.5</span>:<span class=hljs-number >36.5</span>
+    x_cp = <span class=hljs-number >16</span>:<span class=hljs-number >36</span>
+    y_cp = [trapz(x[(x.&gt;x_ep[i]) .&amp; (x.&lt;x_ep[i+<span class=hljs-number >1</span>])], y[(x.&gt;x_ep[i]) .&amp; (x.&lt;x_ep[i+<span class=hljs-number >1</span>])]) <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:length(x_ep)-<span class=hljs-number >1</span>]
+    
+    plot!(x_cp, y_cp, lw=<span class=hljs-number >2</span>, label=<span class=hljs-string >&quot;BW = &quot;</span> * string(bw))
+<span class=hljs-keyword >end</span>
+
+plot!(xlabel=<span class=hljs-string >&quot;Number of Cards in Left Hand&quot;</span>, ylabel=<span class=hljs-string >&quot;Fraction of Cases&quot;</span>, xlims=(<span class=hljs-number >16</span>,<span class=hljs-number >36</span>), xticks=<span class=hljs-number >16</span>:<span class=hljs-number >36</span>)
+
+savefig(<span class=hljs-string >&quot;kernel_fit.svg&quot;</span>)</code></pre>
+<div class=im-100 ><img src="/posts/005_shuffle/kernel_fit.svg" alt=""></div>
+<p>A bandwidth of 0.5 smooths over the spurious 29-30 bump while retaining most of the rest of the structure, it probably wins the eye test here. </p>
+<h4 id=winning_distribution ><a href="#winning_distribution" class=header-anchor >Winning Distribution</a></h4>
+<p>We can compare the leading solutions from each of the previous 4 sections:</p>
+<div class=im-100 ><img src="/posts/005_shuffle/4best.svg" alt=""></div>
+<p>At this point it comes down to either our understanding of the underlying mechanism that is driving the distribution or aesthetic preference. Let me know if you come up with a good causal model. In the meantime, I&#39;ll use the normal distribution with a mean of 23.8 and a standard deviation of 1.8.</p>
+<h3 id=dropping_cards ><a href="#dropping_cards" class=header-anchor >Dropping Cards</a></h3>
+<p>After splitting the deck in two we start to drop cards from either our left or right hand. The GSJ model predicts that this will happen probabilistically, with the probability of dropping from either the left or the right according solely to the fraction of remaining total cards that are currently in that hand. Is this a good model for us?</p>
+<h4 id=comparison_to_gsr ><a href="#comparison_to_gsr" class=header-anchor >Comparison to GSR</a></h4>
+<p>We can view GSR as making a prediction each time we are about to drop a card. We can then look at what actually happened, and see if things that were supposed to happen 25&#37; of the time actually happened 25&#37; of the time. This kind of analysis is commonly referred to as <a href="https://en.wikipedia.org/wiki/Calibration_&#40;statistics&#41;">model calibration</a>. </p>
+<pre><code class="julia hljs">probs = <span class=hljs-built_in >Float64</span>[]
+outcs = <span class=hljs-built_in >Bool</span>[]
+cards = <span class=hljs-built_in >Int</span>[]
+<span class=hljs-keyword >for</span> S <span class=hljs-keyword >in</span> S_vec
+    <span class=hljs-keyword >for</span> (i,s) <span class=hljs-keyword >in</span> enumerate(S)
+        nl = count(S[i:<span class=hljs-keyword >end</span>].==<span class=hljs-number >1</span>)
+        nr = count(S[i:<span class=hljs-keyword >end</span>].==<span class=hljs-number >2</span>)
+        prob = nl/(nl+nr)
+        outc = (s == <span class=hljs-number >1</span>)
+        push!(probs, prob)
+        push!(outcs, outc)
+        push!(cards, nl+nr)
+    <span class=hljs-keyword >end</span>
+<span class=hljs-keyword >end</span>
+
+edges = <span class=hljs-number >0</span>:<span class=hljs-number >0.1</span>:<span class=hljs-number >1.0</span>
+binC  = <span class=hljs-number >0.05</span>:<span class=hljs-number >0.1</span>:<span class=hljs-number >0.95</span>
+
+h  = fit(Histogram, probs, edges)
+binindices = StatsBase.binindex.(<span class=hljs-built_in >Ref</span>(h), probs)
+
+outF = <span class=hljs-built_in >Float64</span>[]
+dps  = <span class=hljs-built_in >Int</span>[]
+<span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:length(binC)
+    idx = binindices .== i
+    push!(outF, count(outcs[idx]) / count(idx))
+    push!(dps, count(idx))
+<span class=hljs-keyword >end</span>
+
+X = vcat([[x-<span class=hljs-number >0.05</span>,x-<span class=hljs-number >0.05</span>,x+<span class=hljs-number >0.05</span>,x+<span class=hljs-number >0.05</span>,x-<span class=hljs-number >0.05</span>,<span class=hljs-literal >NaN</span>] <span class=hljs-keyword >for</span> x <span class=hljs-keyword >in</span> binC]...)
+Y = vcat([[x-<span class=hljs-number >0.05</span>,x+<span class=hljs-number >0.05</span>,x+<span class=hljs-number >0.05</span>,x-<span class=hljs-number >0.05</span>,x-<span class=hljs-number >0.05</span>,<span class=hljs-literal >NaN</span>] <span class=hljs-keyword >for</span> x <span class=hljs-keyword >in</span> binC]...)
+plot(X, Y, fill=<span class=hljs-literal >true</span>, label=<span class=hljs-string >&quot;Perfectly Calibrated&quot;</span>, aspect_ratio=<span class=hljs-number >1</span>, size=(<span class=hljs-number >500</span>,<span class=hljs-number >500</span>),
+    xlabel = <span class=hljs-string >&quot;Predicted Probability&quot;</span>,
+    ylabel = <span class=hljs-string >&quot;Observed Probability&quot;</span>,
+    xticks = edges, yticks=edges)
+
+outF[dps.&lt;<span class=hljs-number >10</span>] .= <span class=hljs-number >0</span>
+dps[dps.&lt;<span class=hljs-number >10</span>]  .= <span class=hljs-number >0</span>
+scatter!(binC, outF, markersize=log.(dps/maximum(dps)).+<span class=hljs-number >9</span>, label=<span class=hljs-string >&quot;Actual&quot;</span>, legend=:topleft, xlims=(-<span class=hljs-number >0.05</span>,<span class=hljs-number >1.05</span>), ylims=(-<span class=hljs-number >0.05</span>,<span class=hljs-number >1.05</span>))</code></pre>
+<p>We don&#39;t have perfect point estimates here - so we need to bucket the probabalities. Anything within the blue squares below is considered likely &quot;calibrated&quot;. For example, the bottom left point says that whenever the model predicted an event to happen between 0-10&#37; of the time, it actually happened 0&#37; of the time. </p>
+<p>The points are sized roughly corresponding to how many predictions they represent. We notice that the model does a pretty good job overall - the only time it is off by more than 10&#37; is the 10-20&#37; bucket which is only comprised of 50 observations. Not bad.</p>
+<div class=im-100 ><img src="/posts/005_shuffle/my_calibration.svg" alt=""></div>
+<div class=im-100 ><img src="/posts/005_shuffle/side_expected.svg" alt=""></div>
 <h1 id=investigating_performance ><a href="#investigating_performance" class=header-anchor >Investigating Performance</a></h1>
 <h1 id=ingredients ><a href="#ingredients" class=header-anchor >Ingredients</a></h1>
 <ul>
@@ -580,7 +756,7 @@ plot!(Binomial(<span class=hljs-number >52</span>), st=:line, xlims=(<span class
     <a href="mailto:mail@jacobw.xyz" class="fa fa-envelope"></a> <a href="https://github.com/jacobwood27" class="fa fa-github"></a>
      <br>
      <br>
-    Last modified: January 09, 2022. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+    Last modified: January 11, 2022. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
   </div>
 </div>
 </div>
