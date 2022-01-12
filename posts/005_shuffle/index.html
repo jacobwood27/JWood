@@ -674,6 +674,8 @@ savefig(<span class=hljs-string >&quot;kernel_fit.svg&quot;</span>)</code></pre>
 <p>After splitting the deck in two we start to drop cards from either our left or right hand. The GSJ model predicts that this will happen probabilistically, with the probability of dropping from either the left or the right according solely to the fraction of remaining total cards that are currently in that hand. Is this a good model for us?</p>
 <h4 id=comparison_to_gsr ><a href="#comparison_to_gsr" class=header-anchor >Comparison to GSR</a></h4>
 <p>We can view GSR as making a prediction each time we are about to drop a card. We can then look at what actually happened, and see if things that were supposed to happen 25&#37; of the time actually happened 25&#37; of the time. This kind of analysis is commonly referred to as <a href="https://en.wikipedia.org/wiki/Calibration_&#40;statistics&#41;">model calibration</a>. </p>
+<p>We don&#39;t have perfect point estimates here - so we need to bucket the probabalities. Anything within the blue squares below is considered likely &quot;calibrated&quot;. For example, the bottom left point says that whenever the model predicted an event to happen between 0-10&#37; of the time, it actually happened 0&#37; of the time. </p>
+<p>The points are sized roughly corresponding to how many predictions they represent. We notice that the model does a pretty good job overall - the only time it is off by more than 10&#37; is the 10-20&#37; bucket which is only comprised of 50 observations. Not bad.</p>
 <pre><code class="julia hljs">probs = <span class=hljs-built_in >Float64</span>[]
 outcs = <span class=hljs-built_in >Bool</span>[]
 cards = <span class=hljs-built_in >Int</span>[]
@@ -712,11 +714,17 @@ plot(X, Y, fill=<span class=hljs-literal >true</span>, label=<span class=hljs-st
 
 outF[dps.&lt;<span class=hljs-number >10</span>] .= <span class=hljs-number >0</span>
 dps[dps.&lt;<span class=hljs-number >10</span>]  .= <span class=hljs-number >0</span>
-scatter!(binC, outF, markersize=log.(dps/maximum(dps)).+<span class=hljs-number >9</span>, label=<span class=hljs-string >&quot;Actual&quot;</span>, legend=:topleft, xlims=(-<span class=hljs-number >0.05</span>,<span class=hljs-number >1.05</span>), ylims=(-<span class=hljs-number >0.05</span>,<span class=hljs-number >1.05</span>))</code></pre>
-<p>We don&#39;t have perfect point estimates here - so we need to bucket the probabalities. Anything within the blue squares below is considered likely &quot;calibrated&quot;. For example, the bottom left point says that whenever the model predicted an event to happen between 0-10&#37; of the time, it actually happened 0&#37; of the time. </p>
-<p>The points are sized roughly corresponding to how many predictions they represent. We notice that the model does a pretty good job overall - the only time it is off by more than 10&#37; is the 10-20&#37; bucket which is only comprised of 50 observations. Not bad.</p>
+binX = [mean(probs[binindices.==i]) <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:length(dps)]
+scatter!(binX, outF, markersize=log.(dps/maximum(dps)).+<span class=hljs-number >9</span>, label=<span class=hljs-string >&quot;Actual&quot;</span>, legend=:topleft, xlims=(-<span class=hljs-number >0.05</span>,<span class=hljs-number >1.05</span>), ylims=(-<span class=hljs-number >0.05</span>,<span class=hljs-number >1.05</span>))</code></pre>
 <div class=im-100 ><img src="/posts/005_shuffle/my_calibration.svg" alt=""></div>
+<p>What are some ways in which we might differ from the GSR model? Perhaps we systematically favor the right or left hand at certain times:</p>
+<pre><code class="julia hljs">side_ev = [mean([s[i] <span class=hljs-keyword >for</span> s <span class=hljs-keyword >in</span> S_vec]) <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:<span class=hljs-number >52</span>] .- <span class=hljs-number >1</span>
+plot(side_ev, label=<span class=hljs-string >&quot;observed&quot;</span>, ylims=(<span class=hljs-number >0</span>, <span class=hljs-number >1</span>), ylabel=<span class=hljs-string >&quot;← Left Hand                Right Hand →&quot;</span>, xlabel=<span class=hljs-string >&quot;Card Number&quot;</span>, lw=<span class=hljs-number >2</span>)
+
+GSR_side_ev = [mean([s[i] <span class=hljs-keyword >for</span> s <span class=hljs-keyword >in</span> GSR_vec]) <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> <span class=hljs-number >1</span>:<span class=hljs-number >52</span>] .- <span class=hljs-number >1</span>
+plot!(GSR_side_ev, label=<span class=hljs-string >&quot;GSR model&quot;</span>, lw=<span class=hljs-number >2</span>)</code></pre>
 <div class=im-100 ><img src="/posts/005_shuffle/side_expected.svg" alt=""></div>
+<p>It looks like we do systematically favor the right hand at the beginning and end of the shuffle. Of particular interest in shuffling efficiency is runs of cards, do we have more or longer runs than the GSR model would predict?</p>
 <h1 id=investigating_performance ><a href="#investigating_performance" class=header-anchor >Investigating Performance</a></h1>
 <h1 id=ingredients ><a href="#ingredients" class=header-anchor >Ingredients</a></h1>
 <ul>
@@ -756,7 +764,7 @@ scatter!(binC, outF, markersize=log.(dps/maximum(dps)).+<span class=hljs-number 
     <a href="mailto:mail@jacobw.xyz" class="fa fa-envelope"></a> <a href="https://github.com/jacobwood27" class="fa fa-github"></a>
      <br>
      <br>
-    Last modified: January 11, 2022. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
+    Last modified: January 12, 2022. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>.
   </div>
 </div>
 </div>
