@@ -918,6 +918,10 @@ After splitting the deck in two we start to drop cards from either our left or r
 #### Comparison to GSR
 We can view GSR as making a prediction each time we are about to drop a card. We can then look at what actually happened, and see if things that were supposed to happen 25% of the time actually happened 25% of the time. This kind of analysis is commonly referred to as [model calibration](https://en.wikipedia.org/wiki/Calibration_(statistics)). 
 
+
+We don't have perfect point estimates here - so we need to bucket the probabalities. Anything within the blue squares below is considered likely "calibrated". For example, the bottom left point says that whenever the model predicted an event to happen between 0-10% of the time, it actually happened 0% of the time. 
+
+The points are sized roughly corresponding to how many predictions they represent. We notice that the model does a pretty good job overall - the only time it is off by more than 10% is the 10-20% bucket which is only comprised of 50 observations. Not bad.
 ```
 probs = Float64[]
 outcs = Bool[]
@@ -957,21 +961,27 @@ plot(X, Y, fill=true, label="Perfectly Calibrated", aspect_ratio=1, size=(500,50
 
 outF[dps.<10] .= 0
 dps[dps.<10]  .= 0
-scatter!(binC, outF, markersize=log.(dps/maximum(dps)).+9, label="Actual", legend=:topleft, xlims=(-0.05,1.05), ylims=(-0.05,1.05))
-```
-We don't have perfect point estimates here - so we need to bucket the probabalities. Anything within the blue squares below is considered likely "calibrated". For example, the bottom left point says that whenever the model predicted an event to happen between 0-10% of the time, it actually happened 0% of the time. 
-
-The points are sized roughly corresponding to how many predictions they represent. We notice that the model does a pretty good job overall - the only time it is off by more than 10% is the 10-20% bucket which is only comprised of 50 observations. Not bad.
+binX = [mean(probs[binindices.==i]) for i in 1:length(dps)]
+scatter!(binX, outF, markersize=log.(dps/maximum(dps)).+9, label="Actual", legend=:topleft, xlims=(-0.05,1.05), ylims=(-0.05,1.05))```
 @@im-100
 \fig{/posts/005_shuffle/my_calibration.svg}
 @@
 
+What are some ways in which we might differ from the GSR model? Perhaps we systematically favor the right or left hand at certain times:
+```
+side_ev = [mean([s[i] for s in S_vec]) for i in 1:52] .- 1
+plot(side_ev, label="observed", ylims=(0, 1), ylabel="← Left Hand                Right Hand →", xlabel="Card Number", lw=2)
 
-
-
+GSR_side_ev = [mean([s[i] for s in GSR_vec]) for i in 1:52] .- 1
+plot!(GSR_side_ev, label="GSR model", lw=2)
+```
 @@im-100
 \fig{/posts/005_shuffle/side_expected.svg}
 @@
+
+It looks like we do systematically favor the right hand at the beginning and end of the shuffle. Of particular interest in shuffling efficiency is runs of cards, do we have more or longer runs than the GSR model would predict?
+
+
 
 # Investigating Performance
 
