@@ -70,3 +70,4 @@ How many shuffles do I need to perform? Start by measuring my shuffling performa
 - How does sped up audio not change freq content?
 - Bounce an RSS feed of select podcasts with sped up audio for runcasts
 - Work through [Chris Blattman's Syllabus](https://chrisblattman.com/files/2022/01/Syllabus_HowToChangeTheWorld_Fall_2021.pdf)
+- Work through [Statistical Re-Thinking 2022](https://github.com/rmcelreath/stat_rethinking_2022)
