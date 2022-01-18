@@ -71,3 +71,8 @@ How many shuffles do I need to perform? Start by measuring my shuffling performa
 - Bounce an RSS feed of select podcasts with sped up audio for runcasts
 - Work through [Chris Blattman's Syllabus](https://chrisblattman.com/files/2022/01/Syllabus_HowToChangeTheWorld_Fall_2021.pdf)
 - Work through [Statistical Re-Thinking 2022](https://github.com/rmcelreath/stat_rethinking_2022)
+- For interactive visualizations [finos](https://github.com/finos/perspective)
+- Post on my understanding of [QRI](https://www.qualiaresearchinstitute.org/)
+- [Arc Institute](https://arcinstitute.org/)
+- [PIBBSS Fellowship](https://www.pibbss.ai/)
+- [The Economics of AI course](https://www.coursera.org/learn/economics-of-ai)
