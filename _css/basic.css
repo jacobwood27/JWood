@@ -179,8 +179,36 @@ table {
   margin-bottom: 1.5em;
 }
 
-.resume li p {
-  margin: 5px 0;
+.resume p, .resume li p, .resume h3 {
+  margin: 0 0 0 0;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+}
+
+.resume h3 .header-anchor {
+  font-weight: normal;
+  font-size: 22px;
+}
+
+.resume ol {
+  padding-inline-start: 0;
+}
+
+.resume ol li {
+  margin: 0 0 0 0;
+  margin-block-start: 0.1em;
+  margin-block-end: 0.1em;
+  padding-inline-start: 0;
+}
+
+.resume ul {
+  margin: 0 0 0 0;
+  margin-block-start: 0.2em;
+  margin-block-end: 1em;
+}
+
+.resume ul ul {
+  margin: 0 0 0 0;
   margin-block-start: 0em;
   margin-block-end: 0em;
 }
