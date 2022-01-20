@@ -1,5 +1,6 @@
 @def title="Shuffle"
 @def mintoclevel=1
+@def maxtoclevel=3
 
 Folk wisdom claims 7 shuffles is sufficient to thoroughly mix up a deck of cards. This claim originates from a [paper](https://escholarship.org/content/qt0k4654kx/qt0k4654kx.pdf?t=p3z6d7) published in 1986 by David Aldous and Persi Diaconis and summarized [in the New York Times](https://www.nytimes.com/1990/01/09/science/in-shuffling-cards-7-is-winning-number.html) in 1990. 
 
@@ -894,8 +895,6 @@ for bw = [0.2, 0.5, 1.0, 2.0]
 end
 
 plot!(xlabel="Number of Cards in Left Hand", ylabel="Fraction of Cases", xlims=(16,36), xticks=16:36)
-
-savefig("kernel_fit.svg")
 ```
 
 @@im-100
@@ -915,7 +914,7 @@ At this point it comes down to either our understanding of the underlying mechan
 ### Dropping Cards
 After splitting the deck in two we start to drop cards from either our left or right hand. The GSJ model predicts that this will happen probabilistically, with the probability of dropping from either the left or the right according solely to the fraction of remaining total cards that are currently in that hand. Is this a good model for us?
 
-#### Comparison to GSR
+#### GSR Calibration
 We can view GSR as making a prediction each time we are about to drop a card. We can then look at what actually happened, and see if things that were supposed to happen 25% of the time actually happened 25% of the time. This kind of analysis is commonly referred to as [model calibration](https://en.wikipedia.org/wiki/Calibration_(statistics)). 
 
 
@@ -962,10 +961,14 @@ plot(X, Y, fill=true, label="Perfectly Calibrated", aspect_ratio=1, size=(500,50
 outF[dps.<10] .= 0
 dps[dps.<10]  .= 0
 binX = [mean(probs[binindices.==i]) for i in 1:length(dps)]
-scatter!(binX, outF, markersize=log.(dps/maximum(dps)).+9, label="Actual", legend=:topleft, xlims=(-0.05,1.05), ylims=(-0.05,1.05))```
+scatter!(binX, outF, markersize=log.(dps/maximum(dps)).+9, label="Actual", legend=:topleft, xlims=(-0.05,1.05), ylims=(-0.05,1.05))
+```
+
 @@im-100
 \fig{/posts/005_shuffle/my_calibration.svg}
 @@
+
+#### Differences from GSR
 
 What are some ways in which we might differ from the GSR model? Perhaps we systematically favor the right or left hand at certain times:
 ```
@@ -979,7 +982,9 @@ plot!(GSR_side_ev, label="GSR model", lw=2)
 \fig{/posts/005_shuffle/side_expected.svg}
 @@
 
-It looks like we do systematically favor the right hand at the beginning and end of the shuffle. Of particular interest in shuffling efficiency is runs of cards, do we have more or longer runs than the GSR model would predict?
+It looks like we do systematically favor the right hand at the beginning and end of the shuffle.
+
+Of particular interest in shuffling efficiency is runs of cards, do we have more or longer runs than the GSR model would predict?
 
 
 
