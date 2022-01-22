@@ -6,3 +6,8 @@
 @def website_descr = ""
 @def website_url   = "https://jacobw.xyz"
 
+
+
+\newcommand{\lineskip}{@@blank@@}
+\newcommand{\skipline}{\lineskip}
+\newcommand{\note}[2]{@@note @@title #1 @@ @@content #2 @@ @@}
