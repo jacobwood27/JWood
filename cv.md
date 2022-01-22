@@ -2,7 +2,7 @@
 @def mintoclevel=1
 @def maxtoclevel=1
 
-Engineer seeking to apply my experience analyzing, modeling, and implementing complex systems to an impactful career aligned with the values of [Effective Altruism](https://en.wikipedia.org/wiki/Effective_altruism).
+\note{Objective}{Engineer seeking to apply my experience analyzing, modeling, and implementing complex systems to an impactful career aligned with the values of [Effective Altruism](https://en.wikipedia.org/wiki/Effective_altruism).}
 
 @@resume
 
@@ -21,7 +21,7 @@ Engineer seeking to apply my experience analyzing, modeling, and implementing co
 - Specified and led integration of propulsion systems for multiple satellite buses
 - *Most Valuable Player* awarded in 2018, 2019, and 2020
 
-@@blank@@
+\lineskip
 
 ### **Teaching Assistant** at *UCLA*
 2014 - 2016
@@ -32,14 +32,14 @@ Engineer seeking to apply my experience analyzing, modeling, and implementing co
 - Developed course material and graded assignments
 - *Certificate of Distinction in Teaching* each quarter based on student evaluations
 
-@@blank@@
+\lineskip
 
 ### **PEERS Workshop Facilitator** at *UCLA*
 2015 - 2016
 - Developed weekly material from scratch based on student needs and unique interests
 - Led discussion and interactive exercises
 
-@@blank@@
+\lineskip
 
 ### **Research Intern** at *Air Force Research Lab, Edwards Air Force Base*
 2013
@@ -47,7 +47,7 @@ Engineer seeking to apply my experience analyzing, modeling, and implementing co
 - Developed computational model for light beam propagation in turbulent media
 - Presented *Optical Design for Beam Steering and Scattering in a Subscale Rocket Combustion Chamber*
 
-@@blank@@
+\lineskip
 
 # Education
 
@@ -61,21 +61,21 @@ Engineer seeking to apply my experience analyzing, modeling, and implementing co
 - kaggle [Data Science Microcourses](https://www.kaggle.com/learn)
 - SFI [Introduction to Complexity](https://www.complexityexplorer.org/courses/119-introduction-to-complexity) and [Introduction to Dynamical Systems and Chaos](https://www.complexityexplorer.org/courses/120-introduction-to-dynamical-systems-and-chaos)
 
-@@blank@@
+\lineskip
 
 ### **MS** in **Aerospace Engineering** from *UCLA*
 2015
 - Emphasis in fluid mechanics
 - Pac-12 Postgraduate Scholarship - Student-Athletes demonstrating commitment to continuing education, community involvement, and leadership
  
-@@blank@@
+\lineskip
 
 ### **BS** in **Aerospace Engineering** from *UCLA*
 2014
 - Emphasis in space systems and design
 - Vishal Parikh Memorial Scholarship - Outstanding performance in the field of rocket propulsion
 
-@@blank@@
+\lineskip
 
 # Extracurricular
 ### **Volunteer Intern** at *Teen Cancer America*
@@ -83,21 +83,21 @@ Engineer seeking to apply my experience analyzing, modeling, and implementing co
 - Implemented general technology infrastructure
 - Posted social media material to improve fund raising efforts
 
-@@blank@@
+\lineskip
 
 ### **NCAA D1 Athletics** (**Cross Country** and **Track & Field**) at *UCLA*
 2010 - 2014
 - *Highest GPA*, *All-Academic 1st Team*, and *Athletic Director's Honor Roll* all four years 
 - *Pac-12 All Academic 1st Team* 2012 and 2013
 
-@@blank@@
+\lineskip
 
 # Skills
 ### **Programming**
  - Proficient: Julia, Python, Matlab
  - Familiar: Go, JavaScript, HTML, CSS, R, C++, LaTeX, LabView, Unix, Git
 
-@@blank@@
+\lineskip
 
 ### **Applications**
  - Tensorflow, Keras, PyTorch, fast.ai, OpenCV, Gimp, Inkscape, Simulink, SolidWorks, OpenVSP, CBAERO, DATCOM, AVL, XFOIL, XFLR, Tecplot, OpenFoam, CFD++, JSBSim, ANSA, ANSYS, NetLogo
