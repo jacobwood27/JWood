@@ -7,8 +7,9 @@ I find *lists of favorite things* made by individuals I respect, and strive to t
 * [Rob Wiblin](https://docs.google.com/document/d/1A8NdLoenjamLfnve7c6u8AI3X49MbORQDhZj4BpJvdY/edit)
 * [Nick Beckstead](https://www.nickbeckstead.com/audiobooks)
 * [Derek Sivers](https://sive.rs/book)
+* [Chris Blattman's 2021 Syllabus](https://chrisblattman.com/files/2022/01/Syllabus_HowToChangeTheWorld_Fall_2021.pdf)
 
-In a similar vein, I've attempted to keep a list of scored and ranked books I've read. The 1-4 rating scale attempts to convey advice I would give to a person like me who was not yet read this book:
+In a similar vein, I've attempted to keep a list of scored and ranked books I've read. The 1-4 rating scale attempts to convey advice I would give to a person like me who has not yet read this book:
 
 * 4 - Definitely read
 * 3 - Recommend reading

@@ -37,7 +37,7 @@ html {
 }
 
 .franklin-content .container img {
-  width: auto;
+  width: 40%;
   padding-left: 0;
   border-radius: 10px;
 }
@@ -331,4 +331,37 @@ code {
   margin-bottom: 5px;
   border-radius: 0 10px 10px 0;
   border-left: 5px solid #4c9cf1;
+}
+
+
+.column {
+  float: left;
+  width: 50%;
+}
+.column30 {
+  float: left;
+  width: 30%;
+}
+.column40 {
+  float: left;
+  width: 40%;
+}
+.column60 {
+  float: left;
+  width: 60%;
+}
+.column70 {
+  float: left;
+  width: 70%;
+}
+.right {
+  text-align:left;
+}
+
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
 }
