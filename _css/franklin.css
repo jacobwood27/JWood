@@ -334,29 +334,6 @@ code {
 }
 
 
-.column {
-  float: left;
-  width: 50%;
-}
-.column30 {
-  float: left;
-  width: 30%;
-}
-.column40 {
-  float: left;
-  width: 40%;
-}
-.column60 {
-  float: left;
-  width: 60%;
-}
-.column70 {
-  float: left;
-  width: 70%;
-}
-.right {
-  text-align:left;
-}
 
 
 /* Clear floats after the columns */

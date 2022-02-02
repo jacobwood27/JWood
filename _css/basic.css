@@ -111,7 +111,6 @@ medium display: nav goes under name
     left: 0%;
     margin-left: 0;
   }
-  
 }
 
 /*
@@ -316,3 +315,30 @@ table tbody tr td {
   color: white;
   background: cornflowerblue;
 }
+
+.vert-middle {
+  vertical-align: middle;
+}
+
+.title-left {
+  float: left;
+  width: 35%;
+}
+
+.title-right {
+  float: left;
+  width: 65%;
+}
+
+
+@media (max-width: 760px) {
+  .title-left {
+    float: left;
+    width: 100%;
+  }
+  
+  .title-right {
+    float: left;
+    width: 100%;
+  }
+}  

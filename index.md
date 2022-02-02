@@ -5,8 +5,7 @@
 @@ -->
 
 @@row
-@@column40
-@@right
+@@title-left
 Hello. I'm Jacob. 
 
 I am currently an engineer interested in Effective Altruism.
@@ -19,11 +18,12 @@ Here is what I've [done](/cv/) and what I'm doing [now](/now/).
 
 Feel free to contact me via [email](mailto:mail@jacobw.xyz).
 @@
-@@
-@@column60
+
+@@title-right
 @@im-100
 \fig{/me_island2.png}
 @@
 @@
+
 @@
 
