@@ -1,5 +1,6 @@
 @def title="2021 Christmas Giving Game"
 
+\note{Objective}{Document the evolution of our Christmas Giving Game (and give others a jumping off point if they are interested in doing something similar!).}
 The charities I have selected for 2021 are, in no particular order:
  - [Center for Alcohol Policy Solutions](https://www.alcoholpolicysolutions.center/) ([pdf](caps.pdf)) - Advancing high impact policy solutions to save lives and promote health
  - [Strong Minds](https://strongminds.org/) ([pdf](sm.pdf)) - Treating depression at scale in Africa

@@ -1,5 +1,7 @@
 @def title = "Disc Golf"
 
+\note{Objective}{Build a functional end-to-end data recording, analytics, and visualization system for a real world activity.}
+
 Disc golf is fun. Visualizing repeated activities with real data is fun. Pulling out your phone while playing disc golf to record every shot is not fun. 
 
 This project attempts to solve that problem. [Here](https://jacobwood27.github.io/dg_dashboard/map/?round_id=2021-08-10-06-13-04_-_kit_carson) are the 

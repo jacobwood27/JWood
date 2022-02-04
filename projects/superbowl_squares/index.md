@@ -1,5 +1,7 @@
 @def title = "Superbowl Squares"
 
+\note{Objective}{Develop and leverage a simple probabilistic model to answer a real world question.}
+
 You know that game everyone plays when watching the Superbowl? Where you buy a square for a dollar and then if the two last digits of the score at the end of the quarter end up corresponding to your square you win some money?
 
 @@im-100
@@ -44,7 +46,7 @@ In Julia webscraping can be done with the help of [HTTP.jl](https://github.com/J
 The scraping is performed in two passes, one to gather all the quarter scores and one to append all the Vegas lines. 
 
 To gather the quarter scores we follow [this algorithm](https://github.com/jacobwood27/017_nflsquares/blob/main/scrape_scores.jl):
- - For each year in 1979-2020 (in parallel):
+ - For each year in 1979-2020:
    - Read [https://www.pro-football-reference.com/years/\$YEAR/](https://www.pro-football-reference.com/years/1979/)
    - Find the weeks games were played from the Week Summaries buttons halfway down the page
    - For each week:

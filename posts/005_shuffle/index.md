@@ -2,6 +2,8 @@
 @def mintoclevel=1
 @def maxtoclevel=3
 
+\note{Objective}{Identify a small experiment and take it through the process of gathering data, modeling, and analyzing.}
+
 Folk wisdom claims 7 shuffles is sufficient to thoroughly mix up a deck of cards. This claim originates from a [paper](https://escholarship.org/content/qt0k4654kx/qt0k4654kx.pdf?t=p3z6d7) published in 1986 by David Aldous and Persi Diaconis and summarized [in the New York Times](https://www.nytimes.com/1990/01/09/science/in-shuffling-cards-7-is-winning-number.html) in 1990. 
 
 Does my mediocre shuffling reflect this common wisdom? This post is an attempt to investigate that question.

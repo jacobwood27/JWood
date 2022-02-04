@@ -1,5 +1,7 @@
 @def title = "Wedding Design"
 
+\note{Objective}{Produce signs and graphics for our wedding at a reasonable cost.}
+
 My wife  and I were married on September 18, 2021 which turned out to be a beautiful San Diego day. We opted to do a majority of the preparation ourselves and this was a great excuse to try my hand in some graphic design. 
 
 @@im-100

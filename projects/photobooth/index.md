@@ -1,5 +1,7 @@
 @def title = "Photobooth"
 
+\note{Objective}{Use computer vision in a real world application (and end up with a touch-free photobooth).}
+
 My wife and I planned on having a small photobooth at our wedding in case people wanted to print and keep a small memento. A week before the wedding I had a few ideas pop up that I thought would be fun to incorporate into the photobooth. Unfortunately you end up kind of busy doing a bunch of other things the week of your wedding, so I didn't get to finish this photobooth in time. To round out the learning process I did complete it after the wedding - this project documents the build.
 
 **Table of Contents**

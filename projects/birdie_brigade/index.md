@@ -1,5 +1,7 @@
 @def title = "Birdie Brigade"
 
+\note{Objective}{Dabble in simple graphic design and end up with a Christmas gift.}
+
 One of the great joys in my life is playing golf with my father. Golf can be a great time, especially when you are playing well. Unfortunately, we don't play as often as we have in the past and this generally leads to a disappointing scorecard. Instead of focusing on the totaled up score, which can be spoiled with a single poor hole, we now chase birdies. We count a course as "checked off" if at least one of our group members birdies a single hole. The goal is to check off all the public golf courses in San Diego. Naturally, this feat should be tracked by a piece of wall art. This project describes the design and build of the "Birdie Brigade" map gifted to my father as a Christmas present in 2019.
 
 @@im-100

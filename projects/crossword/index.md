@@ -1,5 +1,8 @@
 @def title = "Crossword"
 
+\note{Objective}{Produce an interesting crossword puzzle that manifests the theme I have been mulling over.}
+
+
 My friends have made a bunch of incredible crosswords over the years. I have had this idea for a crossword theme for a long time and finally put it together.
 
 Before reading any spoilers head on over to [https://david.vaskos.com/crossword/7](https://david.vaskos.com/crossword/7) (thanks David!) to do the crossword online or print out a .pdf version available [here](/projects/crossword/crossword.pdf). It is mostly free of inside jokes.
