@@ -140,6 +140,7 @@ Here are the podcasts I listen to regularly and a few of my favorite episodes of
  - [On Buddhism and Blackness](https://www.vox.com/future-perfect/2020/7/2/21310378/buddhist-mindfulness-meditation-black-activism-future-perfect)
 
 ### The Realignment
+ - [198 | Erich Schwartzel: Hollywood, China, and the Global Battle for Cultural Supremacy](https://the-realignment.simplecast.com/episodes/198-erich-schwartzel-hollywood-china-and-the-global-battle-for-cultural-supremacy)
  - [171 | Ross Douthat: The Limits of Modern Medicine in a Post-COVID World](https://the-realignment.simplecast.com/episodes/171-ross-douthat-the-limits-of-modern-medicine-in-a-post-covid-world)
  - [131 | Katherine Gehl: Breaking the Duopoly with Political Innovation](https://the-realignment.simplecast.com/episodes/131-katherine-gehl-breaking-the-duopoly-with-political-innovation)
  - [124 | Niall Ferguson: The Politics and History of Catastrophe](https://the-realignment.simplecast.com/episodes/124-niall-ferguson-the-politics-and-history-of-catastrophe)
