@@ -1,5 +1,12 @@
 @def title = "Posts" 
 
+---
+\posttitle{Blogroll Graph}{/projects/blog_graph}{February 2022}
+
+Mapping the connections of the blogosphere.
+
+<!-- --- -->
+
 <!-- ---
 \posttitle{NFL Playoff Bracketology}{}{January 2022}
 

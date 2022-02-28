@@ -988,10 +988,8 @@ It looks like we do systematically favor the right hand at the beginning and end
 
 Of particular interest in shuffling efficiency is runs of cards, do we have more or longer runs than the GSR model would predict?
 
-
-
 # Investigating Performance
-
+[IN WORK]
 
 
 # Ingredients
