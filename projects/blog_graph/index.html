@@ -1,0 +1,81 @@
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/github.min.css"> <link rel=stylesheet  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=stylesheet  href="/css/basic.css"> <link rel=icon  href="/assets/favicon.png"> <title>Blogroll Graph</title> <header> <div class=blog-name ><a href="/">Jacob Wood</a></div> <nav> <ul> <li><a href="/posts/">Posts</a> <li><a href="/books/">Books</a> <li><a href="/podcasts/">Podcasts</a> <li><a href="/cv/">CV</a> <li><a href="/now/">Now</a> </ul> <img src="/assets/hamburger.svg" id=menu-icon > </nav> </header> <div class=franklin-content ><div class=note ><div class=title >Objective</div> <div class=content >Familiarize myself with some network analysis and investigate the information space around some of the blogs I visit.</div></div> <p>Many blogs include a <a href="https://en.wikipedia.org/wiki/Glossary_of_blogging">blogroll</a> on their page with links to other blogs. I thought it might be interesting to try to map the network that emerges from blogs linking to one another.</p> <p>You can find the finished product <a href="https://jacobwood27.github.io/035_blog_graph/">here</a>.</p> <h1 id=data ><a href="#data" class=header-anchor >Data</a></h1> <h3 id=collection ><a href="#collection" class=header-anchor >Collection</a></h3> <p>Data was collected by manually visiting each site, looking for something like a blogroll, and extracting the links with the help of <a href="https://chrome.google.com/webstore/detail/link-grabber/caodelkhipncidmoebgbbeemedohcdma?hl&#61;en-US">Link Grabber</a>. </p> <p>I started with <a href="https://astralcodexten.substack.com/">astralcodexten.substack.com</a> and continued following links as they were mentioned. </p> <p>The data format I chose was a plaintext file listing each parent node &#40;indicated by &#91;square brackets&#93;&#41; and the relevant children. This seemed to me to be a straightforward and lightweight file format for the task at hand. For example, the entry for astralcodexten.substack.com looks like:</p> <pre><code class="plaintext hljs">[astralcodexten.substack.com]
+newscience.org
+applieddivinitystudies.com
+nintil.com
+westhunt.wordpress.com
+putanumonit.com
+rationallyspeakingpodcast.org
+vox.com/authors/kelsey-piper
+lesswrong.com
+marginalrevolution.com
+razib.substack.com
+scottaaronson.com/blog
+infoproc.blogspot.com
+zeynep.substack.com
+thezvi.wordpress.com
+elidourado.com/blog
+bayesianinvestor.com/blog
+scholars-stage.blogspot.com
+blogs.sciencemag.org/pipeline
+forum.effectivealtruism.org
+strangeloopcanon.com
+slimemoldtimemold.com
+freddiedeboer.substack.com
+beeminder.com
+cold-takes.com
+goodoptics.wordpress.com
+dynomight.net</code></pre> <p>I currently have over <a href="https://github.com/jacobwood27/035_blog_graph/blob/master/blogs.txt">300 blogs</a> mapped, but am always accepting pull requests if anyone wants to add more&#33;</p> <h3 id=cleaning ><a href="#cleaning" class=header-anchor >Cleaning</a></h3> <p>As with any real world application the collected data grows dirty and stale. Some links have completely disappeared, some have moved to a new domain, and some contain extraneous suffixes in the URL.</p> <p>The URL will serve as a good unique ID for each blog when trying to cross-reference with other lists, so we want to distill the URL down to the minimum viable address.</p> <p>We can start with some simple cleaning - remove any scheme that might be present as well as a trailing slash.</p> <pre><code class="Python hljs">PREFIXES = [
+    <span class=hljs-string >&quot;https://www.&quot;</span>,
+    <span class=hljs-string >&quot;http://www.&quot;</span>,
+    <span class=hljs-string >&quot;https://&quot;</span>,
+    <span class=hljs-string >&quot;http://&quot;</span>,
+    <span class=hljs-string >&quot;www.&quot;</span>,
+]
+
+<span class=hljs-keyword >for</span> p <span class=hljs-keyword >in</span> PREFIXES:
+    s = s.removeprefix(p)
+s = s.strip(<span class=hljs-string >&#x27;/&#x27;</span>)</code></pre> <p>We also want to make sure our eventual graph contains exactly one node for each distinct blog. For example, we want to combine Andrew Gelman&#39;s old URL &#40;<a href="stat.columbia.edu/~gelman/blog">stat.columbia.edu/~gelman/blog</a>&#41; with his new URL <a href=statmodeling.stat.columbia.edu >statmodeling.stat.columbia.edu</a>. While traversing through the graph I tried to record any updates to URLs. I am sure I missed some, but this dictionary is what I ended up with:</p> <pre><code class="Python hljs">TRANSLATE = {
+    <span class=hljs-string >&quot;slatestarcodex.com&quot;</span> : <span class=hljs-string >&quot;astralcodexten.substack.com&quot;</span>,
+    <span class=hljs-string >&quot;the-diplomat.com&quot;</span> : <span class=hljs-string >&quot;thediplomat.com&quot;</span>,
+    <span class=hljs-string >&quot;redstate.org&quot;</span> : <span class=hljs-string >&quot;redstate.com&quot;</span>,
+    <span class=hljs-string >&quot;nelslindahl.net&quot;</span> : <span class=hljs-string >&quot;nelslindahl.com&quot;</span>,
+    <span class=hljs-string >&quot;aei.org/publication/blog/carpe-diem&quot;</span>: <span class=hljs-string >&quot;aei.org/blog/carpe-diem&quot;</span>,
+    <span class=hljs-string >&quot;amlibpub.com&quot;</span> : <span class=hljs-string >&quot;amlibpub.blogspot.com&quot;</span>,
+    <span class=hljs-string >&quot;cafehayek.typepad.com/hayek&quot;</span> : <span class=hljs-string >&quot;cafehayek.com&quot;</span>,
+    <span class=hljs-string >&quot;cafehayek.typepad.com&quot;</span> : <span class=hljs-string >&quot;cafehayek.com&quot;</span>,
+    <span class=hljs-string >&quot;globalguerrillas.typepad.com/globalguerrillas&quot;</span> : <span class=hljs-string >&quot;globalguerrillas.typepad.com&quot;</span>,
+    <span class=hljs-string >&quot;stat.columbia.edu/~cook/movabletype/mlm&quot;</span> : <span class=hljs-string >&quot;statmodeling.stat.columbia.edu&quot;</span>,
+    <span class=hljs-string >&quot;stat.columbia.edu/~gelman/blog&quot;</span> : <span class=hljs-string >&quot;statmodeling.stat.columbia.edu&quot;</span>,
+    <span class=hljs-string >&quot;delong.typepad.com&quot;</span> : <span class=hljs-string >&quot;braddelong.substack.com&quot;</span>,
+    <span class=hljs-string >&quot;economistsview.typepad.com/economistsview&quot;</span> : <span class=hljs-string >&quot;economistsview.typepad.com&quot;</span>,
+    <span class=hljs-string >&quot;pjmedia.com/instapundit&quot;</span> : <span class=hljs-string >&quot;instapundit.com&quot;</span>,
+    <span class=hljs-string >&quot;stumblingandmumbling.typepad.com/stumbling_and_mumbling&quot;</span>: <span class=hljs-string >&quot;stumblingandmumbling.typepad.com&quot;</span>,
+    <span class=hljs-string >&quot;andrewgelman.com&quot;</span>: <span class=hljs-string >&quot;statmodeling.stat.columbia.edu&quot;</span>,
+    <span class=hljs-string >&quot;taxprof.typepad.com/taxprof_blog&quot;</span>: <span class=hljs-string >&quot;taxprof.typepad.com&quot;</span>,
+    <span class=hljs-string >&quot;gnxp.com/&quot;</span>: <span class=hljs-string >&quot;razib.substack.com&quot;</span>,
+    <span class=hljs-string >&quot;io9.com&quot;</span>: <span class=hljs-string >&quot;gizmodo.com/io9&quot;</span>,
+    <span class=hljs-string >&quot;worthwhile.typepad.com/worthwhile_canadian_initi&quot;</span>: <span class=hljs-string >&quot;worthwhile.typepad.com&quot;</span>,
+    <span class=hljs-string >&quot;rogerfarmerblog.blogspot.com&quot;</span>: <span class=hljs-string >&quot;rogerfarmer.com&quot;</span>
+}</code></pre> <h3 id=filtering ><a href="#filtering" class=header-anchor >Filtering</a></h3> <p>There are a lot of small nodes in the list that bog down the simulation and don&#39;t add much to the visualization. For now we&#39;ll just cut out anything that is referenced only one time.</p> <pre><code class="Python hljs">old_len = <span class=hljs-number >0</span>
+<span class=hljs-keyword >while</span> <span class=hljs-built_in >len</span>(g.vs) != old_len:
+    old_len = <span class=hljs-built_in >len</span>(g.vs)
+    to_delete_ids = [v.index <span class=hljs-keyword >for</span> v <span class=hljs-keyword >in</span> g.vs <span class=hljs-keyword >if</span> <span class=hljs-built_in >len</span>(g.neighbors(v,mode=<span class=hljs-string >&quot;in&quot;</span>))==<span class=hljs-number >1</span> <span class=hljs-keyword >and</span> <span class=hljs-built_in >len</span>(g.neighbors(v,mode=<span class=hljs-string >&quot;out&quot;</span>))==<span class=hljs-number >0</span>]
+    g.delete_vertices(to_delete_ids)</code></pre> <h1 id=processing ><a href="#processing" class=header-anchor >Processing</a></h1> <p>The network data lends itself well to analysis as a graph. <a href="https://igraph.org/">igraph</a> is fantastic network analysis software and is available as a Python package.</p> <h3 id=community_detection ><a href="#community_detection" class=header-anchor >Community Detection</a></h3> <p>After reading the data into a directed igraph object we can easily apply state of the art community detection algorithms like <a href="https://www.nature.com/articles/s41598-019-41695-z">Leiden</a> to reveal some structure in the data.</p> <p>The Leiden algorithm is implemented in Python with various quality functions for use with igraph <a href="https://github.com/vtraag/leidenalg">here</a>. The various quality functions lead to different &#40;similar&#41; community definitions we want to show. We also want to make sure not to generate too many tiny communities, which are hard to pull any meaning out of, so we&#39;ll slowly decrease the <code>resolution_parameter</code> until we have a maximum of 10 communities.</p> <pre><code class="Python hljs"><span class=hljs-keyword >import</span> leidenalg
+algos = [leidenalg.RBConfigurationVertexPartition,
+         leidenalg.RBERVertexPartition,
+         leidenalg.CPMVertexPartition]
+max_n_groups = <span class=hljs-number >10</span>
+s_res0 = <span class=hljs-number >1.0</span>
+dicts = []
+<span class=hljs-keyword >for</span> algo <span class=hljs-keyword >in</span> algos:
+    n_groups = max_n_groups + <span class=hljs-number >1</span>
+    s_res = s_res0
+    <span class=hljs-keyword >while</span> n_groups &gt; max_n_groups:
+        part = leidenalg.find_partition(g,algo, resolution_parameter=s_res)
+        n_groups = <span class=hljs-built_in >len</span>(part)
+        s_res /= <span class=hljs-number >1.2</span>
+    dic = <span class=hljs-built_in >dict</span>()
+    <span class=hljs-keyword >for</span> (pn,p) <span class=hljs-keyword >in</span> <span class=hljs-built_in >enumerate</span>(part):
+        <span class=hljs-keyword >for</span> i <span class=hljs-keyword >in</span> p:
+            dic[i] = pn
+    dicts.append(dic)</code></pre> <h1 id=visualization ><a href="#visualization" class=header-anchor >Visualization</a></h1> <p>The visualization leverages <a href="https://github.com/d3/d3-force">d3-force</a> to assemble a 2D structure from the directed graph. d3-force simulates each node as a particle and allows you to apply forces to each individual node or to the graph globally. The output is tied to SVG nodes that animate in the browser.</p> <p>The forces that are applied are:</p> <ul> <li><p><a href="https://github.com/d3/d3-force#links">Link</a>: Pull two connected nodes together along an edge. The magnitude of this force is inversely proportional to the number of connections on the smaller of the two connecting nodes.</p> <li><p><a href="https://github.com/d3/d3-force#forceManyBody">Charge</a>: Push each node away from one another. The magnitude of this force is selectable in the settings.</p> <li><p><a href="https://github.com/d3/d3-force#collision">Collision</a>: Prevents nodes from overlapping.</p> <li><p><a href="https://github.com/d3/d3-force#centering">Center</a>: Translates the graph uniformly to center it in the SVG canvas.</p> </ul> <p>The final visualization is viewable <a href="https://jacobwood27.github.io/035_blog_graph/">here</a>.</p> <h1 id=ingredients ><a href="#ingredients" class=header-anchor >Ingredients</a></h1> <ul> <li><p><a href="https://github.com/vtraag/leidenalg">Leidenalg</a> - Python implementation of the Leiden community detection algorithm</p> <li><p><a href="https://igraph.org/">igraph</a> - Network analysis software</p> <li><p><a href="https://github.com/d3/d3-force">d3-force</a> - JavaScript module for simulating physical forces on particles</p> </ul> <div class=page-foot > <div class=copyright > <a href="mailto:mail@jacobw.xyz" class="fa fa-envelope"></a> <a href="https://github.com/jacobwood27" class="fa fa-github"></a> <br> <br> Last modified: February 28, 2022. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div>
