@@ -146,6 +146,14 @@ The forces that are applied are:
  - [Collision](https://github.com/d3/d3-force#collision): Prevents nodes from overlapping.
  - [Center](https://github.com/d3/d3-force#centering): Translates the graph uniformly to center it in the SVG canvas.
 
+In addition to particle interactions, we can dress the network up to make things easier to parse:
+ - The size of the nodes will convey the number of incoming connections on the graph
+ - The edges will be displayed at all times
+   - When a node is hovered over, only the edges connected to that node will show. We can use color to differentiate incoming and outgoing connections
+ - Show the label on each node
+   - When hovered, show the name larger because some of the nodes are tiny
+ - Allow the user to drag nodes around to encourage different visualization shapes
+
 The final visualization is viewable [here](https://jacobwood27.github.io/035_blog_graph/).
 
 # Ingredients
