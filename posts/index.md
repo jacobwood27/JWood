@@ -1,6 +1,11 @@
 @def title = "Posts" 
 
 ---
+\posttitle{Stridle}{/projects/stridle}{March 2022}
+
+Building a Wordle clone for running strides.
+
+---
 \posttitle{Blogroll Graph}{/projects/blog_graph}{February 2022}
 
 Mapping the connections of the blogosphere.
