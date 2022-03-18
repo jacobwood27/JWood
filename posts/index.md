@@ -5,6 +5,11 @@
 
 Building a Wordle clone for running strides.
 
+<!-- ---
+\posttitle{Charity Entrepreneurship Application}{/projects/CE_app}{February 2022}
+
+My application to the Charity Entrepreneurship program. -->
+
 ---
 \posttitle{Blogroll Graph}{/projects/blog_graph}{February 2022}
 
