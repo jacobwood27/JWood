@@ -1,1 +1,196 @@
-<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=stylesheet  href="/css/basic.css"> <script async src="https://www.googletagmanager.com/gtag/js?id=G-SP6YS4YNGE"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-SP6YS4YNGE'); </script> <link rel=icon  href="/assets/favicon.png"> <title>Stridle</title> <header> <div class=blog-name ><a href="/">Jacob Wood</a></div> <nav> <ul> <li><a href="/posts/">Posts</a> <li><a href="/books/">Books</a> <li><a href="/podcasts/">Podcasts</a> <li><a href="/cv/">CV</a> <li><a href="/now/">Now</a> </ul> <img src="/assets/hamburger.svg" id=menu-icon > </nav> </header> <div class=franklin-content ><div class=note ><div class=title >Objective</div> <div class=content >Complete an end to end project that utilizes a current machine learning state-of-the-art tool.</div></div> <p>I&#39;ll get there.</p> <div class=page-foot > <div class=copyright > <a href="mailto:mail@jacobw.xyz" class="fa fa-envelope"></a> <a href="https://github.com/jacobwood27" class="fa fa-github"></a> <br> <br> Last modified: March 18, 2022. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div>
+<!doctype html> <html lang=en > <meta charset=UTF-8 > <meta name=viewport  content="width=device-width, initial-scale=1"> <link rel=stylesheet  href="/libs/highlight/github.min.css"> <link rel=stylesheet  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <link rel=stylesheet  href="/css/franklin.css"> <link rel=stylesheet  href="/css/basic.css"> <script async src="https://www.googletagmanager.com/gtag/js?id=G-SP6YS4YNGE"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-SP6YS4YNGE'); </script> <link rel=icon  href="/assets/favicon.png"> <title>Stridle</title> <header> <div class=blog-name ><a href="/">Jacob Wood</a></div> <nav> <ul> <li><a href="/posts/">Posts</a> <li><a href="/books/">Books</a> <li><a href="/podcasts/">Podcasts</a> <li><a href="/cv/">CV</a> <li><a href="/now/">Now</a> </ul> <img src="/assets/hamburger.svg" id=menu-icon > </nav> </header> <div class=franklin-content ><div class=note ><div class=title >Objective</div> <div class=content >Complete an end to end project that utilizes a current machine learning state-of-the-art tool.</div></div> <p><a href="https://en.wikipedia.org/wiki/Wordle">Wordle</a> and its <a href="https://en.wikipedia.org/wiki/Wordle#Adaptations_and_clones">clones</a> seem to have taken the world by storm. My friends were talking about adapting the premise to the running world &#40;drawing inspiration from <a href="https://poeltl.dunk.town/">Poeltl</a>&#41; and thus Stridle was born. The finished product can be played at <a href="http://stridle.xyz/">stridle.xyz</a>.</p> <h2 id=collecting_data ><a href="#collecting_data" class=header-anchor >Collecting Data</a></h2> <p>I decided to include the top 10 of all time for all the Olympic running events listed on <a href="https://worldathletics.org/records/all-time-toplists/sprints/100-metres/outdoor/women/senior">worldathletics.org</a>. Each athlete is assigned a unique athlete ID, so we can start by crawling through all the events and genders and pulling out the ID of the top 10.</p> <pre><code class="Python hljs">events = [
+    <span class=hljs-string >&#x27;sprints/100-metres&#x27;</span>,
+    <span class=hljs-string >&#x27;sprints/200-metres&#x27;</span>,
+    <span class=hljs-string >&#x27;sprints/400-metres&#x27;</span>,
+    <span class=hljs-string >&#x27;middle-long/800-metres&#x27;</span>,
+    <span class=hljs-string >&#x27;middle-long/1500-metres&#x27;</span>,
+    <span class=hljs-string >&#x27;middle-long/5000-metres&#x27;</span>,
+    <span class=hljs-string >&#x27;middle-long/10000-metres&#x27;</span>,
+    <span class=hljs-string >&#x27;road-running/marathon&#x27;</span>,
+    <span class=hljs-string >&#x27;middle-long/3000-metres-steeplechase&#x27;</span>,
+]
+
+genders = [
+    <span class=hljs-string >&#x27;women&#x27;</span>,
+    <span class=hljs-string >&#x27;men&#x27;</span>
+]
+
+competitors = []
+<span class=hljs-keyword >for</span> event <span class=hljs-keyword >in</span> events:
+    <span class=hljs-keyword >for</span> gender <span class=hljs-keyword >in</span> genders:
+        
+        url = <span class=hljs-string >&quot;https://www.worldathletics.org/records/all-time-toplists/&quot;</span> + event + <span class=hljs-string >&quot;/outdoor/&quot;</span> + gender + <span class=hljs-string >&quot;/senior?regionType=world&amp;timing=electronic&amp;windReading=regular&amp;page=1&amp;bestResultsOnly=true&amp;firstDay=1899-12-31&amp;lastDay=2022-03-09&quot;</span>
+        page = requests.get(url)
+        soup = bs.BeautifulSoup(page.content, <span class=hljs-string >&#x27;lxml&#x27;</span>)
+        parsed_head  = soup.find_all(<span class=hljs-string >&#x27;thead&#x27;</span>)[<span class=hljs-number >0</span>] 
+        head = [<span class=hljs-string >&#x27;&#x27;</span>.join(th.stripped_strings) <span class=hljs-keyword >for</span> th <span class=hljs-keyword >in</span> parsed_head.find_all(<span class=hljs-string >&quot;th&quot;</span>)]
+        parsed_table = soup.find_all(<span class=hljs-string >&#x27;tbody&#x27;</span>)[<span class=hljs-number >0</span>] 
+        data = [[td.a[<span class=hljs-string >&#x27;href&#x27;</span>] <span class=hljs-keyword >if</span> td.find(<span class=hljs-string >&#x27;a&#x27;</span>) <span class=hljs-keyword >else</span> 
+                    <span class=hljs-string >&#x27;&#x27;</span>.join(td.stripped_strings)
+                    <span class=hljs-keyword >for</span> td <span class=hljs-keyword >in</span> row.find_all(<span class=hljs-string >&#x27;td&#x27;</span>)]
+                <span class=hljs-keyword >for</span> row <span class=hljs-keyword >in</span> parsed_table.find_all(<span class=hljs-string >&#x27;tr&#x27;</span>)]
+
+        df = pd.DataFrame(data, columns=head)
+
+        <span class=hljs-keyword >for</span> index, row <span class=hljs-keyword >in</span> df.iterrows():
+            <span class=hljs-keyword >if</span> <span class=hljs-built_in >int</span>(row[<span class=hljs-string >&#x27;Rank&#x27;</span>]) &gt; <span class=hljs-number >10</span>:
+                <span class=hljs-keyword >break</span>
+            competitors.append(row[<span class=hljs-string >&#x27;Competitor&#x27;</span>].partition(<span class=hljs-string >&quot;=&quot;</span>)[<span class=hljs-number >2</span>])
+competitors = <span class=hljs-built_in >list</span>(<span class=hljs-built_in >set</span>(competitors))</code></pre> <p>Each athlete has a page with their own personal bests &#40;<a href="https://worldathletics.org/athletes/united-states/florence-griffith-joyner-14359548">example</a>&#41;. To populate the Personal Bests table we need to navigate to that page and then click on &quot;Personal Bests&quot; about halfway down the page before reading in the html. We can use the Python library Selenium to do this. Then we can parse the html using BeautifulSoup as we did above. We&#39;ll plop everything into a pandas dataframe as we go.</p> <pre><code class="Python hljs">events = [  <span class=hljs-string >&quot;100 Metres&quot;</span>,
+            <span class=hljs-string >&quot;200 Metres&quot;</span>,
+            <span class=hljs-string >&quot;400 Metres&quot;</span>,
+            <span class=hljs-string >&quot;800 Metres&quot;</span>,
+            <span class=hljs-string >&quot;1500 Metres&quot;</span>,
+            <span class=hljs-string >&quot;5000 Metres&quot;</span>,
+            <span class=hljs-string >&quot;10,000 Metres&quot;</span>,
+            <span class=hljs-string >&quot;Marathon&quot;</span>,
+            <span class=hljs-string >&quot;3000 Metres Steeplechase&quot;</span>]
+
+df = pd.DataFrame(columns=[<span class=hljs-string >&#x27;Name&#x27;</span>, <span class=hljs-string >&#x27;ID&#x27;</span>, <span class=hljs-string >&#x27;Country&#x27;</span>, <span class=hljs-string >&#x27;BirthYear&#x27;</span>] + events)
+<span class=hljs-keyword >for</span> comp <span class=hljs-keyword >in</span> competitors[<span class=hljs-number >65</span>:]:
+    
+    browser_options = webdriver.FirefoxOptions()
+    browser_options.add_argument(<span class=hljs-string >&#x27;--headless&#x27;</span>)
+    browser = webdriver.Firefox(options=browser_options)
+
+    url  = <span class=hljs-string >&quot;https://www.worldathletics.org/athletes/athlete=&quot;</span> + comp
+
+    browser.get(url)
+    time.sleep(<span class=hljs-number >4</span>)
+    butt = browser.find_element(By.XPATH, <span class=hljs-string >&quot;//div[text()=&#x27;Personal Bests&#x27;]&quot;</span>)
+    browser.execute_script(<span class=hljs-string >&quot;arguments[0].click();&quot;</span>, butt)
+    time.sleep(<span class=hljs-number >1</span>)
+    squadPage=browser.page_source
+
+    soup = bs.BeautifulSoup(squadPage, <span class=hljs-string >&#x27;lxml&#x27;</span>)
+    browser.close()
+
+    dat = soup.find_all(<span class=hljs-string >&quot;table&quot;</span>)
+    data = [[td.a[<span class=hljs-string >&#x27;href&#x27;</span>] <span class=hljs-keyword >if</span> td.find(<span class=hljs-string >&#x27;a&#x27;</span>) <span class=hljs-keyword >else</span> 
+                        <span class=hljs-string >&#x27;&#x27;</span>.join(td.stripped_strings)
+                        <span class=hljs-keyword >for</span> td <span class=hljs-keyword >in</span> row.find_all(<span class=hljs-string >&#x27;td&#x27;</span>)]
+                    <span class=hljs-keyword >for</span> row <span class=hljs-keyword >in</span> dat[<span class=hljs-number >0</span>].find_all(<span class=hljs-string >&#x27;tr&#x27;</span>)]
+    
+    fn = soup.find(<span class=hljs-string >&quot;span&quot;</span>, {<span class=hljs-string >&quot;class&quot;</span>: <span class=hljs-string >&quot;profileBasicInfo_firstName__1Yj4q&quot;</span>}).decode_contents()
+    ln = soup.find(<span class=hljs-string >&quot;span&quot;</span>, {<span class=hljs-string >&quot;class&quot;</span>: <span class=hljs-string >&quot;profileBasicInfo_lastName__10Vkd&quot;</span>}).decode_contents()
+
+    dic = {}
+    dic[<span class=hljs-string >&quot;ID&quot;</span>] = comp
+    dic[<span class=hljs-string >&quot;Name&quot;</span>] = fn + <span class=hljs-string >&quot; &quot;</span> + ln
+    dic[<span class=hljs-string >&quot;Country&quot;</span>] = soup.find_all(<span class=hljs-string >&quot;div&quot;</span>, {<span class=hljs-string >&quot;class&quot;</span>: <span class=hljs-string >&quot;profileBasicInfo_statValue__IXJTW&quot;</span>})[<span class=hljs-number >0</span>].decode_contents()
+    dic[<span class=hljs-string >&quot;BirthYear&quot;</span>] = soup.find_all(<span class=hljs-string >&quot;div&quot;</span>, {<span class=hljs-string >&quot;class&quot;</span>: <span class=hljs-string >&quot;profileBasicInfo_statValue__IXJTW&quot;</span>})[<span class=hljs-number >1</span>].decode_contents()[-<span class=hljs-number >4</span>:]
+    <span class=hljs-keyword >for</span> d <span class=hljs-keyword >in</span> data:
+        <span class=hljs-keyword >if</span> <span class=hljs-built_in >len</span>(d) &gt; <span class=hljs-number >0</span>:
+            <span class=hljs-keyword >if</span> d[<span class=hljs-number >0</span>] <span class=hljs-keyword >in</span> events:
+                event = d[<span class=hljs-number >0</span>]
+                timer = <span class=hljs-string >&#x27;&#x27;</span>.join(<span class=hljs-built_in >filter</span>( <span class=hljs-keyword >lambda</span> x: x <span class=hljs-keyword >in</span> <span class=hljs-string >&#x27;0123456789.:&#x27;</span>, d[<span class=hljs-number >1</span>]))
+                dic[event] = timer
+    df = pd.concat([df, pd.DataFrame.from_records([dic])])</code></pre> <p>We should end up with a table that looks like:</p> <div class=full-width ><table><tr><th align=right >Name<th align=right >ID<th align=right >Country<th align=right >BirthYear<th align=right >100 Metres<th align=right >200 Metres<th align=right >400 Metres<th align=right >800 Metres<th align=right >1500 Metres<th align=right >5000 Metres<th align=right >10,000 Metres<th align=right >Marathon<th align=right >3000 Metres Steeplechase<tr><td align=right >Doina MELINTE<td align=right >14352777<td align=right >Romania<td align=right >1956<td align=right >NaN<td align=right >NaN<td align=right >NaN<td align=right >1:55.05<td align=right >3:56.7<td align=right >NaN<td align=right >NaN<td align=right >NaN<td align=right >NaN<tr><td align=right >Mohamed KATIR<td align=right >14642046<td align=right >Spain<td align=right >1998<td align=right >NaN<td align=right >NaN<td align=right >NaN<td align=right >1:51.84<td align=right >3:28.76<td align=right >12:50.79<td align=right >NaN<td align=right >NaN<td align=right >NaN<tr><td align=right >Norah JERUTO<td align=right >14479154<td align=right >Kazakhstan<td align=right >1995<td align=right >NaN<td align=right >NaN<td align=right >NaN<td align=right >NaN<td align=right >4:30.0<td align=right >14:51.73<td align=right >NaN<td align=right >NaN<td align=right >8:53.65<tr><td align=right >Olga MINEYEVA<td align=right >14352215<td align=right >Soviet Union<td align=right >1952<td align=right >NaN<td align=right >NaN<td align=right >50.3<td align=right >1:54.81<td align=right >NaN<td align=right >NaN<td align=right >NaN<td align=right >NaN<td align=right >NaN<tr><td align=right >Eliud KIPCHOGE<td align=right >14208194<td align=right >Kenya<td align=right >1984<td align=right >NaN<td align=right >NaN<td align=right >NaN<td align=right >NaN<td align=right >3:33.20<td align=right >12:46.53<td align=right >26:49.02<td align=right >2:01:39<td align=right >NaN<tr><td align=right >...<td align=right >...<td align=right >...<td align=right >...<td align=right >...<td align=right >...<td align=right >...<td align=right >...<td align=right >...<td align=right >...<td align=right >...<td align=right >...<td align=right >...<tr><td align=right >Fred KERLEY<td align=right >14504382<td align=right >United States<td align=right >1995<td align=right >9.78<td align=right >19.76<td align=right >43.64<td align=right >NaN<td align=right >NaN<td align=right >NaN<td align=right >NaN<td align=right >NaN<td align=right >NaN<tr><td align=right >Christian COLEMAN<td align=right >14541956<td align=right >United States<td align=right >1996<td align=right >9.76<td align=right >19.85<td align=right >NaN<td align=right >NaN<td align=right >NaN<td align=right >NaN<td align=right >NaN<td align=right >NaN<td align=right >NaN<tr><td align=right >Quincy WATTS<td align=right >14254412<td align=right >United States<td align=right >1970<td align=right >10.17<td align=right >20.50<td align=right >43.50<td align=right >NaN<td align=right >NaN<td align=right >NaN<td align=right >NaN<td align=right >NaN<td align=right >NaN<tr><td align=right >Salwa Eid NASER<td align=right >14643442<td align=right >Bahrain<td align=right >1998<td align=right >11.24<td align=right >22.51<td align=right >48.14<td align=right >NaN<td align=right >NaN<td align=right >NaN<td align=right >NaN<td align=right >NaN<td align=right >NaN<tr><td align=right >Kerron STEWART<td align=right >14285938<td align=right >Jamaica<td align=right >1984<td align=right >10.75<td align=right >21.99<td align=right >51.83<td align=right >NaN<td align=right >NaN<td align=right >NaN<td align=right >NaN<td align=right >NaN<td align=right >NaN</table></div> <h2 id=making_the_videos ><a href="#making_the_videos" class=header-anchor >Making the Videos</a></h2> <p>Videos of each athlete were tracked down one at a time and pulled from YouTube using <a href="https://youtube-dl.org/">youtube-dl</a>. They were cropped &#40;or scaled, for some of the older videos&#41; down to 400x400 and ~4 seconds of runtime using ffmpeg and Kdenlive. </p> <p>Originally, I tried to use <a href="https://google.github.io/mediapipe/solutions/pose">MediaPipe Pose</a> to segment out the runner. It works very well in some cases, but when it doesn&#39;t work it is difficult to iterate with. The process involved using OpenCV to pull frames out of the input video, processing them with the pose detector, and saving out the frame, the silhouette only, and the frame with a silhoutte covering the athlete.</p> <pre><code class="Python hljs"><span class=hljs-built_in >dir</span> = <span class=hljs-string >&quot;14208478&quot;</span>
+cap = cv2.VideoCapture(<span class=hljs-built_in >dir</span> + <span class=hljs-string >&#x27;/input.mp4&#x27;</span>)
+
+frame_width = <span class=hljs-built_in >int</span>(cap.get(<span class=hljs-number >3</span>))
+frame_height = <span class=hljs-built_in >int</span>(cap.get(<span class=hljs-number >4</span>))
+
+BG_COLOR = (<span class=hljs-number >255</span>, <span class=hljs-number >255</span>, <span class=hljs-number >255</span>) 
+
+frames = <span class=hljs-number >0</span>
+<span class=hljs-keyword >with</span> mp_pose.Pose(
+    min_detection_confidence=<span class=hljs-number >0.2</span>,
+    min_tracking_confidence=<span class=hljs-number >0.9</span>,
+    model_complexity=<span class=hljs-number >2</span>,
+    enable_segmentation=<span class=hljs-literal >True</span>) <span class=hljs-keyword >as</span> pose:
+  
+  <span class=hljs-keyword >while</span> cap.isOpened():
+    success, image = cap.read()
+    <span class=hljs-keyword >if</span> <span class=hljs-keyword >not</span> success:
+      <span class=hljs-keyword >break</span>
+
+    image.flags.writeable = <span class=hljs-literal >False</span>
+    results = pose.process(image)
+    <span class=hljs-keyword >if</span> <span class=hljs-keyword >not</span> results.pose_landmarks:
+      <span class=hljs-keyword >continue</span>
+        
+    frames += <span class=hljs-number >1</span>
+
+    black_image = np.zeros((frame_height,frame_width,<span class=hljs-number >3</span>), np.uint8)
+
+    condition = np.stack((results.segmentation_mask,) * <span class=hljs-number >3</span>, axis=-<span class=hljs-number >1</span>) &gt; <span class=hljs-number >0.5</span>
+    labeled_array, num_features = label(condition)
+    
+    bg_image = np.zeros((frame_height,frame_width,<span class=hljs-number >3</span>), dtype=np.uint8)
+    bg_image[:] = BG_COLOR
+    
+    hidden_image = np.where(labeled_array == <span class=hljs-number >1</span>, black_image, bg_image)
+    
+    hint_image = np.where(labeled_array == <span class=hljs-number >1</span>, black_image, image)
+    
+    cv2.imwrite(<span class=hljs-built_in >dir</span> + <span class=hljs-string >&quot;/hidden/&quot;</span> + <span class=hljs-string >f&#x27;<span class=hljs-subst >{frames:03}</span>&#x27;</span> +<span class=hljs-string >&quot;.png&quot;</span>,hidden_image)
+    cv2.imwrite(<span class=hljs-built_in >dir</span> + <span class=hljs-string >&quot;/hint/&quot;</span>   + <span class=hljs-string >f&#x27;<span class=hljs-subst >{frames:03}</span>&#x27;</span> +<span class=hljs-string >&quot;.png&quot;</span>,hint_image)
+    cv2.imwrite(<span class=hljs-built_in >dir</span> + <span class=hljs-string >&quot;/reveal/&quot;</span> + <span class=hljs-string >f&#x27;<span class=hljs-subst >{frames:03}</span>&#x27;</span> +<span class=hljs-string >&quot;.png&quot;</span>,image)
+
+cap.release()</code></pre> <p>After quite a bit of searching around I found <a href="https://hkchengrex.github.io/MiVOS/">MiVOS</a> listed as the state-of-the-art for an Interactive Video Object Segmentation on <a href="https://paperswithcode.com/sota/interactive-video-object-segmentation-on">paperswithcode</a>, which looked to do exactly what I wanted. It wasn&#39;t quite as quick and easy as the tutorials make it look, but overall it is a very effective tool after you get the hang of it.</p> <p>MiVOS saves out masks and overlays for each frame of processed video:</p> <div class=im-100 ><img src="/projects/stridle/overlay.png" alt=""></div> <p>Which can be cleaned up a bit and saved again as hidden, hint, and reveal frames:</p> <pre><code class="Python hljs">vidcap = cv2.VideoCapture(inp_vid_file)
+count = <span class=hljs-number >0</span>
+<span class=hljs-keyword >while</span> <span class=hljs-literal >True</span>:
+    success,reveal_frame = vidcap.read()
+    
+    <span class=hljs-keyword >if</span> <span class=hljs-keyword >not</span> success:
+        <span class=hljs-keyword >break</span>
+    
+    reveal_frame = imutils.resize(reveal_frame, height=des_height)
+    
+    mask_frame = cv2.imread(mask_files[count])
+    mask_frame = imutils.resize(mask_frame, height=des_height)
+    mask_gray  = cv2.cvtColor(mask_frame, cv2.COLOR_BGR2GRAY)
+    (T, mask_black) = cv2.threshold(mask_gray, <span class=hljs-number >2</span>, <span class=hljs-number >255</span>, cv2.THRESH_BINARY_INV)
+    mask_fuzzy1 = cv2.GaussianBlur(mask_black, (<span class=hljs-number >5</span>, <span class=hljs-number >5</span>), <span class=hljs-number >0</span>)
+    mask_big = cv2.erode(mask_black, kernel, iterations=<span class=hljs-number >2</span>)
+    mask_fuzzy2 = cv2.GaussianBlur(mask_big, (<span class=hljs-number >5</span>, <span class=hljs-number >5</span>), <span class=hljs-number >0</span>)
+    
+    hint_frame = reveal_frame.copy()
+    hint_frame = cv2.bitwise_and(hint_frame, hint_frame, mask=mask_fuzzy2)
+
+    cv2.imwrite(hidden_dir + <span class=hljs-string >&quot;/&quot;</span> + <span class=hljs-string >f&#x27;<span class=hljs-subst >{count:03}</span>&#x27;</span> +<span class=hljs-string >&quot;.png&quot;</span>,mask_fuzzy1)
+    cv2.imwrite(hint_dir   + <span class=hljs-string >&quot;/&quot;</span> + <span class=hljs-string >f&#x27;<span class=hljs-subst >{count:03}</span>&#x27;</span> +<span class=hljs-string >&quot;.png&quot;</span>,hint_frame)
+    cv2.imwrite(reveal_dir + <span class=hljs-string >&quot;/&quot;</span> + <span class=hljs-string >f&#x27;<span class=hljs-subst >{count:03}</span>&#x27;</span> +<span class=hljs-string >&quot;.png&quot;</span>,reveal_frame)
+    
+    count += <span class=hljs-number >1</span></code></pre> <p>Finally, these can be converted to web-friendly mp4s with ffmpeg:</p> <pre><code class="Python hljs">cmd = <span class=hljs-string >&quot;ffmpeg -y -i &quot;</span> + hidden_dir + <span class=hljs-string >&quot;/%03d.png -c:v libx264 -vf format=yuv420p -movflags +faststart &quot;</span> + output_dir + <span class=hljs-string >&quot;/hidden.mp4&quot;</span>
+os.system(cmd)
+cmd = <span class=hljs-string >&quot;ffmpeg -y -i &quot;</span> + hint_dir   + <span class=hljs-string >&quot;/%03d.png -c:v libx264 -vf format=yuv420p -movflags +faststart &quot;</span> + output_dir + <span class=hljs-string >&quot;/hint.mp4&quot;</span>
+os.system(cmd)
+cmd = <span class=hljs-string >&quot;ffmpeg -y -i &quot;</span> + reveal_dir + <span class=hljs-string >&quot;/%03d.png -c:v libx264 -vf format=yuv420p -movflags +faststart &quot;</span> + output_dir + <span class=hljs-string >&quot;/reveal.mp4&quot;</span>
+os.system(cmd)</code></pre> <h2 id=building_site ><a href="#building_site" class=header-anchor >Building Site</a></h2> <p>The <a href="http://stridle.xyz/">stridle.xyz</a> website is likely a collection of HTML, CSS, and JavaScript worst practices as I am still just figuring out how things are supposed to play together. The parts that took me a while to figure out were the transitioning video and the selection menu.</p> <h3 id=hidden_hint_and_reveal_video ><a href="#hidden_hint_and_reveal_video" class=header-anchor >Hidden, Hint, and Reveal Video</a></h3> <p>I wanted the hint button to cause a seamless transition from the &quot;hidden&quot; video to the &quot;hint&quot; video at matching frames. Unfortunately this is a really hard thing apparently. Some JavaScript libraries are out there to help out, like <a href="https://github.com/menismu/popcorn-js">popcorn.js</a>, but I was trying to keep things as vanilla as possible. I eventually settled on playing all three videos stacked on top of each other but with an opacity filter that animates away to reveal the video beneath. This is probably not the ideal solution but the videos are small and it seems to run fine on the browsers I have tried.</p> <pre><code class="HTML hljs"><span class=hljs-tag >&lt;<span class=hljs-name >div</span> <span class=hljs-attr >style</span>=<span class=hljs-string >&quot;text-align:center; position:relative;&quot;</span>&gt;</span>
+    <span class=hljs-tag >&lt;<span class=hljs-name >video</span> 
+        <span class=hljs-attr >src</span>=<span class=hljs-string >&#x27;vids/14347437/hidden.mp4&#x27;</span> 
+        <span class=hljs-attr >type</span>=<span class=hljs-string >&quot;video/mp4&quot;</span> 
+        <span class=hljs-attr >id</span>=<span class=hljs-string >&quot;video_hidden&quot;</span> 
+        <span class=hljs-attr >playsinline</span> <span class=hljs-attr >loop</span> <span class=hljs-attr >muted</span> <span class=hljs-attr >autoplay</span>
+        <span class=hljs-attr >style</span>=<span class=hljs-string >&quot;position:absolute; top:0; left:50%; transform: translate(-50%, 0%); z-index:1&quot;</span>&gt;</span>
+    <span class=hljs-tag >&lt;/<span class=hljs-name >video</span>&gt;</span>
+    <span class=hljs-tag >&lt;<span class=hljs-name >video</span> 
+        <span class=hljs-attr >src</span>=<span class=hljs-string >&#x27;vids/14347437/hint.mp4&#x27;</span> 
+        <span class=hljs-attr >type</span>=<span class=hljs-string >&quot;video/mp4&quot;</span> 
+        <span class=hljs-attr >id</span>=<span class=hljs-string >&quot;video_hint&quot;</span> 
+        <span class=hljs-attr >playsinline</span> <span class=hljs-attr >loop</span> <span class=hljs-attr >muted</span> <span class=hljs-attr >autoplay</span>
+        <span class=hljs-attr >style</span>=<span class=hljs-string >&quot;filter:opacity(0%);  position:absolute; top:0; left:50%; transform: translate(-50%, 0%); z-index:2&quot;</span>&gt;</span>
+    <span class=hljs-tag >&lt;/<span class=hljs-name >video</span>&gt;</span>
+    <span class=hljs-tag >&lt;<span class=hljs-name >video</span> 
+        <span class=hljs-attr >src</span>=<span class=hljs-string >&#x27;vids/14347437/reveal.mp4&#x27;</span> 
+        <span class=hljs-attr >type</span>=<span class=hljs-string >&quot;video/mp4&quot;</span> 
+        <span class=hljs-attr >id</span>=<span class=hljs-string >&quot;video_reveal&quot;</span> 
+        <span class=hljs-attr >playsinline</span> <span class=hljs-attr >loop</span> <span class=hljs-attr >muted</span> <span class=hljs-attr >autoplay</span>
+        <span class=hljs-attr >style</span>=<span class=hljs-string >&quot;filter:opacity(0%);  position:absolute; top:0; left:50%; transform: translate(-50%, 0%); z-index:3&quot;</span>&gt;</span>
+    <span class=hljs-tag >&lt;/<span class=hljs-name >video</span>&gt;</span>
+<span class=hljs-tag >&lt;/<span class=hljs-name >div</span>&gt;</span></code></pre> <pre><code class="HTML hljs"><span class=hljs-tag >&lt;<span class=hljs-name >button</span> 
+    <span class=hljs-attr >type</span>=<span class=hljs-string >&quot;button&quot;</span> 
+    <span class=hljs-attr >onclick</span>=<span class=hljs-string >&quot;document.getElementById(&#x27;video_hint&#x27;).classList.add(&#x27;active-animation&#x27;);&quot;</span>&gt;</span>
+    Hint
+<span class=hljs-tag >&lt;/<span class=hljs-name >button</span>&gt;</span></code></pre> <pre><code class="CSS hljs"><span class=hljs-selector-class >.active-animation</span> {
+  <span class=hljs-attribute >animation-name</span>: fadeIn ;
+  <span class=hljs-attribute >animation-duration</span>: <span class=hljs-number >1s</span>;
+  <span class=hljs-attribute >animation-fill-mode</span>: forwards;
+  }
+
+<span class=hljs-keyword >@keyframes</span> fadeIn {
+    <span class=hljs-number >0%</span> {<span class=hljs-attribute >filter</span>:<span class=hljs-built_in >opacity</span>(<span class=hljs-number >0%</span>);}
+    <span class=hljs-number >100%</span> {<span class=hljs-attribute >filter</span>:<span class=hljs-built_in >opacity</span>(<span class=hljs-number >100%</span>);}
+  }</code></pre> <h3 id=searchable_selection_list ><a href="#searchable_selection_list" class=header-anchor >Searchable Selection List</a></h3> <p>I would recommend not trying to to roll your own select element. <a href="https://select2.org/">Select2</a> has an easy drop-in that looks great&#33;</p> <h2 id=ingredients ><a href="#ingredients" class=header-anchor >Ingredients</a></h2> <ul> <li><p><a href="https://kdenlive.org/en/">Kdenlive</a> - free and open source video editor</p> <li><p><a href="https://ffmpeg.org/">ffmpeg</a> - cross-platform solution to record, convert and stream audio and video</p> <li><p><a href="https://github.com/hkchengrex/MiVOS/tree/MiVOS-STCN">MiVOS-STCN</a> - interactive video object segmentation</p> <li><p><a href="https://google.github.io/mediapipe/solutions/pose">MediaPipe Pose</a> - ML solution for high-fidelity body pose tracking</p> <li><p><a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">Beautiful Soup</a> - Python library for pulling data out of HTML and XML files</p> <li><p><a href="https://www.selenium.dev/">Selenium</a> - tool for automating interaction with web applications</p> <li><p><a href="https://youtube-dl.org/">youtube-dl</a> - command-line program to download videos from YouTube</p> <li><p><a href="https://opencv.org/">OpenCV</a> - open-source library with a ton of computer vision algorithms</p> </ul> <div class=page-foot > <div class=copyright > <a href="mailto:mail@jacobw.xyz" class="fa fa-envelope"></a> <a href="https://github.com/jacobwood27" class="fa fa-github"></a> <br> <br> Last modified: March 19, 2022. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div>
