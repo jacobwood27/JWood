@@ -12,7 +12,7 @@ My work time is split between three to five different projects across the domain
 I am trying to round out my rather technical education into something that encourages a more comprehensive view of the world. I am currently participating in a reading group with the [Catherine Project](https://catherineproject.org/) where we are reading Tocqueville's Democracy in America and hosting a parallel reading group with friends at home. 
 
 ## Living in San Diego
-My wonderful wife and I are currently living in Mission Bay, San Diego. We are on the lookout for a new place. I like to spend my free time playing pickup team sports like soccer, volleyball, and ultimate frisbee.
+My wonderful wife, our dog Daisy, and I recently moved to a neighborhood in Tierrasanta, San Diego. I currently like to spend my free time playing pickup active team sports like soccer, volleyball, and ultimate frisbee.
 
 
 &nbsp;  
