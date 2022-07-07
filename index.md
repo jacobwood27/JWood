@@ -8,7 +8,7 @@
 @@title-left
 Hello. I'm Jacob. 
 
-I am currently an engineer interested in Effective Altruism.
+I am a former engineer interested in Effective Altruism, and I am currently participating in the [Charity Entrepeneruship](https://www.charityentrepreneurship.com/) [Incubation Program](https://www.charityentrepreneurship.com/incubation-program).
 
 This site houses a collection of some of my [projects and posts](/posts/).
 

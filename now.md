@@ -2,14 +2,11 @@
 
 # What I'm Doing Now
 
-## Actively Searching for an Impactful Career Path
-I am largely convinced by the case for [long-termism](https://80000hours.org/articles/future-generations/) as a defining moral framework. I haven't been able to determine what career change best exemplifies these principles, and it certainly keeps me up at night. I am currently leaning towards the broad field of [Global Priorities Research](https://80000hours.org/problem-profiles/global-priorities-research/) or something else aligned with the tenets of [Effective Altruism](https://en.wikipedia.org/wiki/Effective_altruism). 
-
-## Aerospace Engineer at General Atomics
-My work time is split between three to five different projects across the domains of water, air, and space systems. The aspects that I most enjoy tend to fall into the realm of conceptual vehicle design and high level system modeling.
+## Charity Entrepeneuship Incubation Program
+I am preparing to start a cost-effective charity with the help of the wonderful people at [Charity Entrepeneurship](https://www.charityentrepreneurship.com/). The intensive program started at the end of June and two months later I should be (fingers crossed) co-founding a charity! It is an exciting program and has so far been unbelievably rewarding. I am very excited about the opportunity.
 
 ## Expanding Intellectual Horizons
-I am trying to round out my rather technical education into something that encourages a more comprehensive view of the world. I am currently participating in a reading group with the [Catherine Project](https://catherineproject.org/) where we are reading Tocqueville's Democracy in America and hosting a parallel reading group with friends at home. 
+I am trying to round out my rather technical education into something that encourages a more comprehensive view of the world. I recently participated in a reading group with the [Catherine Project](https://catherineproject.org/) where we read Tocqueville's Democracy in America. A small group of friends at home is continuing in the spirit of the group with regular "book" club meetings, where we attempt to wax philosophical about the ideas out there in the world.
 
 ## Living in San Diego
 My wonderful wife, our dog Daisy, and I recently moved to a neighborhood in Tierrasanta, San Diego. I currently like to spend my free time playing pickup active team sports like soccer, volleyball, and ultimate frisbee.
