@@ -10,8 +10,14 @@
 
 # Work Experience
 
+### **Co-Founder** of *Policy for People*
+2022 - present
+- [Charity Entrepeneurship](https://www.charityentrepreneurship.com/) incubated charity
+
+
+
 ### **Aerospace Engineer** at *General Atomics Electromagnetic Systems*
-2017 - present  
+2017 - 2022  
 - Completed conceptual design of low speed aircraft, swarming UAV, high speed projectiles, underwater vehicles, and full railgun operational systems
 - Developed tools for trade space scoping and exploration, parametric system sizing, flight command and control, experimental analysis, and mission simulation
 - Conducted full computational fluid analyses at multiple levels of fidelity within subsonic to hypersonic flight regimes
