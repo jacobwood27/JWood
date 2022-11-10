@@ -10,7 +10,7 @@
 
 # Work Experience
 
-### **Co-Founder** of *Policy for People*
+### **Co-Founder** of *Center for Effective Aid Policy*
 2022 - present
 - [Charity Entrepeneurship](https://www.charityentrepreneurship.com/) incubated charity
 
