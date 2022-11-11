@@ -2,14 +2,11 @@
 
 # What I'm Doing Now
 
-## Charity Entrepeneuship Incubation Program
-I am preparing to start a cost-effective charity with the help of the wonderful people at [Charity Entrepreneurship](https://www.charityentrepreneurship.com/). The intensive program started at the end of June and two months later I should be (fingers crossed) co-founding a charity! It is an exciting program and has so far been unbelievably rewarding. 
-
-## Expanding Intellectual Horizons
-I am trying to round out my rather technical education into something that encourages a more comprehensive view of the world. I recently participated in a reading group with the [Catherine Project](https://catherineproject.org/) where we read Tocqueville's Democracy in America. A small group of friends at home is continuing in the spirit of the group with regular "book" club meetings, where we attempt to wax philosophical about the ideas out there in the world.
+## Center for Effective Aid Policy
+I recently co-founded the [Center for Effective Aid Policy](http://aidpolicy.org/) with the one and only [Mathias Bonde](https://dk.linkedin.com/in/mathias-kirk-bonde?trk=people-guest_people_search-card). We met in the [Charity Entrepeneurship](https://www.charityentrepreneurship.com/) incubation program. We hope to move some international development aid in a positive direction!
 
 ## Living in San Diego
-My wonderful wife, our dog Daisy, and I recently moved to a neighborhood in Tierrasanta, San Diego. I currently like to spend my free time playing pickup active team sports like soccer, volleyball, and ultimate frisbee.
+My wonderful wife, our dog Daisy, and I currently live in a neighborhood in Tierrasanta, San Diego. I like to spend my free time playing pickup active team sports like soccer, volleyball, and ultimate frisbee.
 
 
 &nbsp;  
