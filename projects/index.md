@@ -1,7 +1,12 @@
 @def title = "Projects" 
 
 ---
-\posttitle{Experiential Neutral Point}{/projects/neutral_point}{August 2022}
+\posttitle{NFL Playoff Bracket Competition}{/projects/bracket_sim}{January 2023}
+
+Building a tool to predict friend's behavior and optimize our chance at winning the 2023 playoff bracket competition.
+
+---
+\posttitle{Experiential Neutral Point [in work]}{/projects/neutral_point}{August 2022}
 
 Conducting a survey and analyzing the results to try to determine the experiential neutral point.
 
