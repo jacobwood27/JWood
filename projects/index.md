@@ -1,9 +1,14 @@
 @def title = "Projects" 
 
 ---
-\posttitle{NFL Playoff Bracket Competition}{/projects/bracket_sim}{January 2023}
+\posttitle{NFL Playoff Bracket Competition [in work]}{/projects/bracket_sim}{January 2023}
 
 Building a tool to predict friend's behavior and optimize our chance at winning the 2023 playoff bracket competition.
+
+---
+\posttitle{2022 Christmas Giving Game}{/projects/2022_xmas_giving}{December 2022}
+
+Details on conducting, and the results of, our 2022 Christmas gift.
 
 ---
 \posttitle{Experiential Neutral Point [in work]}{/projects/neutral_point}{August 2022}
