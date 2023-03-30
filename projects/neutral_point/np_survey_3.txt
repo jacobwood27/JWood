@@ -1,0 +1,73 @@
+*question: How satisfied are you with life as a whole these days?
+	*type: slider
+	*before: not at all
+	*after: completely
+	0
+	1
+	2
+	3
+	4
+	5
+	6
+	7
+	8
+	9
+	10
+
+*question: How enjoyable is your life as a whole these days?
+	*type: slider
+	*before: not at all
+	*after: completely
+	0
+	1
+	2
+	3
+	4
+	5
+	6
+	7
+	8
+	9
+	10
+
+*question: How enjoyable do you expect tomorrow to be?
+	*type: slider
+	*before: not at all
+	*after: completely
+	0
+	1
+	2
+	3
+	4
+	5
+	6
+	7
+	8
+	9
+	10
+
+*question: Imagine I gave you a "SKIP TOMORROW" button. When pressed, this button would cause you to be instantly transported 24 hours into the future. You still do all the things you would normally do (so nobody else can tell any difference), and remember the day normally, you just don't experience it. Would you press this button to skip tomorrow?
+	Yes
+	No
+	*shuffle
+
+*question: What level of expected enjoyment do you think would be your threshold for pressing the button?
+	*type: slider
+	*before: not at all
+	*after: completely
+	0
+	1
+	2
+	3
+	4
+	5
+	6
+	7
+	8
+	9
+	10
+
+
+You’ve reached the end.
+
+*program: EndOfActivityButton
