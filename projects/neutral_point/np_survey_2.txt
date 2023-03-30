@@ -1,0 +1,44 @@
+*randomize: all
+	*everytime
+	*group
+		*question: How satisfied are you with life as a whole these days?
+			*type: slider
+			*before: not at all
+			*after: completely
+			0
+			1
+			2
+			3
+			4
+			5
+			6
+			7
+			8
+			9
+			10
+
+	*group
+		*question: How enjoyable is your life as a whole these days?
+			*type: slider
+			*before: not at all
+			*after: completely
+			0
+			1
+			2
+			3
+			4
+			5
+			6
+			7
+			8
+			9
+			10
+
+	*group
+		*question: Imagine I gave you a "SKIP TODAY" button. When pressed, this button would cause you to be instantly transported 24 hours into the future. You still do all the things you would normally do, and remember the day normally, you just don't experience it. In a typical week how many times would you use the button?
+			*type: number
+			*tip:  Please enter a number between 0 and 7.
+
+You’ve reached the end.
+
+*program: EndOfActivityButton

@@ -1,0 +1,25 @@
+*progress: 0%
+
+*question: How satisfied are you with life as a whole these days?
+	*type: slider
+	*min: 0
+	*max: 10
+	*before: not at all
+	*after: completely
+
+*progress: 33%
+*question: How enjoyable is your life these days?
+	*type: slider
+	*min: 0
+	*max: 10
+	*before: not at all
+	*after: completely
+
+*progress: 66%
+*question: If you could press a button to skip tomorrow, would you? Assume you still complete all the things you would normally complete, and remember the day normally, you just don't experience it.
+	Yes
+	No
+
+You’ve reached the end.
+
+*program: EndOfActivityButton
