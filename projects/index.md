@@ -1,6 +1,11 @@
 @def title = "Projects" 
 
 ---
+\posttitle{Mystique}{/projects/mystique}{April 2023}
+
+A short story for book club.
+
+---
 \posttitle{NFL Playoff Bracket Competition [in work]}{/projects/bracket_sim}{January 2023}
 
 Building a tool to predict friend's behavior and optimize our chance at winning the 2023 playoff bracket competition.
