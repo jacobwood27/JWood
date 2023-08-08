@@ -1,6 +1,6 @@
 @def title="ChatGPT Embedding Ads"
 
-# Why is ChatGPT Embedding Ads in its Responses?
+# Is ChatGPT Embedding Ads in its Responses?
 
 Something peculiar has started happening in my chats with GPT-4 - it now includes advertisements in its answers!
 
