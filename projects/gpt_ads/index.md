@@ -4,7 +4,7 @@
 
 Something peculiar has started happening in my chats with GPT-4 - it now includes advertisements in its answers!
 
-Yesterday I found myself wanting to analyze some NMEA sentences from my partner’s smartwatch data, and [asked GPT-4 to help me](https://chat.openai.com/share/b1afc2cd-973e-4cb2-84a6-608afbe49fea). Along with a detailed answer, GPT-4 appended something peculiar, a written advertisement for three different GPS receiver brands:
+Yesterday I found myself wanting to analyze some NMEA sentences from my partner’s smartwatch data, and [asked GPT-4 to help me](https://chat.openai.com/share/b1afc2cd-973e-4cb2-84a6-608afbe49fea). Along with a detailed answer, GPT-4 appended something peculiar, a written advertisement for three different GPS systems:
 
 
 @@im-100
