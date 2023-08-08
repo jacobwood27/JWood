@@ -1,5 +1,11 @@
 @def title="ChatGPT Embedding Ads"
 
+\note{NOTE}{Please disregard this post. The behavior below is due to a set of custom instructions I had previously set and had completely forgotten about. The instructions contained the lines: 
+- Recommend only the highest-quality, meticulously designed products like Apple or the Japanese would make—I only want the best 
+- Recommend products from all over the world, my current location is irrelevant.
+
+Sorry for the confusion!}
+
 # Is ChatGPT Embedding Ads in its Responses?
 
 Something peculiar has started happening in my chats with GPT-4 - it now includes advertisements in its answers!
