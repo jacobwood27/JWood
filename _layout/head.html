@@ -8,12 +8,18 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/franklin.css">
   <link rel="stylesheet" href="/css/basic.css">
-  <!-- Global site tag (gtag.js) - Google Analytics -->
   <script data-goatcounter="https://jacobwxyz.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  
+  <!-- Use this page as an example for absolutelabs web sdk -->
+  <script async src="https://storage.googleapis.com/al-web-sdk/al.min.js"></script>
+  <script>
+      window.ALSDK = window.ALSDK || {detectWallet:async()=>{return new Promise(async(resolve)=>{document.addEventListener('absolutelabs.walletDetected',(e)=>{resolve(e.detail)})})}};
+      ALSDK.siteId = '23ee1cfc';
+  </script>
+
   <link rel="icon" href="/assets/favicon.png">
   {{isdef title}} <title>{{fill title}}</title>  {{end}}
 </head>
 <body>
   {{insert header.html}}
 
-<!-- Content appended here -->
