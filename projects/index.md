@@ -1,11 +1,6 @@
 @def title = "Projects" 
 
 ---
-\posttitle{ChatGPT Ads}{/projects/gpt_ads}{August 2023}
-
-Why is ChatGPT Embedding Ads in its Responses?
-
----
 \posttitle{Mystique}{/projects/mystique}{April 2023}
 
 A short story for book club.
