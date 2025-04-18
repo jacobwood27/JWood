@@ -2,7 +2,7 @@
 
 \note{Objective}{Complete an end to end project that utilizes a current machine learning state-of-the-art tool.}
 
-[Wordle](https://en.wikipedia.org/wiki/Wordle) and its [clones](https://en.wikipedia.org/wiki/Wordle#Adaptations_and_clones) seem to have taken the world by storm. My friends were talking about adapting the premise to the running world (drawing inspiration from [Poeltl](https://poeltl.dunk.town/)) and thus Stridle was born. The finished product can be played at [stridle.xyz](http://stridle.xyz/).
+[Wordle](https://en.wikipedia.org/wiki/Wordle) and its [clones](https://en.wikipedia.org/wiki/Wordle#Adaptations_and_clones) seem to have taken the world by storm. My friends were talking about adapting the premise to the running world (drawing inspiration from [Poeltl](https://poeltl.dunk.town/)) and thus Stridle was born. The finished product can be played [here](https://jacobwood27.github.io/037_stridle/).
 
 ## Collecting Data
 I decided to include the top 10 of all time for all the Olympic running events listed on [worldathletics.org](https://worldathletics.org/records/all-time-toplists/sprints/100-metres/outdoor/women/senior). Each athlete is assigned a unique athlete ID, so we can start by crawling through all the events and genders and pulling out the ID of the top 10.
