@@ -79,29 +79,29 @@ needed_count = <span class=hljs-number >10</span> <span class=hljs-comment >#req
                             <span class=hljs-number >2</span>)</code></pre> <p>So far this is what we have on the landing page:</p> <p>Let&#39;s add the minigame. This is what we are shooting for:</p> <div class=im-100 ><img src="/projects/photobooth/minigame_diagram.svg" alt=""></div> <p>First we will track all the heads of our photobooth participants. We want a track to follow detections from frame to frame, resize itself if a head gets bigger or smaller, and rotate when a head rotates. The code that does most of the work looks like:</p> <pre><code class="Python hljs"><span class=hljs-comment >#Define a tracked face object</span>
 <span class=hljs-keyword >class</span> <span class="hljs-title class_">TrackedFace</span>:
     <span class=hljs-keyword >def</span> <span class="hljs-title function_">__init__</span>(<span class=hljs-params >self, points, cam_x, cam_y</span>):
-        self.live = <span class=hljs-literal >True</span>
-        self.points = points
-        self.cam_x = cam_x
-        self.cam_y = cam_y
-        c_c, c_rad, c_rot = self.ear_circle()
-        self.c_c = c_c
-        self.c_rad = c_rad
-        self.c_rot = c_rot
-        self.X = c_c[<span class=hljs-number >0</span>]
-        self.Y = c_c[<span class=hljs-number >1</span>]
-        self.dia = <span class=hljs-number >2</span>*c_rad
+        <span class="hljs-variable language_">self</span>.live = <span class=hljs-literal >True</span>
+        <span class="hljs-variable language_">self</span>.points = points
+        <span class="hljs-variable language_">self</span>.cam_x = cam_x
+        <span class="hljs-variable language_">self</span>.cam_y = cam_y
+        c_c, c_rad, c_rot = <span class="hljs-variable language_">self</span>.ear_circle()
+        <span class="hljs-variable language_">self</span>.c_c = c_c
+        <span class="hljs-variable language_">self</span>.c_rad = c_rad
+        <span class="hljs-variable language_">self</span>.c_rot = c_rot
+        <span class="hljs-variable language_">self</span>.X = c_c[<span class=hljs-number >0</span>]
+        <span class="hljs-variable language_">self</span>.Y = c_c[<span class=hljs-number >1</span>]
+        <span class="hljs-variable language_">self</span>.dia = <span class=hljs-number >2</span>*c_rad
 
     <span class=hljs-keyword >def</span> <span class="hljs-title function_">still_alive</span>(<span class=hljs-params >self</span>):
-        self.live = <span class=hljs-literal >True</span>
+        <span class="hljs-variable language_">self</span>.live = <span class=hljs-literal >True</span>
 
     <span class=hljs-keyword >def</span> <span class="hljs-title function_">reset</span>(<span class=hljs-params >self</span>):
-        self.live = <span class=hljs-literal >False</span>
+        <span class="hljs-variable language_">self</span>.live = <span class=hljs-literal >False</span>
         
     <span class=hljs-keyword >def</span> <span class="hljs-title function_">ear_circle</span>(<span class=hljs-params >self, face_bigger=<span class=hljs-number >1.2</span></span>):
-        lx = self.points[<span class=hljs-number >4</span>][<span class=hljs-number >0</span>] * self.cam_x
-        ly = self.points[<span class=hljs-number >4</span>][<span class=hljs-number >1</span>] * self.cam_y
-        rx = self.points[<span class=hljs-number >5</span>][<span class=hljs-number >0</span>] * self.cam_x
-        ry = self.points[<span class=hljs-number >5</span>][<span class=hljs-number >1</span>] * self.cam_y
+        lx = <span class="hljs-variable language_">self</span>.points[<span class=hljs-number >4</span>][<span class=hljs-number >0</span>] * <span class="hljs-variable language_">self</span>.cam_x
+        ly = <span class="hljs-variable language_">self</span>.points[<span class=hljs-number >4</span>][<span class=hljs-number >1</span>] * <span class="hljs-variable language_">self</span>.cam_y
+        rx = <span class="hljs-variable language_">self</span>.points[<span class=hljs-number >5</span>][<span class=hljs-number >0</span>] * <span class="hljs-variable language_">self</span>.cam_x
+        ry = <span class="hljs-variable language_">self</span>.points[<span class=hljs-number >5</span>][<span class=hljs-number >1</span>] * <span class="hljs-variable language_">self</span>.cam_y
         dia = np.math.sqrt((lx-rx)**<span class=hljs-number >2</span> + (ly-ry)**<span class=hljs-number >2</span>)
         rad = face_bigger * dia/<span class=hljs-number >2</span>
         c = (<span class=hljs-built_in >round</span>((lx+rx)/<span class=hljs-number >2</span>), <span class=hljs-built_in >round</span>((ly+ry)/<span class=hljs-number >2</span>))
@@ -159,16 +159,16 @@ track_list = []
         Yt = P_t[<span class=hljs-number >1</span>]
         dia = <span class=hljs-built_in >round</span>(<span class=hljs-number >2</span>*rad)
 
-        self.cam_x = cam_x
-        self.cam_y = cam_y
+        <span class="hljs-variable language_">self</span>.cam_x = cam_x
+        <span class="hljs-variable language_">self</span>.cam_y = cam_y
 
-        pix_avail = self.cam_x + <span class=hljs-number >2</span>*Yt
+        pix_avail = <span class="hljs-variable language_">self</span>.cam_x + <span class=hljs-number >2</span>*Yt
         pix_select = np.random.randint(<span class=hljs-number >0</span>,pix_avail)
         <span class=hljs-keyword >if</span> pix_select &lt; Yt:
             Xi = -dia
             Yi = Yt - pix_select
             Ai = np.random.rand() * <span class=hljs-number >3.14</span>/<span class=hljs-number >3</span>
-        <span class=hljs-keyword >elif</span> pix_select &lt; Yt + self.cam_x:
+        <span class=hljs-keyword >elif</span> pix_select &lt; Yt + <span class="hljs-variable language_">self</span>.cam_x:
             Yi = -dia
             Xi = pix_select - Yt
             <span class=hljs-keyword >if</span> Xi &lt; Xt:
@@ -176,8 +176,8 @@ track_list = []
             <span class=hljs-keyword >else</span>:
                 Ai = <span class=hljs-number >3.1415</span> - np.random.rand() * <span class=hljs-number >3.14</span>/<span class=hljs-number >4</span>
         <span class=hljs-keyword >else</span>:
-            Xi = self.cam_x + dia
-            Yi = pix_select - self.cam_x - Yt
+            Xi = <span class="hljs-variable language_">self</span>.cam_x + dia
+            Yi = pix_select - <span class="hljs-variable language_">self</span>.cam_x - Yt
             Ai = <span class=hljs-number >3.14</span> - np.random.rand() * <span class=hljs-number >3.14</span>/<span class=hljs-number >3</span>
 
         dX = Xt - Xi
@@ -185,71 +185,71 @@ track_list = []
 
         v = np.math.sqrt(<span class=hljs-number >0.5</span>*a*dX**<span class=hljs-number >2</span>/(np.math.cos(Ai)**<span class=hljs-number >2</span>)/(dY + dX*np.math.tan(Ai)))
         
-        self.X = Xi
-        self.Y = Yi
-        self.Vx = v * np.math.cos(Ai)
-        self.Vy = -v * np.math.sin(Ai)
-        self.a = a
-        self.im = cv2.resize(cv2.imread(image, -<span class=hljs-number >1</span>), (dia, dia))
-        self.dia = dia * head_scale
-        self.rad_px = <span class=hljs-built_in >round</span>(dia/<span class=hljs-number >2</span>)
-        self.w = -w_max + <span class=hljs-number >2</span>*w_max*np.random.rand()
-        self.thet = np.random.rand() * <span class=hljs-number >360</span>
-        self.stuck = <span class=hljs-literal >False</span>
-        self.track = <span class=hljs-literal >None</span>
-        self.stuck_d = <span class=hljs-literal >None</span>
-        self.stuck_thet = <span class=hljs-literal >None</span>
-        self.orig_rot = <span class=hljs-literal >None</span>
-        self.points = s_a
+        <span class="hljs-variable language_">self</span>.X = Xi
+        <span class="hljs-variable language_">self</span>.Y = Yi
+        <span class="hljs-variable language_">self</span>.Vx = v * np.math.cos(Ai)
+        <span class="hljs-variable language_">self</span>.Vy = -v * np.math.sin(Ai)
+        <span class="hljs-variable language_">self</span>.a = a
+        <span class="hljs-variable language_">self</span>.im = cv2.resize(cv2.imread(image, -<span class=hljs-number >1</span>), (dia, dia))
+        <span class="hljs-variable language_">self</span>.dia = dia * head_scale
+        <span class="hljs-variable language_">self</span>.rad_px = <span class=hljs-built_in >round</span>(dia/<span class=hljs-number >2</span>)
+        <span class="hljs-variable language_">self</span>.w = -w_max + <span class=hljs-number >2</span>*w_max*np.random.rand()
+        <span class="hljs-variable language_">self</span>.thet = np.random.rand() * <span class=hljs-number >360</span>
+        <span class="hljs-variable language_">self</span>.stuck = <span class=hljs-literal >False</span>
+        <span class="hljs-variable language_">self</span>.track = <span class=hljs-literal >None</span>
+        <span class="hljs-variable language_">self</span>.stuck_d = <span class=hljs-literal >None</span>
+        <span class="hljs-variable language_">self</span>.stuck_thet = <span class=hljs-literal >None</span>
+        <span class="hljs-variable language_">self</span>.orig_rot = <span class=hljs-literal >None</span>
+        <span class="hljs-variable language_">self</span>.points = s_a
 
     <span class=hljs-keyword >def</span> <span class="hljs-title function_">move</span>(<span class=hljs-params >self, dt</span>):
-        <span class=hljs-keyword >if</span> self.stuck <span class=hljs-keyword >and</span> self.track.live:
-            xt = self.track.X
-            yt = self.track.Y
-            thet = self.stuck_thet + (self.track.c_rot-self.orig_rot)
+        <span class=hljs-keyword >if</span> <span class="hljs-variable language_">self</span>.stuck <span class=hljs-keyword >and</span> <span class="hljs-variable language_">self</span>.track.live:
+            xt = <span class="hljs-variable language_">self</span>.track.X
+            yt = <span class="hljs-variable language_">self</span>.track.Y
+            thet = <span class="hljs-variable language_">self</span>.stuck_thet + (<span class="hljs-variable language_">self</span>.track.c_rot-<span class="hljs-variable language_">self</span>.orig_rot)
 
-            d = self.stuck_d
+            d = <span class="hljs-variable language_">self</span>.stuck_d
             X_new = xt + d*np.math.cos(thet)
             Y_new = yt + d*np.math.sin(thet)
-            self.Vx = (X_new - self.X) /dt
-            self.Vy = (Y_new - self.Y) /dt
-            self.X = X_new
-            self.Y = Y_new
-            self.thet = self.orig_rot_thet - (self.track.c_rot-self.orig_rot)*<span class=hljs-number >57.3</span>
+            <span class="hljs-variable language_">self</span>.Vx = (X_new - <span class="hljs-variable language_">self</span>.X) /dt
+            <span class="hljs-variable language_">self</span>.Vy = (Y_new - <span class="hljs-variable language_">self</span>.Y) /dt
+            <span class="hljs-variable language_">self</span>.X = X_new
+            <span class="hljs-variable language_">self</span>.Y = Y_new
+            <span class="hljs-variable language_">self</span>.thet = <span class="hljs-variable language_">self</span>.orig_rot_thet - (<span class="hljs-variable language_">self</span>.track.c_rot-<span class="hljs-variable language_">self</span>.orig_rot)*<span class=hljs-number >57.3</span>
         
         <span class=hljs-keyword >else</span>:
-            self.stuck = <span class=hljs-literal >False</span>
-            self.X += self.Vx * dt
-            self.Y += self.Vy * dt
-            self.Vy += self.a * dt
-            self.thet += self.w * dt
+            <span class="hljs-variable language_">self</span>.stuck = <span class=hljs-literal >False</span>
+            <span class="hljs-variable language_">self</span>.X += <span class="hljs-variable language_">self</span>.Vx * dt
+            <span class="hljs-variable language_">self</span>.Y += <span class="hljs-variable language_">self</span>.Vy * dt
+            <span class="hljs-variable language_">self</span>.Vy += <span class="hljs-variable language_">self</span>.a * dt
+            <span class="hljs-variable language_">self</span>.thet += <span class="hljs-variable language_">self</span>.w * dt
         
     <span class=hljs-keyword >def</span> <span class="hljs-title function_">near</span>(<span class=hljs-params >self, track, thresh=<span class=hljs-number >1.0</span></span>):
-        x1 = self.X
-        y1 = self.Y
+        x1 = <span class="hljs-variable language_">self</span>.X
+        y1 = <span class="hljs-variable language_">self</span>.Y
         x2 = track.X
         y2 = track.Y
-        <span class=hljs-keyword >return</span> np.math.sqrt((x2-x1)**<span class=hljs-number >2</span> + (y2-y1)**<span class=hljs-number >2</span>) &lt; thresh*(self.dia+track.dia)/<span class=hljs-number >2</span>
+        <span class=hljs-keyword >return</span> np.math.sqrt((x2-x1)**<span class=hljs-number >2</span> + (y2-y1)**<span class=hljs-number >2</span>) &lt; thresh*(<span class="hljs-variable language_">self</span>.dia+track.dia)/<span class=hljs-number >2</span>
     
     <span class=hljs-keyword >def</span> <span class="hljs-title function_">pos</span>(<span class=hljs-params >self</span>):
-        <span class=hljs-keyword >return</span> (<span class=hljs-built_in >round</span>(self.X), <span class=hljs-built_in >round</span>(self.Y))
+        <span class=hljs-keyword >return</span> (<span class=hljs-built_in >round</span>(<span class="hljs-variable language_">self</span>.X), <span class=hljs-built_in >round</span>(<span class="hljs-variable language_">self</span>.Y))
     
     <span class=hljs-keyword >def</span> <span class="hljs-title function_">draw</span>(<span class=hljs-params >self, frame</span>):
-        add_overlay(frame, imutils.rotate(self.im, self.thet), <span class=hljs-built_in >round</span>(self.X-self.rad_px), <span class=hljs-built_in >round</span>(self.Y-self.rad_px))
+        add_overlay(frame, imutils.rotate(<span class="hljs-variable language_">self</span>.im, <span class="hljs-variable language_">self</span>.thet), <span class=hljs-built_in >round</span>(<span class="hljs-variable language_">self</span>.X-<span class="hljs-variable language_">self</span>.rad_px), <span class=hljs-built_in >round</span>(<span class="hljs-variable language_">self</span>.Y-<span class="hljs-variable language_">self</span>.rad_px))
 
     <span class=hljs-keyword >def</span> <span class="hljs-title function_">stick</span>(<span class=hljs-params >self, track</span>):
-        self.stuck = <span class=hljs-literal >True</span>
-        self.track = track
+        <span class="hljs-variable language_">self</span>.stuck = <span class=hljs-literal >True</span>
+        <span class="hljs-variable language_">self</span>.track = track
 
-        x1 = self.X
-        y1 = self.Y
+        x1 = <span class="hljs-variable language_">self</span>.X
+        y1 = <span class="hljs-variable language_">self</span>.Y
         x2 = track.X
         y2 = track.Y
-        self.stuck_d = np.math.sqrt((x2-x1)**<span class=hljs-number >2</span> + (y2-y1)**<span class=hljs-number >2</span>)
+        <span class="hljs-variable language_">self</span>.stuck_d = np.math.sqrt((x2-x1)**<span class=hljs-number >2</span> + (y2-y1)**<span class=hljs-number >2</span>)
         thet = np.arctan2(y1-y2,x1-x2)
-        self.stuck_thet = thet
-        self.orig_rot_thet = self.thet
-        self.orig_rot = track.c_rot</code></pre> <p>Now we can tie the flying and tracked heads together inside the video processing loop&#33; And then we can sum up the current score. If this is the best score of the day, grab a snapshot of the current players and add it to the landing page.</p> <pre><code class="Python hljs"><span class=hljs-comment ># Spawn a flying head about every 5th frame if there are people using the photobooth</span>
+        <span class="hljs-variable language_">self</span>.stuck_thet = thet
+        <span class="hljs-variable language_">self</span>.orig_rot_thet = <span class="hljs-variable language_">self</span>.thet
+        <span class="hljs-variable language_">self</span>.orig_rot = track.c_rot</code></pre> <p>Now we can tie the flying and tracked heads together inside the video processing loop&#33; And then we can sum up the current score. If this is the best score of the day, grab a snapshot of the current players and add it to the landing page.</p> <pre><code class="Python hljs"><span class=hljs-comment ># Spawn a flying head about every 5th frame if there are people using the photobooth</span>
 head_list = []
 <span class=hljs-keyword >if</span> face_res.detections:
     p_spawn = <span class=hljs-number >0.2</span>
@@ -344,29 +344,29 @@ id_album = <span class=hljs-keyword >await</span> task_init_album</code></pre> <
     QR_h = <span class=hljs-number >2376</span>-<span class=hljs-number >1690</span>
 
     <span class=hljs-keyword >def</span> <span class="hljs-title function_">__init__</span>(<span class=hljs-params >self</span>):
-        self.idx = <span class=hljs-number >0</span>
-        self.im = Image.<span class=hljs-built_in >open</span>(self.BG)
-        self.im = self.im.convert(<span class=hljs-string >&#x27;RGBA&#x27;</span>)
+        <span class="hljs-variable language_">self</span>.idx = <span class=hljs-number >0</span>
+        <span class="hljs-variable language_">self</span>.im = Image.<span class=hljs-built_in >open</span>(<span class="hljs-variable language_">self</span>.BG)
+        <span class="hljs-variable language_">self</span>.im = <span class="hljs-variable language_">self</span>.im.convert(<span class=hljs-string >&#x27;RGBA&#x27;</span>)
 
     <span class=hljs-keyword >def</span> <span class="hljs-title function_">show</span>(<span class=hljs-params >self</span>):
-        self.im.show()
+        <span class="hljs-variable language_">self</span>.im.show()
 
     <span class=hljs-keyword >def</span> <span class="hljs-title function_">add_im</span>(<span class=hljs-params >self, im</span>):
-        im = im.resize((self.p_w, self.p_h), resample=Image.LANCZOS)
-        self.im.paste(im,self.tl_coords[self.idx][<span class=hljs-number >0</span>])
-        self.im.paste(im,self.tl_coords[self.idx][<span class=hljs-number >1</span>])
-        self.idx += <span class=hljs-number >1</span>
+        im = im.resize((<span class="hljs-variable language_">self</span>.p_w, <span class="hljs-variable language_">self</span>.p_h), resample=Image.LANCZOS)
+        <span class="hljs-variable language_">self</span>.im.paste(im,<span class="hljs-variable language_">self</span>.tl_coords[<span class="hljs-variable language_">self</span>.idx][<span class=hljs-number >0</span>])
+        <span class="hljs-variable language_">self</span>.im.paste(im,<span class="hljs-variable language_">self</span>.tl_coords[<span class="hljs-variable language_">self</span>.idx][<span class=hljs-number >1</span>])
+        <span class="hljs-variable language_">self</span>.idx += <span class=hljs-number >1</span>
     
     <span class=hljs-keyword >def</span> <span class="hljs-title function_">add_QR</span>(<span class=hljs-params >self, qr</span>):
-        qr = qr.resize((self.QR_w, self.QR_h))
-        self.im.paste(qr, self.tl_QR[<span class=hljs-number >0</span>])
-        self.im.paste(qr, self.tl_QR[<span class=hljs-number >1</span>])
+        qr = qr.resize((<span class="hljs-variable language_">self</span>.QR_w, <span class="hljs-variable language_">self</span>.QR_h))
+        <span class="hljs-variable language_">self</span>.im.paste(qr, <span class="hljs-variable language_">self</span>.tl_QR[<span class=hljs-number >0</span>])
+        <span class="hljs-variable language_">self</span>.im.paste(qr, <span class="hljs-variable language_">self</span>.tl_QR[<span class=hljs-number >1</span>])
 
     <span class=hljs-keyword >def</span> <span class="hljs-title function_">save</span>(<span class=hljs-params >self, fname</span>):
-        fg_im = Image.<span class=hljs-built_in >open</span>(self.FG).convert(<span class=hljs-string >&quot;RGBA&quot;</span>)
-        self.im.paste(fg_im,mask=fg_im)
-        self.im.save(fname, quality=<span class=hljs-number >95</span>)</code></pre> <p>After completing the photostrip all the media is uploaded to the shared Google Photos album. The user is presented with a QR code on screen to view the album and the QR code is provided on the printed photostrip.</p> <h3 id=flipbook ><a href="#flipbook" class=header-anchor >Flipbook</a></h3> <p>The flipbook modality gives the user a chance to create a physical flipbook and a digital .gif. The interaction is much the same as the photostrip described above. The user takes 15 snapshots which are compiled into a gif, which is uploaded to their new Google Photos album: <img src="/projects/photobooth/flipbook_small.gif" alt=""></p> <p>The snapshots are also formatted into a 8.5x11 image that is printed onto plain printer paper. The user is shown <a href="https://www.youtube.com/watch?v&#61;29SCiHN9zCI">instructions</a> for cutting and stapling the paper into a physical flipbook to take home. It works, sort of&#33; <img src="/projects/photobooth/flipbook.png" alt=""></p> <h3 id=video ><a href="#video" class=header-anchor >Video</a></h3> <p>The video selection allows the user to record a 30 second video. It doesn&#39;t provide a physical manifestation, but rather just uploads the video to a Google Photos album. The tricky part &#40;for me&#41; here was maintaining a full quality, full framerate recording while presenting the processed live video to the user in the application. </p> <p>To accomplish this I used <a href="https://github.com/umlaeute/v4l2loopback">v4l2loopback</a> to create two dummy video feeds, /dev/video1 and /dev/video2. A <a href="https://gstreamer.freedesktop.org/">gstreamer</a> pipeline plumbs everything together. There may be a few unnecessary queues in the resulting pipeline, but it works.</p> <div class=im-100 ><img src="/projects/photobooth/video_route.svg" alt=""></div> <pre><code class="bash hljs"><span class=hljs-comment ># Make dummy video devices</span>
-sudo modprobe v4l2loopback video_nr=1,2
+        fg_im = Image.<span class=hljs-built_in >open</span>(<span class="hljs-variable language_">self</span>.FG).convert(<span class=hljs-string >&quot;RGBA&quot;</span>)
+        <span class="hljs-variable language_">self</span>.im.paste(fg_im,mask=fg_im)
+        <span class="hljs-variable language_">self</span>.im.save(fname, quality=<span class=hljs-number >95</span>)</code></pre> <p>After completing the photostrip all the media is uploaded to the shared Google Photos album. The user is presented with a QR code on screen to view the album and the QR code is provided on the printed photostrip.</p> <h3 id=flipbook ><a href="#flipbook" class=header-anchor >Flipbook</a></h3> <p>The flipbook modality gives the user a chance to create a physical flipbook and a digital .gif. The interaction is much the same as the photostrip described above. The user takes 15 snapshots which are compiled into a gif, which is uploaded to their new Google Photos album: <img src="/projects/photobooth/flipbook_small.gif" alt=""></p> <p>The snapshots are also formatted into a 8.5x11 image that is printed onto plain printer paper. The user is shown <a href="https://www.youtube.com/watch?v&#61;29SCiHN9zCI">instructions</a> for cutting and stapling the paper into a physical flipbook to take home. It works, sort of&#33; <img src="/projects/photobooth/flipbook.png" alt=""></p> <h3 id=video ><a href="#video" class=header-anchor >Video</a></h3> <p>The video selection allows the user to record a 30 second video. It doesn&#39;t provide a physical manifestation, but rather just uploads the video to a Google Photos album. The tricky part &#40;for me&#41; here was maintaining a full quality, full framerate recording while presenting the processed live video to the user in the application. </p> <p>To accomplish this I used <a href="https://github.com/umlaeute/v4l2loopback">v4l2loopback</a> to create two dummy video feeds, /dev/video1 and /dev/video2. A <a href="https://gstreamer.freedesktop.org/">gstreamer</a> pipeline plumbs everything together. There may be a few unnecessary queues in the resulting pipeline, but it works.</p> <div class=im-100 ><img src="/projects/photobooth/video_route.svg" alt=""></div> <pre><code class="bash hljs"><span class=hljs-comment ># Make dummy video devices</span>
+<span class=hljs-built_in >sudo</span> modprobe v4l2loopback video_nr=1,2
 
 <span class=hljs-comment ># Initiate pipeline</span>
 gst-launch-1.0 -e v4l2src device=/dev/video0 do-timestamp=<span class=hljs-literal >true</span> ! image/jpeg,width=1920,height=1080,framerate=30/1 ! jpegdec ! videoconvert ! <span class=hljs-built_in >tee</span> name=t t. ! queue  ! videoscale ! <span class=hljs-string >&#x27;video/x-raw,width=1280,height=720&#x27;</span> !  v4l2sink device=/dev/video1 <span class=hljs-built_in >sync</span>=<span class=hljs-literal >false</span> t. ! queue  !  v4l2sink device=/dev/video2 <span class=hljs-built_in >sync</span>=<span class=hljs-literal >false</span>
@@ -386,4 +386,4 @@ ARDUINO.write(<span class=hljs-built_in >bytes</span>(<span class=hljs-built_in 
         leds[i] = CRGB::Black;
     }
 }
-FastLED.show();</code></pre> <h2 id=hardware ><a href="#hardware" class=header-anchor >Hardware</a></h2> <p>The photobooth itself ended up being slightly imposing. This is mostly because the only two-tray printer I had access to was massive.</p> <h3 id=architecture__2 ><a href="#architecture__2" class=header-anchor >Architecture</a></h3> <p>By the end of the project there were quite a few components to keep track of. I had to track down a larger USB hub to accomodate everything: <img src="/projects/photobooth/components.svg" alt=""></p> <h3 id=frame ><a href="#frame" class=header-anchor >Frame</a></h3> <p>The simple frame was constructed with 1x2 furring strips cut haphazardly to length. The corners are joined with bolts, wing nuts, and small angle brackets. This allows for easy disassembly and assembly. <img src="/projects/photobooth/photobooth_frame.jpg" alt=""></p> <p>The monitor can be attached directly to the frame with its VESA mount. The WS2811 LED strip was ziptied to a large piece of cardboard which is attached to the frame with some more zip ties. <img src="/projects/photobooth/monitor_attached.jpg" alt=""></p> <p>The original intent was to wrap the entire frame in a watercolor blue mural. Unfortunately the original watercolor attempt didn&#39;t make it back after the wedding. The remainder of the paper was painted &#40;a little too splashy, and didn&#39;t quite get it to dry uniformly&#41; and used to cover the front of the photbooth. A tablecloth from the rehearsal dinner was used to cover the rest of the frame.</p> <img src="/projects/photobooth/finished_booth.jpg" alt=""> <h2 id=ingredients ><a href="#ingredients" class=header-anchor >Ingredients</a></h2> <ul> <li><p><a href="https://pysimplegui.readthedocs.io/en/latest/">PySimpleGUI</a> - Python GUI For Humans</p> <li><p><a href="https://opencv.org/">OpenCV</a> - Open source computer vision</p> <li><p><a href="https://google.github.io/mediapipe/">Mediapipe</a> - Google ML live/streaming image processing</p> <li><p><a href="https://excalidraw.com/">Excalidraw</a> - diagram creation</p> <li><p><a href="https://github.com/davidedelpapa/gphotospy">gphotospy</a> - Google Photos Python library</p> <li><p><a href="https://pillow.readthedocs.io/en/stable/index.html">PIL</a> - Python Imaging Library</p> <li><p><a href="https://pypi.org/project/qrcode/">qrcode</a> - QR code generation in Python</p> <li><p><a href="https://pypi.org/project/yagmail/">yagmail</a> - Python GMAIL/SMTP client </p> </ul> <div class=page-foot > <div class=copyright > <a href="mailto:mail@jacobw.xyz" class="fa fa-envelope"></a> <a href="https://github.com/jacobwood27" class="fa fa-github"></a> <br> <br> Last modified: June 19, 2024. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div>
+FastLED.show();</code></pre> <h2 id=hardware ><a href="#hardware" class=header-anchor >Hardware</a></h2> <p>The photobooth itself ended up being slightly imposing. This is mostly because the only two-tray printer I had access to was massive.</p> <h3 id=architecture__2 ><a href="#architecture__2" class=header-anchor >Architecture</a></h3> <p>By the end of the project there were quite a few components to keep track of. I had to track down a larger USB hub to accomodate everything: <img src="/projects/photobooth/components.svg" alt=""></p> <h3 id=frame ><a href="#frame" class=header-anchor >Frame</a></h3> <p>The simple frame was constructed with 1x2 furring strips cut haphazardly to length. The corners are joined with bolts, wing nuts, and small angle brackets. This allows for easy disassembly and assembly. <img src="/projects/photobooth/photobooth_frame.jpg" alt=""></p> <p>The monitor can be attached directly to the frame with its VESA mount. The WS2811 LED strip was ziptied to a large piece of cardboard which is attached to the frame with some more zip ties. <img src="/projects/photobooth/monitor_attached.jpg" alt=""></p> <p>The original intent was to wrap the entire frame in a watercolor blue mural. Unfortunately the original watercolor attempt didn&#39;t make it back after the wedding. The remainder of the paper was painted &#40;a little too splashy, and didn&#39;t quite get it to dry uniformly&#41; and used to cover the front of the photbooth. A tablecloth from the rehearsal dinner was used to cover the rest of the frame.</p> <img src="/projects/photobooth/finished_booth.jpg" alt=""> <h2 id=ingredients ><a href="#ingredients" class=header-anchor >Ingredients</a></h2> <ul> <li><p><a href="https://pysimplegui.readthedocs.io/en/latest/">PySimpleGUI</a> - Python GUI For Humans</p> <li><p><a href="https://opencv.org/">OpenCV</a> - Open source computer vision</p> <li><p><a href="https://google.github.io/mediapipe/">Mediapipe</a> - Google ML live/streaming image processing</p> <li><p><a href="https://excalidraw.com/">Excalidraw</a> - diagram creation</p> <li><p><a href="https://github.com/davidedelpapa/gphotospy">gphotospy</a> - Google Photos Python library</p> <li><p><a href="https://pillow.readthedocs.io/en/stable/index.html">PIL</a> - Python Imaging Library</p> <li><p><a href="https://pypi.org/project/qrcode/">qrcode</a> - QR code generation in Python</p> <li><p><a href="https://pypi.org/project/yagmail/">yagmail</a> - Python GMAIL/SMTP client </p> </ul> <div class=page-foot > <div class=copyright > <a href="mailto:mail@jacobw.xyz" class="fa fa-envelope"></a> <a href="https://github.com/jacobwood27" class="fa fa-github"></a> <br> <br> Last modified: April 18, 2025. Website built with <a href="https://github.com/tlienart/Franklin.jl">Franklin.jl</a> and the <a href="https://julialang.org">Julia programming language</a>. </div> </div> </div>
