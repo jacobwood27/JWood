@@ -8,7 +8,7 @@ There are 13 games in the NFL playoffs, which means there are 2^13 = 8192 unique
 
 There must exist a single bracket that has the highest probability of winning the competition. The best bracket has to balance picking likely winners against picking brackets that are differentiated from the competition to derive an edge. To do this, we'll leverage everything we know about our friends' behavior and the brackets they are likely to pick.
 
-You can find the finished product [here](http://nflbracket.xyz/) and all the code is [here](https://github.com/jacobwood27/052_bracketsim2).
+You can find the finished product [here](https://jacobwood27.github.io/052_bracketsim2/) and all the code is [here](https://github.com/jacobwood27/052_bracketsim2).
 
 # Predicting the Actual Outcomes
 The first step for us is predicting the actual outcomes of the NFL playoff games to the best of our abilities. Luckily, [FiveThirtyEight](https://fivethirtyeight.com/) has us covered. 
