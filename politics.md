@@ -11,7 +11,6 @@ Inspired by [Ryan Briggs](https://twitter.com/ryancbriggs/status/171544283424800
  - Better air filtration in public places, particularly schools
     - CO2 buildup is a big problem
  - Tax or fine loud cars
-    - 
  - Reduce regulation and zoning that restricts the housing supply
     - Remove parking requirements
     - Less community involvement (instead, sortition if necessary)
