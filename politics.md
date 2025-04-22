@@ -6,10 +6,8 @@ Inspired by [Ryan Briggs](https://twitter.com/ryancbriggs/status/171544283424800
 
  - Drive anopheles mosquito and screw worm to extinction
     - [Anopheles mosquitoes](https://en.wikipedia.org/wiki/Anopheles) are responsible for transmitting malaria to humans, resulting in an estimated [619,000 deaths in 2021](https://www.who.int/teams/global-malaria-programme/reports/world-malaria-report-2022). The Anopheles genus represents only 460 of the 3,500+ known species of mosquitoes. 
-    - []
     - Gene drives are a potential method of precision eradication of harmful species
  - Better air filtration in public places, particularly schools
-    - CO2 buildup is a big problem
  - Tax or fine loud cars
  - Reduce regulation and zoning that restricts the housing supply
     - Remove parking requirements
