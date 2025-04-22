@@ -31,5 +31,5 @@ Inspired by [Ryan Briggs](https://twitter.com/ryancbriggs/status/171544283424800
  - price transparency
  - no reduced minimum wage for tip workers
     - national "last day of tipping" holiday
-    
+ - All citizens get a free passport every 5 years
  
