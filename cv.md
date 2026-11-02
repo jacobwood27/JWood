@@ -2,7 +2,7 @@
 @def mintoclevel=1
 @def maxtoclevel=1
 
-\note{Objective}{Engineer seeking to apply my experience analyzing, modeling, and implementing complex systems to an impactful career aligned with the values of [Effective Altruism](https://en.wikipedia.org/wiki/Effective_altruism).}
+\note{Objective}{Engineer seeking to apply my experience designing, analyzing, and modeling complex systems to an impactful career.}
 
 @@resume
 
@@ -10,22 +10,24 @@
 
 # Work Experience
 
-### **Co-Founder** of *Center for Effective Aid Policy*
-2022 - present
-- [Charity Entrepeneurship](https://www.charityentrepreneurship.com/) incubated charity
 
-
-
-### **Aerospace Engineer** at *General Atomics Electromagnetic Systems*
+### **Aerospace Engineer** in Advanced Programs at *General Atomics Electromagnetic Systems*
 2017 - present  
-- Completed conceptual design of low speed aircraft, swarming UAV, high speed projectiles, underwater vehicles, and full railgun operational systems
-- Developed tools for trade space scoping and exploration, parametric system sizing, flight command and control, experimental analysis, and mission simulation
-- Conducted full computational fluid analyses at multiple levels of fidelity within subsonic to hypersonic flight regimes
+- Engineering lead for \$8M project to design, build, and test a UAV
+- Completed conceptual design of low speed aircraft, swarming UAV, high speed projectiles, underwater vehicles, and fully operational weapon systems
+- Developed internal tools for trade space scoping and exploration, parametric system sizing, flight command and control, experimental analysis, and mission simulation
+- Conducted full computational fluid dynamics analyses at multiple levels of fidelity within subsonic to hypersonic flight regimes
 - Implemented novel flight control algorithms and automated mission control logic
-- Contributed to hands on assembly and construction of multiple flight vehicles
-- Executed wind tunnel and led flight testing with subsequent data analysis
-- Specified and led integration of propulsion systems for multiple satellite buses
-- *Most Valuable Player* awarded in 2018, 2019, and 2020
+- Contributed to hands on assembly and construction of flight vehicles and test apparatus
+- Led wind tunnel and flight testing planning, execution, and analysis
+- Designed and led integration of propulsion systems for multiple satellite buses
+
+### **Co-Founder** of *Center for Effective Aid Policy*
+2022 - 2024
+- [Charity Entrepeneurship](https://www.charityentrepreneurship.com/) incubated charity
+- Led massive public outreach campaign in Sweden in attempt to prevent reduction in Sweden's foreign aid budget
+- 
+
 
 \lineskip
 

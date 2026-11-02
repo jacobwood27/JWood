@@ -1,13 +1,21 @@
 @def title = "Now"
 
 # What I'm Doing Now
+@@small_text
+  Last updated 15 October 2025
+@@
 
-## Center for Effective Aid Policy
-I recently co-founded the [Center for Effective Aid Policy](http://aidpolicy.org/) with the one and only [Mathias Bonde](https://dk.linkedin.com/in/mathias-kirk-bonde?trk=people-guest_people_search-card). We met in the [Charity Entrepeneurship](https://www.charityentrepreneurship.com/) incubation program. We hope to move some international development aid in a positive direction!
+## General Atomics
+I am currently working as an aerospace engineer designing advanced vehicles and integrated systems for next-generation programs at General Atomics Electromagnetic Systems.
 
 ## Living in San Diego
-My wonderful wife, our daughter Annie, our dog Daisy, and I currently live in a neighborhood in Tierrasanta, San Diego.  I like to spend my free time playing pickup active team sports like soccer, volleyball, and ultimate frisbee.
+My wonderful wife, our 2yo daughter, our baby boy due February 2026(!), our dog, and I currently live in a lovely neighborhood in Tierrasanta, San Diego. When I can find some free time I like to spend it badgering my friends about why AI is a big deal on a run, tinkering around the house, or playing pickup ultimate frisbee.
 
+## AI Safety Related Work
+I recently completed the [AI Safety, Ethics, and Society Course](https://www.aisafetybook.com/virtual-course) and did some work contributing edits to [The Compendium](https://www.thecompendium.ai/introduction) as a member of the [Torchbearer Community](https://torchbearer.community/). I will be attending the [Eleos Conference on AI Consciousness and Welfare](https://eleosai.org/conference/) in November.
+
+## Book Club
+I have been hosting a small book/film/writing club that meets monthly. Most recently we met to talk about [The Ballad of Buster Scruggs](https://en.wikipedia.org/wiki/The_Ballad_of_Buster_Scruggs).
 
 &nbsp;  
 

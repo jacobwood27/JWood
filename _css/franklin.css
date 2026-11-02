@@ -342,3 +342,8 @@ code {
   display: table;
   clear: both;
 }
+
+
+.small_text {
+  color: #b1b1b1; /* Medium gray */
+}
